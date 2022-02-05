@@ -1,0 +1,2413 @@
+@import 'vars';
+@import 'fonts';
+@import 'reset';
+@import 'libs';
+@import 'global';
+
+.header__wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0 9px 0;
+    border-bottom: 1px solid #bcbcbc;
+}
+
+.header__menu{
+    width: 30%;
+    display: flex;
+    justify-content:space-between;
+    text-align: center;
+}
+
+
+.header__menu-item-link{
+    @extend %montserrat-400;
+    font-size: 17px;
+    line-height: 22px;
+    color: $descriptionTextColor;    
+    display: block;
+}
+
+.header__submenu-box{
+    padding: 20px 18px;
+    position: absolute;
+    top: 59px;
+    left: -6px;
+    width: 245px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    z-index: 1;    
+    display: none;
+    text-align: left;
+}
+
+.header__submenu-list-item{
+    margin-bottom: 20px;
+    &:last-child{
+        margin-bottom: 0;
+    }                
+}
+
+.header__submenu-list-link{
+    @extend %montserrat-400;
+    font-size: 15px;
+    line-height: 20px;
+    color: $descriptionTextColor;
+    &:hover{
+        color: $defaultColor;
+        border-bottom: 1px solid $defaultColor;
+    }
+}
+
+
+
+.select-box{
+    display: flex;
+    margin-bottom: 10px;
+    position: relative;
+    right: -120px;
+}
+
+.header__location{
+    width: 30%;
+}
+
+
+.header__location-select{
+    border: none;
+    outline: none;
+    font-size: 18px;
+    line-height: 24px;
+    color: $defaultColor;
+    @extend %montserrat-600;
+    margin-bottom: 1px;
+}
+
+.search-box{
+    padding: 7px 12px;
+    width: 100%;
+    text-align: right;
+    height: 34px;
+    border: 1px solid $selectColor;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.header__search{
+    outline: none;
+    border: none;
+    margin: 0 17px 0 17px;
+    width: 100%;
+    &::placeholder{
+        font-size: 15px;
+        line-height: 20px;
+        color: $searchPlaceHolderColor;
+        @extend %montserrat-400;
+    }
+}
+
+.search-link{
+    display: inline-block;
+}
+
+.search-text{    
+    font-size: 11px;
+    line-height: 14px;
+    color: $defaultColor;
+    @extend %montserrat-400;
+}
+
+
+.header__info-box{
+    width: 16%;
+    text-align: right;
+}
+
+.header__phone{
+    font-size: 18px;
+    line-height: 24px;
+    color: $defaultColor;
+    @extend %montserrat-600;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.header__basket-box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.header__basket-box-item{
+    cursor: pointer;
+}
+
+.header__basket-box-link{
+    width: 100%;
+    display: block;
+}
+
+.header__basket-box-img{
+    margin: 0 auto;
+}
+
+.header__basket-box-text{
+    font-size: 11px;
+    line-height: 14px;
+    color: $defaultColor;
+    @extend %montserrat-400;
+}
+
+//Всплывающее окно с пустой корзиной
+
+.header__basket-subbox-empty-wrapper{
+    width: 100%;
+    text-align: center;
+    padding: 38px 0 109px 0;
+    display: none;
+}
+
+.header__basket-subbox-empty-inner{
+    display: none;
+}
+
+
+.header__basket-subbox-empty-img{
+    margin: 0 auto;
+    margin-bottom: 42px;
+}
+
+.header__basket-subbox-empty-text{
+    display: inline-block;
+    font-size: 20px;
+    line-height: 26px;
+    color: $descriptionTextColor;
+    @extend %montserrat-600;
+}
+
+
+//Всплывающее окно карзины с товаром
+.header__basket-subbox{
+    background-color: #fff;
+    box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.25);
+    text-align: right;
+    width: 670px;
+    padding: 27px 0 27px 20px;  
+    position: absolute;
+    right: 50px;
+    top: 70px;
+    z-index: 2;  
+    display: none;
+    &::before{
+        content: "";
+        position: absolute;
+        right: 20px;
+        top: -20px;
+        width: 0;
+        height: 0;
+        border-right: 13px solid transparent;
+        border-bottom: 20px solid #fff;
+        border-left: 13px solid transparent;
+    }
+}
+
+// .right-side-bar__basket-box{
+//     text-align: right;
+//     padding: 72px 0 23px 40px;
+//     background-color: #fff;
+//     width: 695px;
+//     position: fixed;
+//     top: 15%;
+//     // top: -333px;
+//     right: 65px;
+//     box-shadow: 0px 4px 19px 1px rgba(0, 0, 0, 0.25);
+//     border-radius: 30px 0px 0px 10px;
+//     display: none;
+// }
+
+
+
+.header__basket-products-info{
+    display: none;
+}
+
+.header__basket-subbox-title{
+    @extend %montserrat-600;
+    font-size: 18px;
+    line-height: 24px;
+    color: $selectColor;
+    border-bottom: 1px solid $selectColor;
+    display: inline-block;
+    margin: 0 30px 17px 0;
+}
+
+.header__basket-subbox-items{
+    max-height: 404px;
+    overflow-y: scroll;
+    &::-webkit-scrollbar{
+        background: none;
+        width: 3px;
+    }
+    &::-webkit-scrollbar-thumb{        
+        height: 40px;
+        background-color: $scrollbarThumbBg;
+        border-radius: 2px;
+    }
+}
+
+.header__basket-subbox-item{
+    position: relative;
+    display: flex;
+    margin-bottom: 22px;
+    &::after{
+        content: "";
+        width: 487px;
+        height: 1px;
+        background-color: $lineColor;
+        position: absolute;
+        bottom: -10px;
+        right: 0;
+    }
+}
+
+.header__basket-subbox-item{
+    &:last-child{
+        &::after{
+            display: none;
+        }
+    }   
+}
+
+.header__basket-product-img-box{
+    position: relative;
+    width: 25%;
+    &:hover{
+        &::after{
+            content: "";
+            position: absolute;
+            width: 86px;
+            height: 56px;
+            background-image: url(../images/icon/eyes-hover.svg);
+            background-repeat: no-repeat;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+}
+
+.header__product-basket-box{
+    text-align: left;
+    width: 100%;
+    padding-right: 30px;
+}
+
+.header__basket-subbox-top{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0 9px 22px;
+}
+
+.header__basket-subbox-product-info{
+    width: 100%;
+}
+
+.header__basket-subbox-product-name{
+    @extend %montserrat-600;
+    font-size: 20px;
+    line-height: 26px;
+    color: $descriptionTextColor;
+    margin-bottom: 3px;
+}
+
+.header__basket-subbox-product-article{
+    @extend %montserrat-400;
+    font-size: 13px;
+    line-height: 17px;
+    color: $oldPriceColor;
+    margin-bottom: 7px;
+}
+
+.header__basket-subbox-list{
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header__basket-subbox-bottom{
+    padding: 10px 0 10px 22px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.header__basket-subbox-price-box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header__basket-subbox-price,
+.header__basket-subbox-sum-price{
+    @extend %montserrat-500;
+    font-size: 20px;
+    line-height: 26px;
+    color: $descriptionTextColor;
+    margin-right: 3px;
+}
+
+.header__basket-subbox-rub-img{
+    width: 12px;
+}
+
+.header__basket-subbox-dividing-line{
+    @extend %montserrat-500;
+    font-size: 20px;
+    line-height: 26px;
+    color: $descriptionTextColor;
+    margin: 0 4px;
+}
+
+.header__basket-subbox-dividing-line,
+.header__basket-subbox-sum-price,
+.product__rub-sum-img{
+    visibility: hidden;
+}
+
+.header__basket-sum-one-product--active{
+    visibility: visible;
+}
+
+.header__basket-subbox-bottom-quantity{
+    display: flex;
+    justify-content: space-between;
+    width: 27%;
+    align-items: center;
+}
+
+.header__basket-subbox-bottom-quantity-text{
+    @extend %montserrat-400;
+    font-size: 16px;
+    line-height: 21px;
+    color: $descriptionTextColor;
+}
+
+.header__basket-subbox-bottom-quantity-input{
+    width: 33px;
+    border: none;
+    outline: none;
+    @extend %montserrat-400;
+    font-size: 16px;
+    line-height: 21px;
+    color: $descriptionTextColor;
+    text-align: center;
+}
+
+.header__basket-subbox-all-sum{
+    padding: 16px 0;
+    width: 100%;
+    border-top: 2px solid $defaultColor;
+    display: flex;
+    justify-content: right;
+    padding-right: 30px;
+    margin-bottom: 11px;
+}
+
+.header__basket-subbox-all-sum-text{
+    @extend %montserrat-600;
+    font-size: 24px;
+    line-height: 32px;
+    color: $defaultColor;
+    margin-right: 9px;
+    &:last-child{
+        margin-right: 0;
+    }
+}
+
+.header__basket-subbox-btn-wrapper{
+    padding-right: 30px;
+}
+
+.header__basket-subbox-btn{
+    @extend %montserrat-600;
+    font-size: 20px;
+    line-height: 26px;
+    color: $defaultColor;
+    background: transparent;
+    border: 1px solid $defaultColor;
+    border-radius: 49px;
+    outline: none;
+    text-transform: uppercase;
+    padding: 12px 29px;
+    margin-right: 24px;
+    &:last-child{
+        padding: 12px 52px;
+        margin-right: 0;
+    }
+    &:hover{
+        background-color: $defaultColor;
+        color: #fff;
+    }
+}
+
+//Секция top
+
+.top__wrapper{
+    padding: 23px 0 40px 0;
+    border-bottom: 1px solid #bcbcbc;
+}
+
+.top__menu{
+    display: flex;
+    justify-content: space-between;
+}
+
+.top__menu-link{
+    text-align: center;
+}
+
+.top__img-wrapper{
+    width: 63px;
+    height: 63px;
+    border-radius: 50%;
+    background-color: $svgColor;
+    position: relative;
+    margin: 0 auto;
+    margin-bottom: 13px;
+    svg{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.top__menu-text{
+    width: 99%;
+}
+
+
+
+.top__img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+//Секция bread-crumbs
+
+.bread-crumbs__wrapper{
+    padding: 30px 0 35px 0;
+}
+
+.bread-crumbs__list{
+    display: flex;
+}
+
+.bread-crumbs__item{
+    padding-right: 10px;    
+    margin-right: 10px;
+    position: relative;
+    &::after{
+        content: "";
+        position: absolute;
+        width: 4px;
+        height: 7px;
+        background-image: url(../images/icon/bread-crumbs-arrow.svg);
+        right: 0;
+        top: 7px;
+        background-repeat: no-repeat;
+    }
+
+    &:last-child{
+        margin-right: 0;
+        padding-right: 0;
+
+        &::after{
+            display: none;
+        }
+    }        
+}
+
+.bread-crumbs__link{
+    font-size: 15px;
+    line-height: 20px;
+    color: $defaultColor;
+    @extend %montserrat-400;
+}
+
+
+.top__filters{
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top__filter-box{
+    width: 50%;
+}
+
+.top__filter-list{
+    display: flex;
+    justify-content: space-between;
+}
+
+.top__filter-position{
+    display: flex;
+    justify-content: space-between;
+}
+
+.top__filter-position-quantity-box{
+    display: flex;
+    align-items: center;
+    margin-right: 19px;
+}
+
+.top__filter-position-text{
+    font-size: 16px;
+    line-height: 21px;
+    color: $selectColor;
+    @extend %montserrat-500;
+    margin-right: 8px;
+}
+
+.top__filter-position-quantity{
+    font-size: 16px;
+    line-height: 21px;
+    color: $selectColor;
+    @extend %montserrat-500;
+    outline: none;
+    border: 1px solid $selectColor;
+    padding: 3px 10px;
+    border-radius: 6px;
+}
+
+.top__filter-position-box{
+    display: flex;
+}
+
+.top__filter-position-img-net{
+    margin-right: 16px;
+}
+
+.top__filter-position-img-net,
+.top__filter-position-img-list{
+    cursor: pointer;
+}
+
+
+
+.basic{
+    position: relative;
+}
+
+.basic__wrapper{
+    display: flex;
+}
+
+//Блок с фильтрами
+
+.basic__filter-case{
+    width: 25%;
+    margin-right: 36px;
+}
+
+.flter-case__top{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    align-items: center;
+}
+
+.filter-case__clear{
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 14px;
+    line-height: 18px;
+    color: $specificStore;
+    @extend %montserrat-400;
+}
+
+.filter-case__search{
+    padding: 4px 14px;
+    outline: none;
+    border-radius: 6px;
+    border: 1px solid $selectColor;
+    font-size: 14px;
+    line-height: 18px;
+    color: $descriptionTextColor;
+    margin-bottom: 23px;
+    @extend %montserrat-400;
+    &::placeholder{
+        font-size: 14px;
+        line-height: 18px;
+        color: $descriptionTextColor;
+        @extend %montserrat-400;
+    }    
+}
+
+.filter-case__top-info-box{
+    margin-bottom: 27px;
+}
+
+.filter-case__price-title{
+    font-size: 18px;
+    line-height: 24px;
+    color: $descriptionTextColor;
+    @extend %montserrat-600;
+    margin-bottom: 10px;
+}
+
+
+.filter-case__img{
+    transform: rotate(-90deg);
+}
+
+.filter-case__info-wrapper{
+    display: none;
+}
+
+
+//Стили range slider
+
+.irs-min,
+.irs-max,
+.irs-from,
+.irs-to,
+.irs-single{
+    display: none;
+}
+
+.irs-line{
+    height: 3px !important;
+    top: 30px !important;
+}
+
+.irs-bar{
+    background-color: $defaultColor !important;
+    height: 3px !important;
+    top: 30px !important;
+}
+
+.irs-handle{
+    width: 18px !important;
+    height: 18px !important;
+    border-radius: 50% !important;
+    background-color: $defaultColor !important;
+    top: 22px !important;
+    i{
+        &:first-child{
+            background: none !important;
+        }            
+    }
+}
+
+.example__wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.example__range-input{
+    padding: 3px 8px;
+    border: 1px solid $selectColor;
+    border-radius: 6px;
+    @extend %montserrat-500;
+    font-size: 16px;
+    line-height: 21px;
+    color: $descriptionTextColor;
+    width: 100px;
+}
+
+.input-line{
+    @extend %montserrat-600;
+    color: $selectColor;
+    font-size: 16px;
+}
+
+.filter-case__info-box{
+    margin-bottom: 13px;
+    cursor: pointer;
+}
+
+.filter-case__info-box-top{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 13px;
+}
+
+.filter-case__cheking-box{
+    display: flex;
+    margin-bottom: 14px;
+}
+
+.filter-case__check-box{
+    margin-right: 10px;
+}
+
+.filter-case__radio-box{
+    display: flex;
+    margin-bottom: 13px;
+    margin-right: 9px;
+}
+
+.filter-case__shop-link{
+    @extend %montserrat-400;
+    font-size: 14px;
+    line-height: 18px;
+    color: $specificStore;
+    padding-right: 16px;
+    position: relative;
+    &::after{
+        content: "";
+        position: absolute;
+        width: 7px;
+        height: 12px;
+        background-image: url(../images/icon/specific-store-link-arrow.svg);
+        background-repeat: no-repeat;
+        top: 3px;
+        right: 0;
+    }
+}
+
+//Блок product net
+
+.product{
+    width: 100%;
+}
+
+
+.product-net{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+}
+
+.product__item-box{
+    width: 29%;
+    border: 1px solid $selectColor;
+    border-radius: 8px;
+    margin-bottom: 45px;   
+    position: relative;
+}
+
+
+.product__img-box{
+    position: relative;
+    &:hover{
+        &::after{
+            content: "";
+            position: absolute;
+            width: 86px;
+            height: 56px;
+            background-image: url(../images/icon/eyes-hover.svg);
+            background-repeat: no-repeat;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+}
+
+
+.product__img-box-favorites{
+    position: absolute;
+    right: 10px;
+    top: 14px;
+    z-index: 1;
+}
+
+
+
+.product__img{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.product__item-body{
+    padding: 14px 18px;
+}
+
+.product__item-botton{
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 18px;
+    align-items: end;
+    height: 83px;
+}
+
+.product__old-price{
+    text-decoration: line-through;
+}
+
+.product__new-price-box{
+    display: flex;
+}
+
+.product__new-price{
+    margin-right: 3px;
+}
+.dividing-line{
+    font-size: 28px;
+    line-height: 37px;
+    color: $descriptionTextColor;
+    @extend %montserrat-500;
+    margin-right: 6px;
+    display: none;
+}
+
+.product__new-price-sum{
+    display: none;
+}
+
+
+.product__img-basket-wrapper{
+    width: 40px;
+    height: 40px;
+    position: relative;
+    background-color: $defaultColor;
+    border-radius: 50%; 
+}
+
+.product__img-basket{   
+    cursor: pointer;
+}
+
+.product__item-price-box-list{
+    width: 41%;
+}
+
+
+.product__rub-sum-img-net{
+    display: none;
+}
+
+.product__item-archive{
+    @extend %montserrat-400;
+    font-size: 12px;
+    line-height: 16px;
+    color: $defaultColor;
+    display: none;
+}
+
+
+.product__on-order{
+    @extend %montserrat-400;
+    font-size: 12px;
+    line-height: 16px;
+    color: $underTheOrder;    
+    display: none;
+}
+
+
+
+.product__in-stock-info-text{
+    @extend %montserrat-400;
+    font-size: 12px;
+    line-height: 16px;
+    color: $inStockItem;
+    display: none;
+}
+
+
+.product__img-wrapper-text-list{
+    @extend %montserrat-500;
+    font-size: 16px;
+    line-height: 21px;
+    color: #fff;
+    display: none;
+}
+
+.product__img-basket{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+//Правое меню
+
+
+
+.right-side-bar__list{
+    position: absolute;
+    right: 0;
+    top: -260px;
+}
+
+.right-side-bar__item-box{
+    margin-bottom: 65px;
+    display: flow-root;
+}
+
+
+
+.right-side-bar__item-box-inner{
+    border-top-left-radius: 100px;
+    border-bottom-left-radius: 100px;
+    width: 53px;
+    height: 61px;
+    position: fixed;
+    right: 0;
+    cursor: pointer;
+    &:not(.right-side-bar__item--active):hover{
+        width: 250px;
+        background-color: $defaultColor;
+        .right-side-bar__item{
+            
+            background-color: $defaultColor;
+            .right-side-bar__link{
+                left: 12px;
+            }
+            .right-side-bar__baskem-price-box{
+                display: block;
+
+                .right-side-bar__basket-product{
+                    display: block;
+                }
+            }
+        }
+        
+    }
+}
+
+.right-side-bar__item{
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    border-top-left-radius: 100px;
+    border-bottom-left-radius: 100px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+
+.right-side-bar__link{
+    position: relative;
+    top: 35%;
+    left: 35%;
+    display: block;
+    width: 26px;
+}
+
+.quantity-product__box{
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background-color: $quantityProductBG;
+    text-align: center;
+    font-size: 10px;
+    line-height: 13px;
+    color: #fff;
+    @extend %montserrat-500;
+    border-radius: 50%;
+    top: -5px;
+    right: -5px;
+    display: none;
+}
+
+.quantity-product{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.right-side-bar__baskem-price-box{
+    position: absolute;
+    top: 28%;
+    left: 23%;
+    display: none;
+}
+
+
+
+.right-side-bar__basket-sum,
+.right-side-bar__basket-product,
+.right-side-bar__product-in-basket{
+    @extend %montserrat-600;
+    font-size: 22px;
+    line-height: 29px;
+    color: #fff;
+    display: none;
+}
+
+// .right-side-bar__basket-product,
+// .right-side-bar__product-in-basket{
+//     @extend %montserrat-600;
+//     font-size: 22px;
+//     line-height: 29px;
+//     color: #fff;
+//     display: none;
+// }
+
+// .right-side-bar__basket-box{
+//     text-align: right;
+//     padding: 72px 0 23px 40px;
+//     background-color: #fff;
+//     width: 695px;
+//     position: fixed;
+//     top: 15%;
+//     // top: -333px;
+//     right: 65px;
+//     box-shadow: 0px 4px 19px 1px rgba(0, 0, 0, 0.25);
+//     border-radius: 30px 0px 0px 10px;
+//     display: none;
+// }
+
+.right-side-bar__basket-box-empty-inner{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    padding: 48px 30px 48px 0;
+}
+
+
+
+
+.right-side-bar__basket-box-empty-img{
+    margin-right: 26px;
+}
+
+.right-side-bar__basket-box-empty-info{
+    width: 421px;
+}
+
+.right-side-bar__basket-box-empty-title{
+    @extend %montserrat-500;
+    font-size: 22px;
+    line-height: 29px;
+    color: $descriptionTextColor;
+    margin-bottom: 28px;
+}
+
+.right-side-bar__basket-box-empty-text{
+    @extend %montserrat-500;
+    font-size: 12px;
+    line-height: 16px;
+    color: $descriptionTextColor;
+}
+
+.right-side-bar__basket-products-info{
+    display: none;
+}
+
+.right-side-bar__basket-rub{
+    @extend %montserrat-600;
+    font-size: 22px;
+    line-height: 29px;
+    color: #fff;
+}
+
+
+//Блок product list
+
+.product__item-box-list--active{
+    width: 100%;
+    display: flex;
+    margin-bottom: 42px;
+    box-shadow: 0px 0px 10px rgb(0 0 0 / 15%);
+    border-radius: 8px;
+    .product__item-title{
+        font-size: 22px;
+        line-height: 29px;
+        color: #4b4b4b;
+        margin-bottom: 2px;
+    }
+
+    .product__vendor-code{
+        font-size: 13px;
+        line-height: 17px;
+        color: #929292;
+        margin-bottom: 14px;
+    }
+
+    .product__description{
+        font-size: 19px;
+        line-height: 25px;
+        color: #4b4b4b;
+        width: 65%;
+    }
+    // .product__rub-sum-img
+    // .dividing-line,
+    // .product__rub-sum-img,
+    // .product__new-price-sum,
+    .product__img-wrapper-text-list,
+    .product__img-wrapper-text-list{
+        display: block;
+    }
+  
+    .product__img-basket-wrapper{
+        padding: 6px 20px;
+        border-radius: 100px;
+        display: flex;
+        // width: 24%;
+        // height: 40px;
+        align-items: center;
+        width: 149px;
+        cursor: pointer;
+    }
+    .product__img-basket{
+        top: 50%;
+        left: 82%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+    }    
+    .product__item-price-box-list{
+        width: 60%;
+    }
+    .product__rub-img{
+        margin-right: 6px;
+    }
+}
+
+
+.product__item-botton-list{
+    align-items: end;
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 18px;
+}
+
+
+
+.product__new-price-link--active{
+    margin-right: 6px;
+}
+
+
+
+
+
+
+
+//Секция pagination
+
+
+
+
+.pagination__wrapper{
+    display: flex;
+    justify-content: space-between;
+    width: 700px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+
+.pagination__show-more-btn{
+    padding: 9px 32px;
+    outline: none;
+    border: 1px solid $defaultColor;
+    border-radius: 8px;
+    font-size: 16px;
+    line-height: 21px;
+    color: $defaultColor;
+    background: none;
+    @extend %montserrat-500;
+}
+
+
+
+.pagination ul {
+width: 100%;
+display: flex;
+flex-wrap: wrap;
+padding: 8px;
+align-items: center;
+}
+.pagination ul li {
+    color: $descriptionTextColor;
+    list-style: none;
+    line-height: 21px;
+    text-align: center;
+    font-size: 16px;
+    @extend %montserrat-600;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.3s ease;
+    position: relative;
+}
+.pagination ul li.numb{
+    list-style: none;
+    height: 30px;
+    width: 30px;
+    line-height: 21px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.pagination ul li span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: inline-block;
+}
+// .pagination ul li.numb.first {
+//     margin: 0px 3px 0 -5px;
+// }
+// .pagination ul li.numb.last{
+//     margin: 0px -5px 0 3px;
+//     // margin-right: 24px;
+// }
+.pagination ul li.dots {
+    font-size: 16px;
+    cursor: default;
+    margin-right: 12px;
+}
+
+.pagination li.active,
+.pagination ul li.numb:hover{
+    color: #fff;
+    background: $defaultColor;
+}
+
+.prev{
+    margin-right: 60px;
+    position: relative;
+    align-items: center;
+    &::before {
+        content: '';
+        position: absolute;
+        display: block;
+        width: 7px;
+        height: 13px;
+        background-image: url('../images/icon/pagination-arrow.svg');
+        background-repeat: no-repeat;
+        transform: rotate(180deg);
+        top: -5px;
+        left: -70px;
+    }
+}
+
+.next{
+    margin-left: 60px;
+    position: relative;
+    align-items: center;
+     &::after {
+        content: '';
+        position: absolute;
+        display: block;
+        width: 7px;
+        height: 13px;
+        background-image: url('../images/icon/pagination-arrow.svg');
+        background-repeat: no-repeat;
+        top: -5px;
+        right: -61px;
+    }
+}
+
+.btn span{    
+    color: $defaultColor;
+}
+
+// .next{ 
+     
+// }
+
+
+//Footer
+
+.footer{
+    background-color: $defaultColor;
+}
+
+
+.footer__wrapper{
+    padding: 42px 0 32px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.contact{
+    text-align: right;
+    width: 38%;
+}
+
+.contact__phone{
+    @extend %mitr-400;
+    font-size: 41px;
+    line-height: 54px;
+    color: #fff;
+    display: block;
+    margin-bottom: 28px;
+}
+
+.contact__info-box{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.contact__call-btn{
+    padding: 18px 43px;
+    background: none;
+    outline: none;
+    border: 1px solid #fff;
+    border-radius: 111px;
+    @extend %montserrat-600;
+    font-size: 14px;
+    line-height: 18px;
+    color: #fff;
+}
+
+.contact__work-mode{
+    @extend %montserrat-600;
+    font-size: 14px;
+    line-height: 18px;
+    color: #fff;
+    width: 45%;
+}
+
+.contact__info-text{
+    @extend %montserrat-400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #fff;
+    opacity: 0.8;
+}
+
+.company{
+    text-align: right;
+    width: 40%;
+}
+
+.company__info-box{
+    margin-bottom: 31px;
+}
+
+.company__info{
+    @extend %montserrat-400;
+    font-size: 18px;
+    line-height: 22px;
+    color: #fff;
+    margin-bottom: 15px;
+}
+   
+.social-media__box{
+    display: flex;
+    justify-content: right;
+    width: 100%;
+    align-items: center;
+}
+
+.social-media__list{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+
+
+//Стилизуем pop-up__body
+
+.pop-up{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.25);
+    display: none;
+    z-index: 1;
+}
+
+.pop-up__wrapper{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.pop-up__box{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: 8px;
+    width: 900px;
+}
+
+.pop-up__title-box{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 22px 30px 57px;
+}
+
+.pop-up__title{
+    @extend %montserrat-600;
+    font-size: 22px;
+    line-height: 26px;
+    color: $defaultColor;
+}
+
+.pop-up__close-btn{
+    position: relative;
+    width: 17px;
+    height: 17px;
+    border: none;
+    outline: none;
+    background: none;
+    &::before{
+        content: "";
+        position: absolute;
+        width: 17px;
+        height: 3px;
+        background-color: $defaultColor;
+        left: 0;
+        transform: rotate(45deg);
+        border-radius: 3px;
+    }
+    &::after{
+        content: "";
+        position: absolute;
+        width: 17px;
+        height: 3px;
+        background-color: $defaultColor;
+        left: 0;
+        transform: rotate(-45deg);        
+        border-radius: 3px;
+    }
+}
+
+.pop-up__info-box{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0 26px 56px;
+}
+
+.pop-up__info-left-box{
+    margin-right: 46px;
+}
+
+//Стили слайдера
+.pop-up__slider-box{
+    width: 323px;
+    margin-bottom: 22px;
+}
+
+
+.pop-up__slider-big{
+    margin-bottom: 19px;
+}
+
+.pop-up__slider-big-item{
+    position: relative;
+}
+
+.pop-up__big-bg{
+    width: 100%;
+}
+
+.pop-up__big-img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.pop-up__favorite-product-img{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.pop-up__slider-thumb{
+    width: 100%;
+    height: 61px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.slick-prev{
+    margin-right: 15px;
+    border: none;
+    background: none;
+}
+
+.slick-next{
+    border: none;
+    background: none;
+}
+
+.pop-up__slider-thumb-item{
+    position: relative;
+    width: 61px !important;
+    height: 61px;
+    margin-right: 9px;
+}
+
+// .slick-slide{
+//     width: 61px !important;
+// }
+
+// .slick-track {
+//     width: 100% !important;
+// }
+
+.pop-up__slider-img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.pop-up__info-inner{
+    margin-bottom: 17px;
+}
+
+.pop-up__price-box-info{
+    display: flex;
+    justify-content: space-between;
+}
+
+.pop-up__price-box{
+    display: flex;    
+}
+
+.pop-up__old-price{
+    @extend %montserrat-400;
+    font-size: 20px;
+    line-height: 26px;
+    color: $oldPriceColor;
+    text-decoration: line-through;
+    margin: 0 2px 3px 0;
+}
+
+.pop-up__new-price{
+    @extend %montserrat-500;
+    font-size: 30px;
+    line-height: 40px;
+    color: $descriptionTextColor;
+    margin-right: 8px;
+}
+
+.pop-up__quantity-wrapper{
+    width: 50%;
+}
+
+.pop-up__bottom-quantity{
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.pop-up__in-basket-btn{
+    padding: 6px 16px;
+    background-color: $defaultColor;
+    @extend %montserrat-400;
+    font-size: 18px;
+    line-height: 23px;
+    color: #fff;
+    align-items: center;
+    border: none;
+    border-radius: 27px;
+    outline: none;
+    display: flex;
+}
+
+.pop-up__in-basket-btn-img{
+    margin-left: 15px;
+}
+
+//Стили правого блока попапа
+
+.pop-up__info-right-box{
+    width: 475px;
+    max-height: 500px;
+    overflow: auto;
+    padding-right: 40px;
+    &::-webkit-scrollbar{
+        background: none;        
+        width: 3px;
+        height: 40px;
+    }
+    &::-webkit-scrollbar-thumb{
+        background-color: $scrollbarThumbBg;
+        border-radius: 2px;
+    }
+}
+
+.pop-up__info-right-title{
+    @extend %montserrat-600;
+    font-size: 22px;
+    line-height: 29px;
+    color: $descriptionTextColor;
+    margin-bottom: 4px;
+}
+
+.pop-up__info-right-article{
+    @extend %montserrat-400;
+    font-size: 13px;
+    line-height: 17px;
+    color: $oldPriceColor;
+    margin-bottom: 14px;
+}
+
+.pop-up__right-description-box{
+    margin-bottom: 16px;
+}
+
+.pop-up__right-description-title{
+    @extend %montserrat-500;
+    font-size: 14px;
+    line-height: 18px;
+    color: $descriptionTextColor;
+    margin-bottom: 8px;
+}
+
+.pop-up__right-description-text{
+    @extend %montserrat-400;
+    font-size: 14px;
+    line-height: 18px;
+    color: $descriptionTextColor;
+    width: 330px;
+}
+
+.pop-up__right-specifications-odd-box,
+.pop-up__right-specifications-even-box{
+    padding: 9px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.pop-up__right-specifications-even-box{
+    background-color: $specificationsEvenBgColor;
+}
+
+.pop-up__right-specifications-text{
+    @extend %montserrat-400;
+    font-size: 14px;
+    line-height: 18px;
+    color: $descriptionTextColor;
+}
+
+//Стили для страницы продукта
+
+
+//Секция product__one
+
+.product-one{
+    position: relative;
+}
+
+.product-one__wrapper{
+    display: flex;
+    justify-content: space-between;
+}
+
+.product-one__info{
+    padding: 42px 49px;
+}
+
+.product-one__info-wrapper{
+    display: flex;
+}
+
+.product-one__title{
+    @extend %montserrat-600;
+    font-size: 22px;
+    line-height: 29px;
+    color: $descriptionTextColor;
+    margin-bottom: 8px;
+}
+
+.product-one__article{
+    @extend %montserrat-400;
+    font-size: 13px;
+    line-height: 17px;
+    color: $oldPriceColor;
+    margin-bottom: 32px;
+}
+
+.product-one__text{
+    @extend %montserrat-400;
+    font-size: 18px;
+    line-height: 24px;
+    color: $descriptionTextColor;
+    margin-bottom: 42px;
+}
+
+.product-one__color-quantity-box{
+    display: flex;
+    align-items: center;
+}
+
+.product-one__color-box{
+    display: flex;
+    justify-content: space-between;
+    margin-right: 55px;
+}
+
+.product-one__color-text,
+.product-one__quantity-text{
+    @extend %montserrat-400;
+    font-size: 15px;
+    line-height: 20px;
+    color: $descriptionTextColor;
+    margin-right: 13px;
+}
+
+.product-one__quantity-box{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 13px;
+    align-items: center;
+}
+
+.product-one__quantity-wrapper{
+    display: flex;
+    justify-content: space-between;
+    padding: 9px 17px;
+    border: 1px solid $selectColor;
+    border-radius: 20px;
+    align-items: center;
+}
+
+
+.product-one__input-quantity-value{
+    width: 33px;
+    text-align: center;
+    border: none;
+    out-line: none;
+    @extend %montserrat-400;
+    font-size: 15px;
+    line-height: 20px;
+    color: $descriptionTextColor;
+}
+
+.product-one__price-inner{
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 28px;
+}
+
+.product-one__price-text{
+    @extend %montserrat-400;
+    font-size: 15px;
+    line-height: 20px;
+    color: $descriptionTextColor;
+    margin-right: 6px;
+}
+
+.product-one__price-value{
+    @extend %montserrat-400;
+    font-size: 40px;
+    line-height: 53px;
+    color: $descriptionTextColor;
+}
+
+.product-one__price-btn{
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 27px;
+    background-color: $defaultColor;
+    border: none;
+    outline: none;
+    border-radius: 21px;
+}
+
+.product-one__price-btn-text{
+    @extend %montserrat-500;
+    font-size: 20px;
+    line-height: 26px;
+    color: #fff;
+    margin-right: 5px;
+}
+
+.product-one__similar-products{
+    padding: 18px 0;
+}
+
+.product-one__similar-products-item{
+    margin-bottom: 20px;
+}
+
+.product-one__similar-products-title{
+    @extend %montserrat-600;
+    font-size: 14px;
+    line-height: 18px;
+    color: $defaultColor;
+    width: 67px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.product-one__similar-products-img-wrapper{
+    width: 125px;
+    height: 116px;
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.product-one__similar-products-img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.product-one__similar-products-price-box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-one__similar-products-price-inner{
+    display: flex;
+}
+
+.product-one__similar-products-price{
+    @extend %montserrat-600;
+    font-size: 15px;
+    line-height: 20px;
+    color: $defaultColor;
+    margin-right: 2px;
+}
+
+.product-one__similar-products-btn{
+    padding: 4px;
+    width: 18px;
+    height: 18px;
+    position: relative;
+    border: none;
+    outline: none;
+    background-color: $defaultColor;
+    border-radius: 50%;
+}
+
+.product-one__similar-products-btn-img{
+    width: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+//Стилизация табов на странице product
+
+.links__wrapper{
+    width: 100%;
+    height: 56px;
+    position: relative;
+}
+
+.links__list{
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.links__list-item{
+    text-align: center;
+    padding: 14px 12px 18px;
+    margin-right: 10px;
+}
+
+.links__list-link{
+    @extend %montserrat-400;
+    font-size: 18px;
+    line-height: 24px;
+    color: $oldPriceColor;
+}
+
+.tabs-box{
+    border-top: 1px solid $tabBorderColor;
+    border-bottom: 1px solid $tabBorderColor;
+    padding: 12px 0;    
+}
+
+.tabs-box__item{
+    display: none;
+}
+
+.tabs-box__item-text{
+    @extend %montserrat-400;
+    font-size: 22px;
+    line-height: 29px;
+    color: $descriptionTextColor;
+}
+
+.tabs-box__specifications-wrapper{
+    width: 70%;
+    height: 366px;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+.tabs-box__specifications-item{
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 8px;
+}
+
+.tabs-box__specifications-item-text,
+.degree{
+    @extend %montserrat-400;
+    font-size: 22px;
+    line-height: 29px;
+    color: $descriptionTextColor;
+}
+
+.degree{
+    color: $descriptionTextColor;
+}
+
+.tabs-box__specifications-item-even{
+    display: flex;
+    justify-content: space-between;
+    background-color: $specificationsEvenBgColor;
+    padding: 16px 8px;
+}
+
+.tabs-box__specifications-list-all{
+    @extend %montserrat-400;
+    font-size: 18px;
+    line-height: 24px;
+    color: $defaultColor;
+}
+
+//Стили для меню категории на странице product
+
+.category{
+    padding: 49px 0 117px;
+}
+
+.category__wrapper{
+    display: flex;
+}
+
+.category__box{
+    margin-right: 62px;
+    width: 22%;
+}
+
+.category__product-top{
+    display: flex;    
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.category__product-btn{
+    border: none;
+    outline: none;
+    background: transparent;
+    position: relative;
+    width: 28px;
+    height: 28px;
+    margin-right: 14px;
+}
+
+.category__product-btn-line{
+    background-color: $defaultColor;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 4px;
+    border-radius: 10px;
+    display: block;
+    &::before{
+        content: "";        
+        display: block;
+        position: absolute;
+        top: -10px;
+        left: 0;
+        background-color: $defaultColor;
+        width: 28px;
+        height: 4px;
+        border-radius: 10px;
+    }
+
+    &::after{
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        background-color: $defaultColor;
+        width: 28px;
+        height: 4px;
+        border-radius: 10px;
+    }
+}
+
+.category__product-title{
+    @extend %montserrat-600;
+    font-size: 22px;
+    line-height: 29px;
+    color: $descriptionTextColor;
+}
+
+.category__product-list-item{
+    margin-bottom: 13px;
+}
+
+.category__product-list-top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.category__product-title-box{
+    display: flex;
+}
+
+.category__product-img{
+    margin-right: 10px;
+}
+
+.category__product-list-title{
+    @extend %montserrat-500;
+    font-size: 14px;
+    line-height: 18px;
+    color: $descriptionTextColor;
+    width: 198px;
+}
+
+//Стили блока "с этим покупают"
+
+.buy-with-this__title{
+    @extend %montserrat-600;
+    font-size: 26px;
+    line-height: 34px;
+    color: $descriptionTextColor;
+    margin-bottom: 32px;
+}
+
+.buy-with-this__wrapper{
+    display: flex;
+    justify-content: space-between;
+}
+
+.buy-with-this__item{
+    width: 29%;
+}
+
+.buy-with-this__img-box{
+    position: relative;
+}
+
+.buy-with-this__img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.buy-with-this__border-box{
+    padding: 14px 40px 10px 19px;
+    border: 1px solid $selectColor;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top: none;
+}
+
+.buy-with-this__product-name{
+    @extend %montserrat-600;
+    font-size: 16px;
+    line-height: 21px;
+    color: $descriptionTextColor;
+    margin-bottom: 6px;
+}
+
+.buy-with-this__product-article{
+    @extend %montserrat-400;
+    font-size: 9px;
+    line-height: 12px;
+    color: $oldPriceColor;
+    margin-bottom: 13px;
+}
+
+.buy-with-this__product-descr{
+    @extend %montserrat-400;
+    font-size: 12px;
+    line-height: 16px;
+    color: $descriptionTextColor;
+    margin-bottom: 44px;
+}
+
+.buy-with-this__price-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.buy-with-this__price-box{
+    display: flex;
+    width: 80%;
+    align-items: center;
+}
+
+.buy-with-this__price-value{
+    @extend %montserrat-500;
+    font-size: 26px;
+    line-height: 34px;
+    color: $descriptionTextColor;
+    margin-right: 7px;
+}
+
+.buy-with-this__price-rub-img{
+    width: 15px;
+    height: 18px;
+}
+
+.buy-with-this__basket-btn{
+    border: none;
+    outline: none;
+    background-color: $defaultColor;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    border-radius: 50%;
+}
+
+.buy-with-this__basket-btn-img{
+    width: 21px;
+    height: 23px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+
+
+
+
+//Класс для добавления полосы в топ меню
+
+// .header__menu-item--active{
+//     &::after{
+//         content: '';
+//         width: 100%;
+//         height: 2px;
+//         background-color: $defaultColor;
+//         position: absolute;
+//         bottom: -33px;
+//         left: 0;
+//     }
+// }
+
+
+
+
+//Класс для добавления фона табам
+//и изменение цвета текста
+
+.links__list-item--active{
+    background-color: $specificationsEvenBgColor;
+    color: $descriptionTextColor;
+    height: 57px;
+    z-index: 1;
+}
+
+//Класс для позиционирования правого меню
+//для страницы с продуктом
+
+.product-one__right-bar__position{
+    top: -114px;
+}
+
+
+
+//Класс для смены фона в сердце
+.heart--active-bg{
+    path{
+        fill: $defaultColor;
+    }
+}
+
+
+
+//Класс для смены цвета фона в ссылках pagination
+.pagination__item--active{
+    background-color: $defaultColor;
+    .pagination__item-link{
+        color: #fff;
+    }    
+}
+
+//Класс для активации элементов
+.active--element{
+    display: block;
+}
+
+
+
+//Класс для добавления псевдо элемента after для корзины
+//и изменение фона
+
+.product__img-wrapper--active-after{
+     background-color: $inStock;
+    &::after{
+        content: "";
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        border: 1px solid #fff;
+        border-radius: 50%;
+        background-color: $inStockItem;
+        top: 0;
+        right: 0;
+    }
+}
+
+//Класс для разворота стрелки
+.filter-case__img-active{
+    transform: rotate(0);
+}
+
+//Класс изменения картинки сетки
+.top__filter-position-img-net--active{
+    svg{
+        path{
+            stroke: $defaultColor;
+        }
+    }
+}
+
+
+//Класс для изменения цвета картинки листа
+.top__filter-position-img-list--active{
+    svg{
+        path{
+            fill: $defaultColor;
+        }
+    }
+}
+
+//Класс изменение цвета хлебных крошек
+.bread-crumbs__list--active{
+    color: $checkedLinkColor;
+}
+
+//Класс для изменения цвета фона top-menu и цвета картинки
+.top__img-wrapper--active{
+    background-color: $svgBackgroundColor;
+
+    svg{
+        path{
+            fill: $svgColor;
+        }
+    }
+}
+
+
+
+//Класс для добавление цвета
+.sale-color{
+    color: $specificStore;
+}
+
+//Класс для добавления очертания текста
+.top__filter-link--active{
+    @extend %montserrat-600;
+}
+
+
+//Класс ативации выпадающих списков меню в правой стороне экрана
+
+.right-side-bar__item--active{
+    width: 760px;
+    background-color: $defaultColor;
+    z-index: 2;
+    .right-side-bar__item{
+        z-index: 1;
+        background-color: $defaultColor;
+    }
+
+    .right-side-bar__basket-box{
+        z-index: -1;
+    }
+    .right-side-bar__baskem-price-box{
+        display: block;
+        left: 10%;
+    }
+    
+    .right-side-bar__link{
+        left: 26px;
+    }       
+}
+
+//Активация вложенного текста
+
+.right-side-bar__baskem-price-box--active{
+    display: inline-block;
+}
+
+
+
+//Стили контента пустого меню справа
+.right-side-bar__basket-box-empty-inner--active{
+    display: flex;
+}
+
+
+//Стили корзины для отображения справа
+.header__basket-right-subbox--active {
+    text-align: right;
+    padding: 72px 0 23px 40px;
+    background-color: #fff;
+    width: 695px;
+    position: fixed;
+    top: 15%;
+    right: 65px;
+    box-shadow: 0px 4px 19px 1px rgba(0, 0, 0, 0.25);
+    border-radius: 30px 0px 0px 10px;
+    display: block;
+    &::before {
+        display: none;
+    }
+}
+
+
+
+
+//Выезжающий элемент правого меню
+
+// .test--active{
+//         width: 760px;
+//         background-color: $defaultColor;
+//         z-index: 1;  
+//         .right-side-bar__baskem-price-box{
+//             display: block;
+//             left: 10%;
+//         }
+    
+//         .right-side-bar__link{
+//             left: 26px;
+//         }
+//         &:hover{
+
+//         }
+    
+// }
+
+
+
+
+@import 'media';
