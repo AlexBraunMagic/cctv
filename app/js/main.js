@@ -448,7 +448,7 @@ leftFilterMenuActive();
 //Функция добавления фона сердечку
 //===================================================================================
 function addBgHeart(heart) {
-    heart.classList.add('heart--active-bg');    
+    heart.classList.add('heart--active-bg');
 }
 
 //===================================================================================
@@ -478,26 +478,63 @@ function removeBgBasket(productImgBasketWrapper) {
 
 
 //===================================================================================
-//Функция для записи свойств карточки в объект,
-//с последующим добавлением объекта в массив
+//Функция для удалени товара принажатии на корзину
+// в карточке товара
 //===================================================================================
+
+function delProductInBasket() {
+    const productInBasket = document.querySelectorAll('.header__basket-subbox-item');
+
+    console.log(productInBasket);
+
+    const newArr = [];
+
+    Array.from(productInBasket).map((itemProduct) => {
+        console.log(itemProduct.id);
+        for (let i = 0; i < productCardObjArr.length; i++) {
+            if (itemProduct.id === productCardObjArr[i].id) {
+                newArr.push(itemProduct);
+            }
+        }
+    });
+
+
+    console.log(newArr);
+
+
+    // for(let item of productInBasket) {
+    //     for (let i = 0; i < productInBasket.length; i++) {
+    //         productInBasket.filter((itemProduct) => {
+    //             if (itemProduct.id === productCardObjArr[i].id && productCardObjArr[i].id === i + 1 && item.inBasket === false) {
+
+    //             }
+    //         })
+
+    //     }
+    // }
+
+    // const heartCard = document.querySelectorAll('.heart-card');
+    // for (let item of productInBasket) {
+    //     for (let i = 0; i < heartCard.length; i++) {
+    //         if (item.id === productCardObjArr[i].id && productCardObjArr[i].id === i + 1 && item.cartfavorite === true) {
+    //             console.log('work');
+    //             heartCard[i].classList.add('heart--active-bg');
+    //         }
+    //     }
+    // }
+
+
+
+}
+
+
+
+
 //Массив с объектами
 const productCardObjArr = [];
+const productInBasket = [];
 
 let cardId = 1;
-
-// function createproductCardObj() {
-//     //Объект с информацией о карточке с продуктом
-//     const productCardObj = {
-//         id: cardId++,
-//         productCard: '',
-//         inBasket: false,
-//     };
-
-//     productCardObjArr.push(productCardObj);
-
-//     return productCardObj;
-// }
 
 
 //===================================================================================
@@ -512,8 +549,11 @@ function createProductCards() {
         id: cardId++,
         productCard: '',
         inBasket: false,
-        favorite: false,
+        cartfavorite: false,
+        basketfavorite: false,
     };
+
+    productCardObjArr.push(productCardObj);
 
 
     //Картинка фейворит
@@ -522,7 +562,7 @@ function createProductCards() {
     const boxHeight = 25;
 
     const heart = document.createElementNS(xmlns, 'svg');
-    heart.classList.add('heart');
+    heart.classList.add('heart-card');
     heart.setAttributeNS(null, 'viewBox', '0 0 ' + boxWidth + ' ' + boxHeight);
     heart.setAttributeNS(null, 'width', boxWidth);
     heart.setAttributeNS(null, 'height', boxHeight);
@@ -533,15 +573,21 @@ function createProductCards() {
     heartPath.setAttributeNS(null, 'stroke', 'none');
     heart.appendChild(heartPath);
 
+    // if(productCardObj.cartfavorite === true) {
+    //     addBgHeart(heart);
+    // }
+
+
     heartPath.addEventListener('click', (e) => {
         if (heart.classList.contains('heart--active-bg') === false) {
             addBgHeart(heart);
-            productCardObj.favorite = true;
+            productCardObj.cartfavorite = true;
         }
         else {
             removeBgHeart(heart);
-            productCardObj.favorite = false;
-        }       
+            productCardObj.cartfavorite = false;
+            productCardObj.basketfavorite = false;
+        }
     });
 
     //Обёртка картинки фейворит
@@ -685,17 +731,19 @@ function createProductCards() {
 
     productImgBasketWrapper.addEventListener('click', () => {
 
-        if (productImgBasketWrapper.classList.contains('product__img-wrapper--active-after') === false) {            
+        if (productImgBasketWrapper.classList.contains('product__img-wrapper--active-after') === false) {
             productCardObj.inBasket = true;
-            productCardObjArr.push(productCardObj);
+            productInBasket.push(productCardObj);
             addBgBasket(productImgBasketWrapper);
             addBasketProduct(productCardObj);
             addCardSum();
             showPlusQuantityProduct();
             console.log(productCardObjArr);
+            console.log(productInBasket);
         }
         else {
             removeBgBasket(productImgBasketWrapper);
+            delProductInBasket();
             productCardObj.inBasket = false;
         }
 
@@ -1042,6 +1090,42 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+
+//===================================================================================
+//Функции добавления фона сердечка у карточки товара
+// принажатии на сердечко товара в корзине
+//===================================================================================
+
+function addBgCardFaivorite() {
+    const heartCard = document.querySelectorAll('.heart-card');
+    for (let item of productInBasket) {
+        for (let i = 0; i < heartCard.length; i++) {
+            if (item.id === productCardObjArr[i].id && productCardObjArr[i].id === i + 1 && item.cartfavorite === true) {
+                console.log('work');
+                heartCard[i].classList.add('heart--active-bg');
+            }
+        }
+    }
+}
+
+
+//===================================================================================
+//Функции удаления фона сердечка у карточки товара
+// принажатии на сердечко товара в корзине
+//===================================================================================
+
+function removeBgCardFaivorite() {
+    const heartCard = document.querySelectorAll('.heart-card');
+    for (let item of productInBasket) {
+        for (let i = 0; i < heartCard.length; i++) {
+            if (item.id === productCardObjArr[i].id && productCardObjArr[i].id === i + 1 && item.cartfavorite === false) {
+                console.log('work');
+                heartCard[i].classList.remove('heart--active-bg');
+            }
+        }
+    }
+}
+
 //===================================================================================
 //Функции создания карточки для корзины
 //===================================================================================
@@ -1108,19 +1192,27 @@ function headerBasketSubboxItem(obj) {
     heartPath.setAttributeNS(null, 'stroke', '#007ABE');
     heart.appendChild(heartPath);
 
-    if(obj.favorite === true){
+    if (obj.cartfavorite === true) {
+        obj.basketfavorite = true;
         addBgHeart(heart);
     }
 
     heartPath.addEventListener('click', (e) => {
+
+
+
         if (heart.classList.contains('heart--active-bg') === false) {
             addBgHeart(heart);
-            // productCardObj.favorite = true;
+            obj.cartfavorite = true;
+            obj.basketfavorite = true;
+            addBgCardFaivorite();
         }
         else {
             removeBgHeart(heart);
-            // productCardObj.favorite = false;
-        } 
+            obj.cartfavorite = false;
+            obj.basketfavorite = false;
+            removeBgCardFaivorite();
+        }
     });
 
     //Картинка удалить
@@ -1225,7 +1317,7 @@ function headerBasketSubboxItem(obj) {
             headerBasketSubboxPriceSum.textContent = (+stringToNumber(headerBasketSubboxPriceSum)) - (+stringToNumber(headerBasketSubboxPrice));
             headerBasketSubboxPriceSum.textContent = numberToString(headerBasketSubboxPriceSum);
 
-            
+
             headerBasketSubboxAllSumNumber.textContent = (+stringToNumber(headerBasketSubboxAllSumNumber)) - (+stringToNumber(headerBasketSubboxPrice));
             headerBasketSubboxAllSumNumber.textContent = numberToString(headerBasketSubboxAllSumNumber);
             rightSideBarBasketSum.textContent = headerBasketSubboxAllSumNumber.textContent + ' руб.';
@@ -1283,13 +1375,13 @@ function headerBasketSubboxItem(obj) {
             productRubSumImg.classList.add('header__basket-sum-one-product--active');
         }
 
-        
-        
+
+
         headerBasketSubboxAllSumNumber.textContent = (+stringToNumber(headerBasketSubboxAllSumNumber)) + (+stringToNumber(headerBasketSubboxPrice));
         headerBasketSubboxAllSumNumber.textContent = numberToString(headerBasketSubboxAllSumNumber);
         rightSideBarBasketSum.textContent = headerBasketSubboxAllSumNumber.textContent + ' руб.';
 
-        
+
 
     });
 
