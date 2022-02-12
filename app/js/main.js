@@ -251,9 +251,8 @@ function showRightBasket() {
 for (let item of rightSideBarItem) {
     item.addEventListener('click', (e) => {
         const itemTarget = e.target;
-        console.log('work');
         if ((itemTarget.className === 'right-side-bar__item') || (itemTarget.className === 'right-side-bar__basket-product') || (itemTarget.className === 'right-side-bar__basket-sum') || (itemTarget.className === 'right-side-bar__product-in-basket') || (itemTarget.className === 'right-side-bar__baskem-price-box')) {
-            console.log('work');
+
 
             const headerBasketSubboxItemArr = document.querySelectorAll('.header__basket-subbox-item');
             if (headerBasketSubbox.classList.contains('active--element') === false) {
@@ -483,48 +482,18 @@ function removeBgBasket(productImgBasketWrapper) {
 //===================================================================================
 
 function delProductInBasket() {
-    const productInBasket = document.querySelectorAll('.header__basket-subbox-item');
+    let productInBasket = document.querySelectorAll('.header__basket-subbox-item');
+    const productInBasketWrapper = document.querySelector('.header__basket-subbox-items');
 
     console.log(productInBasket);
 
-    const newArr = [];
-
-    Array.from(productInBasket).map((itemProduct) => {
-        console.log(itemProduct.id);
+    for(let item of productInBasket) {
         for (let i = 0; i < productCardObjArr.length; i++) {
-            if (itemProduct.id === productCardObjArr[i].id) {
-                newArr.push(itemProduct);
+            if ((productCardObjArr[i].id == item.id) && (productCardObjArr[i].inBasket === false)) {
+                productInBasketWrapper.removeChild(item);
             }
         }
-    });
-
-
-    console.log(newArr);
-
-
-    // for(let item of productInBasket) {
-    //     for (let i = 0; i < productInBasket.length; i++) {
-    //         productInBasket.filter((itemProduct) => {
-    //             if (itemProduct.id === productCardObjArr[i].id && productCardObjArr[i].id === i + 1 && item.inBasket === false) {
-
-    //             }
-    //         })
-
-    //     }
-    // }
-
-    // const heartCard = document.querySelectorAll('.heart-card');
-    // for (let item of productInBasket) {
-    //     for (let i = 0; i < heartCard.length; i++) {
-    //         if (item.id === productCardObjArr[i].id && productCardObjArr[i].id === i + 1 && item.cartfavorite === true) {
-    //             console.log('work');
-    //             heartCard[i].classList.add('heart--active-bg');
-    //         }
-    //     }
-    // }
-
-
-
+    }
 }
 
 
@@ -738,13 +707,12 @@ function createProductCards() {
             addBasketProduct(productCardObj);
             addCardSum();
             showPlusQuantityProduct();
-            console.log(productCardObjArr);
-            console.log(productInBasket);
         }
         else {
             removeBgBasket(productImgBasketWrapper);
-            delProductInBasket();
             productCardObj.inBasket = false;
+            showMinusQuantityProduct();
+            delProductInBasket();
         }
 
 
@@ -1101,7 +1069,6 @@ function addBgCardFaivorite() {
     for (let item of productInBasket) {
         for (let i = 0; i < heartCard.length; i++) {
             if (item.id === productCardObjArr[i].id && productCardObjArr[i].id === i + 1 && item.cartfavorite === true) {
-                console.log('work');
                 heartCard[i].classList.add('heart--active-bg');
             }
         }
@@ -1119,7 +1086,6 @@ function removeBgCardFaivorite() {
     for (let item of productInBasket) {
         for (let i = 0; i < heartCard.length; i++) {
             if (item.id === productCardObjArr[i].id && productCardObjArr[i].id === i + 1 && item.cartfavorite === false) {
-                console.log('work');
                 heartCard[i].classList.remove('heart--active-bg');
             }
         }
@@ -1542,7 +1508,7 @@ function subQuantityOneProduct(inputProductValue) {
 }
 
 //=================================================================================
-//Увеличение количества товаров
+//Увеличение количества товаров в кружочке оранжевом
 //=================================================================================
 
 function showPlusQuantityProduct() {
@@ -1558,7 +1524,7 @@ function showPlusQuantityProduct() {
 
 
 //=================================================================================
-//Уменьшение количества товаров
+//Уменьшение количества товаров в кружочке оранжевом
 //=================================================================================
 
 function showMinusQuantityProduct() {
@@ -1620,7 +1586,6 @@ const bodyBox = document.querySelector('body');
 
 bodyBox.addEventListener('click', (e) => {
     let bodyBoxTarget = e.target;
-    console.log(bodyBoxTarget);
     if ((bodyBoxTarget.className === 'basic') || (bodyBoxTarget.className === 'container') || (bodyBoxTarget.className === 'main') || (bodyBoxTarget.className === 'body') || (bodyBoxTarget.className === 'product-net') || (bodyBoxTarget.className === 'top-wraper') || (bodyBoxTarget.className === 'header') || (bodyBoxTarget.className === 'header__wrapper')) {
         // removeRigthBasket();
     }
