@@ -144,19 +144,6 @@ function showHeaderEmptyBasket() {
     headerBasketProductInfo.classList.remove('active--element');
     headerBasketSubboxEmptyWrapper.classList.add('active--element');
     headerBasketSubboxEmptyInner.classList.add('active--element');
-
-
-    // if (headerBasketSubbox.classList.contains('active--element') === false) {        
-    //     headerBasketProductInfo.classList.remove('active--element');
-    //     headerBasketSubbox.classList.add('active--element');
-    //     headerBasketSubboxEmptyWrapper.classList.add('active--element');
-    //     headerBasketSubboxEmptyInner.classList.add('active--element');
-    // }
-    // else {
-    //     headerBasketSubbox.classList.remove('active--element');
-    //     headerBasketSubboxEmptyWrapper.classList.remove('active--element');
-    //     headerBasketSubboxEmptyInner.classList.remove('active--element');
-    // }
 }
 
 function removeHeaderBasket() {
@@ -232,27 +219,21 @@ const rightSideBarBasketSum = document.querySelector('.right-side-bar__basket-su
 
 
 function showRightBasket() {
+    headerBasketProductInfo.classList.remove('active--element');
     headerBasketSubbox.classList.add('header__basket-right-subbox--active');
     rightSideBarEmpty.classList.add('right-side-bar__basket-box-empty-inner--active');
-    rightSideBarInner.classList.add('right-side-bar__item--active');
     rightSideBarBasketSum.classList.add('active--element');
     headerBasketSubboxEmptyWrapper.classList.add('active--element');
 
 
 }
 
-// function removeRightBasket() {
-//     rightSideBarEmpty.classList.remove('right-side-bar__basket-box-empty-inner--active');
-//     rightSideBarInner.classList.remove('right-side-bar__item--active');
-//     rightSideBarBasketSum.classList.remove('active--element');
-//     headerBasketSubboxEmptyWrapper.classList.remove('active--element');
-// }
-
 for (let item of rightSideBarItem) {
     item.addEventListener('click', (e) => {
         const itemTarget = e.target;
         if ((itemTarget.className === 'right-side-bar__item') || (itemTarget.className === 'right-side-bar__basket-product') || (itemTarget.className === 'right-side-bar__basket-sum') || (itemTarget.className === 'right-side-bar__product-in-basket') || (itemTarget.className === 'right-side-bar__baskem-price-box')) {
 
+            rightSideBarInner.classList.add('right-side-bar__item--active');
 
             const headerBasketSubboxItemArr = document.querySelectorAll('.header__basket-subbox-item');
             if (headerBasketSubbox.classList.contains('active--element') === false) {
@@ -272,8 +253,6 @@ for (let item of rightSideBarItem) {
                 }
                 removeHeaderBasket();
             }
-            // item.classList.add('right-side-bar__item--active');
-            // removeHeaderBasket();
         }
     });
 }
@@ -309,9 +288,7 @@ function changeBgTopItem() {
             //Получаем первого потомка элемента
             //У которого нужно добавить класс
             const topMenuLinkChild = topMenuTarget.firstElementChild;
-
-
-
+            
             //Проверяем таргет
             if (topMenuTarget.className === 'top__menu-link') {
 
@@ -478,30 +455,126 @@ function removeBgBasket(productImgBasketWrapper) {
 
 //===================================================================================
 //Функция для удалени товара принажатии на корзину
-// в карточке товара
+// в карточке товара или на корзину удаления 
 //===================================================================================
 
 function delProductInBasket() {
+    console.log('work del');
     let productInBasket = document.querySelectorAll('.header__basket-subbox-item');
     const productInBasketWrapper = document.querySelector('.header__basket-subbox-items');
 
-    console.log(productInBasket);
+    //Общая сумма корзины
+    const headerBasketSubboxAllSumNumber = document.querySelector('.header__basket-subbox-all-sum-number');
 
-    for(let item of productInBasket) {
+    //Отображение общей суммы корзины в правом окне
+    const rightSideBarBasketSum = document.querySelector('.right-side-bar__basket-sum');
+
+    //Обёртка корзины
+    const basketProductWrapper = document.querySelectorAll('.product__img-basket-wrapper');
+
+    const headerBasketSubboxAllSumNumberArr = stringToNumber(headerBasketSubboxAllSumNumber);
+    if (headerBasketSubboxAllSumNumberArr.length === 1 || headerBasketSubboxAllSumNumberArr[0] === '0') {
+        // sumProductValue = '0';
+        headerBasketSubboxAllSumNumber.textContent = '0';
+    }
+
+    for (let item of productInBasket) {
         for (let i = 0; i < productCardObjArr.length; i++) {
             if ((productCardObjArr[i].id == item.id) && (productCardObjArr[i].inBasket === false)) {
+                if (productCardObjArr[i].oneProductSum > 0) {
+                    headerBasketSubboxAllSumNumber.textContent = (+stringToNumber(headerBasketSubboxAllSumNumber)) - productCardObjArr[i].oneProductSum;
+                    headerBasketSubboxAllSumNumber.textContent = numberToString(headerBasketSubboxAllSumNumber);
+                    rightSideBarBasketSum.textContent = headerBasketSubboxAllSumNumber.textContent + ' руб.';
+                    changeQuantityProduct(productCardObjArr[i]);
+                }
+                else {
+                    headerBasketSubboxAllSumNumber.textContent = (+stringToNumber(headerBasketSubboxAllSumNumber)) - productCardObjArr[i].newPriceProduct;
+                    headerBasketSubboxAllSumNumber.textContent = numberToString(headerBasketSubboxAllSumNumber);
+                    rightSideBarBasketSum.textContent = headerBasketSubboxAllSumNumber.textContent + ' руб.';
+                    changeQuantityProduct(productCardObjArr[i]);
+                }
+                removeBgBasket(basketProductWrapper[i]);
                 productInBasketWrapper.removeChild(item);
+                // console.log(productInBasket.length);
             }
+        }
+    }
+
+    if (productInBasket.length === 1) {
+
+        const rightSideBarInner = document.querySelector('.right-side-bar__item-box-inner');
+
+        if (rightSideBarInner.classList.contains('right-side-bar__item--active')) {
+            showRightBasket();
+        }
+        else {
+            showHeaderEmptyBasket();
         }
     }
 }
 
 
+//===================================================================================
+//Функция для полного очищения корзины
+//===================================================================================
+const delAllProductBtn = document.querySelector('.header__basket-subbox-title');
 
 
-//Массив с объектами
+
+function delAllProductInBasket() {
+    //Получаем массив элементов из корзины
+    const productInBasket = document.querySelectorAll('.header__basket-subbox-item');
+    //Получаем обёртку всех товаров находящихся в корзине
+    const productInBasketWrapper = document.querySelector('.header__basket-subbox-items');
+    for (let item of productInBasket) {
+        productInBasketWrapper.removeChild(item);
+    }
+
+
+    //Получаем все обёртки корзины у карточек
+    const basketProductWrapper = document.querySelectorAll('.product__img-basket-wrapper');
+    for (let i = 0; i < productCardObjArr.length; i++) {
+        productCardObjArr[i].inBasket = false;
+        productCardObjArr[i].oneProductSum = 0;
+        productCardObjArr[i].quantityShowProduct = 1;
+        removeBgBasket(basketProductWrapper[i]);
+    }
+
+    //Получаем элемент для подсчёта общего колличества продуктов
+    const quantityProduct = document.querySelector('.quantity-product');
+    quantityProduct.textContent = 0;
+
+    //Получаем обёртку элемента подсчёта общего количества товаров
+    const quantityProductWrapper = document.querySelector('.quantity-product__box');
+    quantityProductWrapper.classList.remove('active--element');
+
+
+    //Получаем общую сумму всех товаров и обнуляем
+    const allProductSum = document.querySelector('.header__basket-subbox-all-sum-number');
+    allProductSum.textContent = 0;
+
+    //Получаем общую сумму всех товаров в правом меню и обнуляем
+    const allProductSumRightSideBar = document.querySelector('.right-side-bar__basket-sum');
+    allProductSumRightSideBar.textContent = 0 + ' руб';
+
+
+    if (rightSideBarInner.classList.contains('right-side-bar__item--active')) {
+        showRightBasket();
+    }
+    else {
+        showHeaderEmptyBasket();
+    }
+}
+
+delAllProductBtn.addEventListener('click', () => {
+    delAllProductInBasket();
+});
+
+
+
+
+//Массив со объектами
 const productCardObjArr = [];
-const productInBasket = [];
 
 let cardId = 1;
 
@@ -520,6 +593,9 @@ function createProductCards() {
         inBasket: false,
         cartfavorite: false,
         basketfavorite: false,
+        newPriceProduct: 0,
+        oneProductSum: 0,
+        quantityShowProduct: 1,
     };
 
     productCardObjArr.push(productCardObj);
@@ -542,15 +618,12 @@ function createProductCards() {
     heartPath.setAttributeNS(null, 'stroke', 'none');
     heart.appendChild(heartPath);
 
-    // if(productCardObj.cartfavorite === true) {
-    //     addBgHeart(heart);
-    // }
-
-
+   
     heartPath.addEventListener('click', (e) => {
         if (heart.classList.contains('heart--active-bg') === false) {
             addBgHeart(heart);
-            productCardObj.cartfavorite = true;
+            productCardObj.cartfavorite = true;            
+            productCardObj.basketfavorite = true; //YFgbcfn
         }
         else {
             removeBgHeart(heart);
@@ -695,14 +768,11 @@ function createProductCards() {
     productImgBasketWrapper.appendChild(productImgWrapperTextList);
     productImgBasketWrapper.appendChild(productImgBasket);
 
-    // const obj = createproductCardObj();
-
-
+    
     productImgBasketWrapper.addEventListener('click', () => {
 
         if (productImgBasketWrapper.classList.contains('product__img-wrapper--active-after') === false) {
             productCardObj.inBasket = true;
-            productInBasket.push(productCardObj);
             addBgBasket(productImgBasketWrapper);
             addBasketProduct(productCardObj);
             addCardSum();
@@ -711,18 +781,8 @@ function createProductCards() {
         else {
             removeBgBasket(productImgBasketWrapper);
             productCardObj.inBasket = false;
-            showMinusQuantityProduct();
             delProductInBasket();
         }
-
-
-
-        // changeBgBasket(productImgBasketWrapper);
-        //     addBasketProduct();
-        //     addCardSum();
-        //     showPlusQuantityProduct();
-        //     console.log(productCardObjArr);
-
     });
 
     //Основная обёртка информации о цене
@@ -755,9 +815,6 @@ function createProductCards() {
     productItemBox.appendChild(productImgBox);
     productItemBox.appendChild(box);
 
-
-
-
     // productCardObjArr.push(createproductCardObj(productItemBox));
     console.log(productCardObjArr);
 
@@ -784,10 +841,6 @@ function addProductCard() {
     }
 }
 
-
-//===================================================================================
-//Вызываем функцию добавления карточек при загрузке страницы
-//===================================================================================
 addProductCard();
 
 
@@ -913,15 +966,12 @@ function showPositionList() {
 
 //Вешаем событие на дочерний элемент
 topfilterPositionListChild.addEventListener('click', function (e) {
-    // e.preventDefault();
-
     showPositionList();
 });
 
 //Вешаем событие на дочерний элемент    
 topfilterPositionNetChild.addEventListener('click', function (e) {
     // e.preventDefault();
-
     showPositionNet();
 });
 
@@ -1009,8 +1059,6 @@ function createPagination(totalPages, page) {
 //Активация pop-up элемента
 //===================================================================================
 
-// //Получаем обёртку всех карточек для реализации делегирования
-// const productNetBox = document.querySelector('.product-net');
 
 //Получаем кнопку закрытия pop-up
 const popupCloseBtn = document.querySelector('.pop-up__close-btn');
@@ -1044,8 +1092,6 @@ function closePopup() {
 
 //Вешаем событие на кнопку закрытия pop-up
 popupCloseBtn.addEventListener('click', (e) => {
-    //Убираем стандартное поведение
-    // e.preventDefault();
     //Вызываем функцию скрытия pop-up
     closePopup();
 });
@@ -1066,10 +1112,12 @@ document.addEventListener('keydown', (e) => {
 
 function addBgCardFaivorite() {
     const heartCard = document.querySelectorAll('.heart-card');
-    for (let item of productInBasket) {
+   
+    for (let item of productCardObjArr) {
         for (let i = 0; i < heartCard.length; i++) {
-            if (item.id === productCardObjArr[i].id && productCardObjArr[i].id === i + 1 && item.cartfavorite === true) {
+            if (item.id === i + 1 && item.basketfavorite === true) {
                 heartCard[i].classList.add('heart--active-bg');
+                item.cartfavorite = true;
             }
         }
     }
@@ -1083,10 +1131,12 @@ function addBgCardFaivorite() {
 
 function removeBgCardFaivorite() {
     const heartCard = document.querySelectorAll('.heart-card');
-    for (let item of productInBasket) {
+
+     for (let item of productCardObjArr) {
         for (let i = 0; i < heartCard.length; i++) {
-            if (item.id === productCardObjArr[i].id && productCardObjArr[i].id === i + 1 && item.cartfavorite === false) {
+            if (item.id === i + 1 && item.basketfavorite === false) {
                 heartCard[i].classList.remove('heart--active-bg');
+                item.cartfavorite = false;
             }
         }
     }
@@ -1186,6 +1236,15 @@ function headerBasketSubboxItem(obj) {
     headerBasketSubboxListLinkImgDelete.classList.add('header__basket-subbox-link-img');
     headerBasketSubboxListLinkImgDelete.src = 'images/icon/basket-subbox-delete.svg';
 
+
+    headerBasketSubboxListLinkImgDelete.addEventListener('click', (e) => {
+        console.log('work img');
+        obj.inBasket = false;
+        delProductInBasket();
+    });
+
+
+
     // Создаём обёртку для картинок которые помещаем в элементы li
     const headerBasketSubboxListLink = document.createElement('div');
     headerBasketSubboxListLink.classList.add('.header__basket-subbox-list-link');
@@ -1202,6 +1261,7 @@ function headerBasketSubboxItem(obj) {
     const createHeaderBasketSubboxListLinkImgDelete = document.createElement('li');
     createHeaderBasketSubboxListLinkImgDelete.classList.add('header__basket-subbox-list-item');
     createHeaderBasketSubboxListLinkImgDelete.appendChild(headerBasketSubboxListLinkImgDelete);
+
 
     //Создание ul элемента для кнопок
     const headerBasketSubboxList = document.createElement('ul');
@@ -1222,6 +1282,8 @@ function headerBasketSubboxItem(obj) {
     const headerBasketSubboxPrice = document.createElement('p');
     headerBasketSubboxPrice.classList.add('header__basket-subbox-price');
     headerBasketSubboxPrice.textContent = '4 990';
+    obj.newPriceProduct = stringToNumber(headerBasketSubboxPrice);
+
 
     //Картика валюты рубль
     const productRubImg = document.createElement('img');
@@ -1280,9 +1342,10 @@ function headerBasketSubboxItem(obj) {
 
         if (Number(headerBasketSubboxBottomQuantityInput.value) > 0) {
             headerBasketSubboxBottomQuantityInput.value = (+headerBasketSubboxBottomQuantityInput.value) - 1;
+            obj.quantityShowProduct = headerBasketSubboxBottomQuantityInput.value;
             headerBasketSubboxPriceSum.textContent = (+stringToNumber(headerBasketSubboxPriceSum)) - (+stringToNumber(headerBasketSubboxPrice));
+            obj.oneProductSum = headerBasketSubboxPriceSum.textContent;
             headerBasketSubboxPriceSum.textContent = numberToString(headerBasketSubboxPriceSum);
-
 
             headerBasketSubboxAllSumNumber.textContent = (+stringToNumber(headerBasketSubboxAllSumNumber)) - (+stringToNumber(headerBasketSubboxPrice));
             headerBasketSubboxAllSumNumber.textContent = numberToString(headerBasketSubboxAllSumNumber);
@@ -1294,16 +1357,6 @@ function headerBasketSubboxItem(obj) {
             headreBasketSubboxDividingLine.classList.remove('header__basket-sum-one-product--active');
             productRubSumImg.classList.remove('header__basket-sum-one-product--active');
         }
-
-
-
-
-        // const rightSideBarBasketSum = document.querySelector('.right-side-bar__basket-sum');
-        // headerBasketSubboxAllSumNumber.textContent = numberToString(headerBasketSubboxAllSumNumber);
-        // rightSideBarBasketSum.textContent = headerBasketSubboxAllSumNumber.textContent + ' руб.';
-
-
-
     });
 
     // Инпут с количеством товаров
@@ -1330,9 +1383,11 @@ function headerBasketSubboxItem(obj) {
         const rightSideBarBasketSum = document.querySelector('.right-side-bar__basket-sum');
 
         headerBasketSubboxBottomQuantityInput.value = (+headerBasketSubboxBottomQuantityInput.value) + 1;
+        obj.quantityShowProduct = headerBasketSubboxBottomQuantityInput.value;
         showPlusQuantityProduct();
 
         headerBasketSubboxPriceSum.textContent = (+stringToNumber(headerBasketSubboxPrice)) * (+headerBasketSubboxBottomQuantityInput.value);
+        obj.oneProductSum = headerBasketSubboxPriceSum.textContent;
         headerBasketSubboxPriceSum.textContent = numberToString(headerBasketSubboxPriceSum);
 
         if (Number(headerBasketSubboxBottomQuantityInput.value) > 1) {
@@ -1341,13 +1396,9 @@ function headerBasketSubboxItem(obj) {
             productRubSumImg.classList.add('header__basket-sum-one-product--active');
         }
 
-
-
         headerBasketSubboxAllSumNumber.textContent = (+stringToNumber(headerBasketSubboxAllSumNumber)) + (+stringToNumber(headerBasketSubboxPrice));
         headerBasketSubboxAllSumNumber.textContent = numberToString(headerBasketSubboxAllSumNumber);
         rightSideBarBasketSum.textContent = headerBasketSubboxAllSumNumber.textContent + ' руб.';
-
-
 
     });
 
@@ -1398,7 +1449,6 @@ function headerBasketSubboxItem(obj) {
     headerBasketSubboxItem.id = obj.id;
     headerBasketSubboxItem.classList.add('header__basket-subbox-item');
 
-
     headerBasketSubboxItem.appendChild(headerBasketProductImgBox);
     headerBasketSubboxItem.appendChild(headerProductBasketBox);
 
@@ -1427,8 +1477,6 @@ function addCardSum() {
     const priceProductElement = document.querySelector('.product__new-price');
     const headerBasketSubboxAllSumNumberArr = stringToNumber(headerBasketSubboxAllSumNumber);
     const rightSideBarBasketSum = document.querySelector('.right-side-bar__basket-sum');
-    // let sumProductValue = '';
-
 
 
     if (headerBasketSubboxAllSumNumberArr.length === 1 || headerBasketSubboxAllSumNumberArr[0] === '0') {
@@ -1436,11 +1484,7 @@ function addCardSum() {
         headerBasketSubboxAllSumNumber.textContent = '0';
     }
 
-
-
     headerBasketSubboxAllSumNumber.textContent = (+stringToNumber(headerBasketSubboxAllSumNumber)) + (+stringToNumber(priceProductElement));
-
-
     headerBasketSubboxAllSumNumber.textContent = numberToString(headerBasketSubboxAllSumNumber);
     rightSideBarBasketSum.textContent = headerBasketSubboxAllSumNumber.textContent + ' руб.';
 }
@@ -1484,6 +1528,8 @@ function stringToNumber(element) {
     }
     return newNum;
 }
+
+
 
 //=================================================================================
 //Функция добавления количества одного товара
@@ -1545,37 +1591,27 @@ function showMinusQuantityProduct() {
 }
 
 
+//=================================================================================
+//Функция обновления количества товара
+// при удалении из корзины
+//=================================================================================
 
+function changeQuantityProduct(obj) {
+    const quantityProductBox = document.querySelector('.quantity-product__box');
+    let quantityProductRightSideBar = document.querySelector('.quantity-product');
+    const headerBasketSubboxItemArr = document.querySelectorAll('.header__basket-subbox-item');
 
+    if (headerBasketSubboxItemArr.length > 0) {
+        quantityProductBox.classList.add('active--element');
+        if (quantityProductRightSideBar.textContent > 0) {
+            quantityProductRightSideBar.textContent = (+quantityProductRightSideBar.textContent) - obj.quantityShowProduct;
+        }
 
-// //Функция удаления карточки из корзины
-// function removeProductCardInBasket() {
-//     rightSideBarBasket.forEach((item) => {
-//         item.removeChild(item.firstElementChild);
-
-//         if (document.getElementsByClassName('header__basket-subbox-item').length === 0) {
-//             // objTargetSibling.lastElementChild.classList.remove('active--element');
-//             // objTargetSibling.firstElementChild.classList.add('active--element');
-//         }
-//     });
-// }
-
-
-
-// //===================================================================================
-// //Активируем кнопку удалить карточку
-// //===================================================================================
-
-
-// for (let itemBasketCardWrapper of rightSideBarBasket) {
-//     itemBasketCardWrapper.addEventListener('click', (e) => {
-//         let itemBasketCardWrapperTarget = e.target;
-
-//         if ((itemBasketCardWrapperTarget.className === 'header__basket-subbox-link-img delete-card-img') || (itemBasketCardWrapperTarget.className === 'header__basket-subbox-list-link delete-card-img-wrapper')) {
-//             removeProductCardInBasket();
-//         }
-//     });
-// }
+    }
+    if (Number(quantityProductRightSideBar.textContent) <= 0) {
+        quantityProductBox.classList.remove('active--element');
+    }
+}
 
 
 //===================================================================================
