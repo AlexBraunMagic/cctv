@@ -288,7 +288,7 @@ function changeBgTopItem() {
             //Получаем первого потомка элемента
             //У которого нужно добавить класс
             const topMenuLinkChild = topMenuTarget.firstElementChild;
-            
+
             //Проверяем таргет
             if (topMenuTarget.className === 'top__menu-link') {
 
@@ -618,17 +618,20 @@ function createProductCards() {
     heartPath.setAttributeNS(null, 'stroke', 'none');
     heart.appendChild(heartPath);
 
-   
+
     heartPath.addEventListener('click', (e) => {
+        console.log(e.target);
         if (heart.classList.contains('heart--active-bg') === false) {
-            addBgHeart(heart);
-            productCardObj.cartfavorite = true;            
+            productCardObj.cartfavorite = true;
             productCardObj.basketfavorite = true; //YFgbcfn
+            addBgHeart(heart);
+            addBgBasketFaivorite();
         }
         else {
-            removeBgHeart(heart);
             productCardObj.cartfavorite = false;
             productCardObj.basketfavorite = false;
+            removeBgHeart(heart);
+            removeBgBasketFaivorite();
         }
     });
 
@@ -658,7 +661,7 @@ function createProductCards() {
     productImgBox.appendChild(productImg);
 
     productImgBox.addEventListener('click', (e) => {
-        showPopup();
+        showPopup(productCardObj);
     });
 
     //Ссылка для перехода
@@ -768,7 +771,7 @@ function createProductCards() {
     productImgBasketWrapper.appendChild(productImgWrapperTextList);
     productImgBasketWrapper.appendChild(productImgBasket);
 
-    
+
     productImgBasketWrapper.addEventListener('click', () => {
 
         if (productImgBasketWrapper.classList.contains('product__img-wrapper--active-after') === false) {
@@ -1056,68 +1059,17 @@ function createPagination(totalPages, page) {
 
 
 //===================================================================================
-//Активация pop-up элемента
-//===================================================================================
-
-
-//Получаем кнопку закрытия pop-up
-const popupCloseBtn = document.querySelector('.pop-up__close-btn');
-
-//Получаем сам pop-up 
-const popupElement = document.querySelector('.pop-up');
-
-//Функция отображения pop-up
-function showPopup() {
-    //Отключаем прокрутку страницы когда отображается pop-up
-    document.body.style.overflow = 'hidden';
-    //Добавляем элементу pop-up класс активности
-    popupElement.classList.add('active--element');
-    //Получаем положение страницы при прокрутке,
-    //для отображения pop-up
-    window.onscroll = function () {
-        //Передаём в переменную значение положения окна
-        const Y = window.scrollY;
-        //Добавляем полученное значение в стили для pop-up
-        popupElement.style.top = Y + 'px';
-    };
-}
-
-//Функция скрытия pop-up
-function closePopup() {
-    //Возвращаем странице возможность прокручиваться
-    document.body.style.overflow = '';
-    //Удаляем класс для отображения у элемента pop-up
-    popupElement.classList.remove('active--element');
-}
-
-//Вешаем событие на кнопку закрытия pop-up
-popupCloseBtn.addEventListener('click', (e) => {
-    //Вызываем функцию скрытия pop-up
-    closePopup();
-});
-
-//Убираем pop-up
-//при нажатии на ESC
-document.addEventListener('keydown', (e) => {
-    if (e.code == 'Escape') {
-        closePopup();
-    }
-});
-
-
-//===================================================================================
 //Функции добавления фона сердечка у карточки товара
 // принажатии на сердечко товара в корзине
 //===================================================================================
 
 function addBgCardFaivorite() {
     const heartCard = document.querySelectorAll('.heart-card');
-   
+
     for (let item of productCardObjArr) {
         for (let i = 0; i < heartCard.length; i++) {
             if (item.id === i + 1 && item.basketfavorite === true) {
                 heartCard[i].classList.add('heart--active-bg');
-                item.cartfavorite = true;
             }
         }
     }
@@ -1132,11 +1084,57 @@ function addBgCardFaivorite() {
 function removeBgCardFaivorite() {
     const heartCard = document.querySelectorAll('.heart-card');
 
-     for (let item of productCardObjArr) {
+
+    for (let item of productCardObjArr) {
         for (let i = 0; i < heartCard.length; i++) {
             if (item.id === i + 1 && item.basketfavorite === false) {
                 heartCard[i].classList.remove('heart--active-bg');
-                item.cartfavorite = false;
+            }
+        }
+    }
+}
+
+//===================================================================================
+//Функции добавления фона сердечка у карточки в корзине
+// принажатии на сердечко карточки товара
+//===================================================================================
+
+function addBgBasketFaivorite() {
+    const heartBasketCard = document.querySelectorAll('.heart');
+    const basketCard = document.querySelectorAll('.header__basket-subbox-item');
+   
+
+
+    for (let j = 0; j < basketCard.length; j++ ) {
+        for (let i = 0; i < productCardObjArr.length; i++) {
+            if (basketCard[j].id == productCardObjArr[i].id && productCardObjArr[i].cartfavorite === true) {
+                heartBasketCard[j].classList.add('heart--active-bg');
+                console.log(i);
+                console.log('work');
+            }
+        }
+    }
+
+}
+
+
+//===================================================================================
+//Функции удаления фона сердечка у карточки в корзине
+// принажатии на сердечко в карточке товара
+//===================================================================================
+
+function removeBgBasketFaivorite() {
+    const heartBasketCard = document.querySelectorAll('.heart');
+    const basketCard = document.querySelectorAll('.header__basket-subbox-item');
+   
+
+
+    for (let j = 0; j < basketCard.length; j++ ) {
+        for (let i = 0; i < productCardObjArr.length; i++) {
+            if (basketCard[j].id == productCardObjArr[i].id && productCardObjArr[i].cartfavorite === false) {
+                heartBasketCard[j].classList.remove('heart--active-bg');
+                console.log(i);
+                console.log('work');
             }
         }
     }
@@ -1209,7 +1207,6 @@ function headerBasketSubboxItem(obj) {
     heart.appendChild(heartPath);
 
     if (obj.cartfavorite === true) {
-        obj.basketfavorite = true;
         addBgHeart(heart);
     }
 
@@ -1218,15 +1215,15 @@ function headerBasketSubboxItem(obj) {
 
 
         if (heart.classList.contains('heart--active-bg') === false) {
-            addBgHeart(heart);
             obj.cartfavorite = true;
             obj.basketfavorite = true;
+            addBgHeart(heart);
             addBgCardFaivorite();
         }
         else {
-            removeBgHeart(heart);
             obj.cartfavorite = false;
             obj.basketfavorite = false;
+            removeBgHeart(heart);
             removeBgCardFaivorite();
         }
     });
@@ -1626,6 +1623,204 @@ bodyBox.addEventListener('click', (e) => {
         // removeRigthBasket();
     }
 
+});
+
+//===================================================================================
+//Создание pop-up элемента
+//===================================================================================
+
+function createPopUp() {    
+
+    //title шапки pop-up
+    const popUpTitle = document.createElement('h2');
+    popUpTitle.classList.add('pop-up__title');
+    popUpTitle.textContent = 'Быстрый просмотр';
+
+    //Кнопка закрытия pop-up__title
+    const popUpCloseBtn = document.createElement('button');
+    popUpCloseBtn.classList.add('pop-up__close-btn');
+
+    //Шапка  pop-upэлемента
+    const popUpTitleBox = document.createElement('div');
+    popUpTitleBox.classList.add('pop-up__title-box');
+    popUpTitleBox.appendChild(popUpTitle);
+    popUpTitleBox.appendChild(popUpCloseBtn);
+
+    //Картинка фона для большого слайдера
+    const popUpBigBg1 = document.createElement('img');
+    popUpBigBg1.classList.add('pop-up__big-bg');
+    popUpBigBg1.src = 'images/bg/bg-02-item.png';
+    popUpBigBg1.alt = 'Фон';
+
+    //Картинка продукта для большого слайдера
+    const popUpBigImg1 = document.createElement('img');
+    popUpBigImg1.classList.add('pop-up__big-img');
+    popUpBigImg1.src = 'images/products/product-02.png';
+    popUpBigImg1.alt = 'Камера';
+
+    //Обёртка для картинок большого слайдера
+    const popUpSliderBigItem1 = document.createElement('div');
+    popUpSliderBigItem1.classList.add('pop-up__slider-big-item');
+    popUpSliderBigItem1.appendChild(popUpBigBg1);
+    popUpSliderBigItem1.appendChild(popUpBigImg1);
+
+    //Картинка фона для большого слайдера
+    const popUpBigBg2 = document.createElement('img');
+    popUpBigBg2.classList.add('pop-up__big-bg');
+    popUpBigBg2.src = 'images/bg/bg-03-item.png';
+    popUpBigBg2.alt = 'Фон';
+
+    //Картинка продукта для большого слайдера
+    const popUpBigImg2 = document.createElement('img');
+    popUpBigImg2.classList.add('pop-up__big-img');
+    popUpBigImg2.src = 'images/products/product-03.png';
+    popUpBigImg2.alt = 'Камера';
+
+    //Обёртка для картинок большого слайдера
+    const popUpSliderBigItem2 = document.createElement('div');
+    popUpSliderBigItem2.classList.add('pop-up__slider-big-item');
+    popUpSliderBigItem2.appendChild(popUpBigBg2);
+    popUpSliderBigItem2.appendChild(popUpBigImg2);
+
+    //Картинка фона для большого слайдера
+    const popUpBigBg3 = document.createElement('img');
+    popUpBigBg3.classList.add('pop-up__big-bg');
+    popUpBigBg3.src = 'images/bg/bg-04-item.png';
+    popUpBigBg3.alt = 'Фон';
+
+    //Картинка продукта для большого слайдера
+    const popUpBigImg3 = document.createElement('img');
+    popUpBigImg3.classList.add('pop-up__big-img');
+    popUpBigImg3.src = 'images/products/product-04.png';
+    popUpBigImg3.alt = 'Камера';
+
+    //Обёртка для картинок большого слайдера
+    const popUpSliderBigItem3 = document.createElement('div');
+    popUpSliderBigItem3.classList.add('pop-up__slider-big-item');
+    popUpSliderBigItem3.appendChild(popUpBigBg3);
+    popUpSliderBigItem3.appendChild(popUpBigImg3);
+
+    //Картинка фона для большого слайдера
+    const popUpBigBg4 = document.createElement('img');
+    popUpBigBg4.classList.add('pop-up__big-bg');
+    popUpBigBg4.src = 'images/bg/bg-02-item.png';
+    popUpBigBg4.alt = 'Фон';
+
+    //Картинка продукта для большого слайдера
+    const popUpBigImg4 = document.createElement('img');
+    popUpBigImg4.classList.add('pop-up__big-img');
+    popUpBigImg4.src = 'images/products/product-02.png';
+    popUpBigImg4.alt = 'Камера';
+
+    //Обёртка для картинок большого слайдера
+    const popUpSliderBigItem4 = document.createElement('div');
+    popUpSliderBigItem4.classList.add('pop-up__slider-big-item');
+    popUpSliderBigItem4.appendChild(popUpBigBg4);
+    popUpSliderBigItem4.appendChild(popUpBigImg4);
+
+    //Обёртка большой картинки слайдера
+    const popUpSliderBig = document.createElement('div');
+    popUpSliderBig.classList.add('pop-up__slider-big');
+    popUpSliderBig.appendChild(popUpSliderBigItem1);
+    popUpSliderBig.appendChild(popUpSliderBigItem2);
+    popUpSliderBig.appendChild(popUpSliderBigItem3);
+    popUpSliderBig.appendChild(popUpSliderBigItem4);
+
+    //Основная обёртка слайдера
+    const popUpSliderBox = document.createElement('div');
+    popUpSliderBox.classList.add('pop-up__slider-box');
+    popUpSliderBox.appendChild(popUpSliderBig);
+
+    //Левый блок с информацией
+    const popUpInfoLeftBox = document.createElement('div');
+    popUpInfoLeftBox.classList.add('pop-up__info-left-box');
+
+    //Основная обёртка информации
+    const popUpInfoBox = document.createElement('div');
+    popUpInfoBox.classList.add('pop-up__info-box');
+
+    //pop-up box
+    const popUpBox = document.createElement('div');
+    popUpBox.classList.add('pop-up__box');
+    popUpBox.appendChild(popUpTitleBox);
+    popUpBox.appendChild(popUpInfoBox);
+
+
+    //Wrapper pop-up
+    const popUpWrapper = document.createElement('div');
+    popUpWrapper.classList.add('pop-up__wrapper');
+    popUpWrapper.appendChild(popUpBox);
+
+
+    //Основная обёртка pop-up элемента
+    const popUp = document.createElement('div');
+    popUp.classList.add('pop-up');
+    popUp.appendChild(popUpWrapper);
+    return popUp;
+}
+
+
+//===================================================================================
+//Активация pop-up элемента
+//===================================================================================
+
+
+//Получаем кнопку закрытия pop-up
+const popupCloseBtn = document.querySelector('.pop-up__close-btn');
+
+//Получаем сам pop-up 
+// const popupElement = document.querySelector('.pop-up');
+
+//Функция отображения pop-up
+function showPopup() {
+    //Отключаем прокрутку страницы когда отображается pop-up
+    document.body.style.overflow = 'hidden';
+    //Добавляем элементу pop-up класс активности
+    const popupElemen = createPopUp();
+    popupElemen.classList.add('active--element');
+    //Добавляем pop-up нас траницу
+    document.body.appendChild(popupElemen);
+    //Получаем положение страницы при прокрутке,
+    //для отображения pop-up
+    window.onscroll = function () {
+        //Передаём в переменную значение положения окна
+        const Y = window.scrollY;
+        //Добавляем полученное значение в стили для pop-up
+        popupElement.style.top = Y + 'px';
+    };
+}
+
+//Функция скрытия pop-up
+function closePopup() {
+    //Возвращаем странице возможность прокручиваться
+    document.body.style.overflow = '';
+    //Удаляем класс для отображения у элемента pop-up
+    popupElement.classList.remove('active--element');
+}
+
+//Вешаем событие на кнопку закрытия pop-up
+popupCloseBtn.addEventListener('click', (e) => {
+    //Вызываем функцию скрытия pop-up
+    closePopup();
+});
+
+//Убираем pop-up
+//при нажатии на ESC
+document.addEventListener('keydown', (e) => {
+    if (e.code == 'Escape') {
+        closePopup();
+    }
+});
+
+
+
+
+
+const popupInBasketBtn = document.querySelector('.pop-up__in-basket-btn');
+
+
+popupInBasketBtn.addEventListener('click', () => {
+    
 });
 
 
