@@ -1649,13 +1649,13 @@ function createPopUp() {
     //Картинка фона для большого слайдера
     const popUpBigBg1 = document.createElement('img');
     popUpBigBg1.classList.add('pop-up__big-bg');
-    popUpBigBg1.src = 'images/bg/bg-02-item.png';
+    popUpBigBg1.src = '../images/bg/bg-02-item.png';
     popUpBigBg1.alt = 'Фон';
 
     //Картинка продукта для большого слайдера
     const popUpBigImg1 = document.createElement('img');
     popUpBigImg1.classList.add('pop-up__big-img');
-    popUpBigImg1.src = 'images/products/product-02.png';
+    popUpBigImg1.src = '../images/products/product-02.png';
     popUpBigImg1.alt = 'Камера';
 
     //Обёртка для картинок большого слайдера
@@ -1667,13 +1667,13 @@ function createPopUp() {
     //Картинка фона для большого слайдера
     const popUpBigBg2 = document.createElement('img');
     popUpBigBg2.classList.add('pop-up__big-bg');
-    popUpBigBg2.src = 'images/bg/bg-03-item.png';
+    popUpBigBg2.src = '../images/bg/bg-03-item.png';
     popUpBigBg2.alt = 'Фон';
 
     //Картинка продукта для большого слайдера
     const popUpBigImg2 = document.createElement('img');
     popUpBigImg2.classList.add('pop-up__big-img');
-    popUpBigImg2.src = 'images/products/product-03.png';
+    popUpBigImg2.src = '../images/products/product-03.png';
     popUpBigImg2.alt = 'Камера';
 
     //Обёртка для картинок большого слайдера
@@ -1685,13 +1685,13 @@ function createPopUp() {
     //Картинка фона для большого слайдера
     const popUpBigBg3 = document.createElement('img');
     popUpBigBg3.classList.add('pop-up__big-bg');
-    popUpBigBg3.src = 'images/bg/bg-04-item.png';
+    popUpBigBg3.src = '../images/bg/bg-04-item.png';
     popUpBigBg3.alt = 'Фон';
 
     //Картинка продукта для большого слайдера
     const popUpBigImg3 = document.createElement('img');
     popUpBigImg3.classList.add('pop-up__big-img');
-    popUpBigImg3.src = 'images/products/product-04.png';
+    popUpBigImg3.src = '../images/products/product-04.png';
     popUpBigImg3.alt = 'Камера';
 
     //Обёртка для картинок большого слайдера
@@ -1703,13 +1703,13 @@ function createPopUp() {
     //Картинка фона для большого слайдера
     const popUpBigBg4 = document.createElement('img');
     popUpBigBg4.classList.add('pop-up__big-bg');
-    popUpBigBg4.src = 'images/bg/bg-02-item.png';
+    popUpBigBg4.src = '../images/bg/bg-02-item.png';
     popUpBigBg4.alt = 'Фон';
 
     //Картинка продукта для большого слайдера
     const popUpBigImg4 = document.createElement('img');
     popUpBigImg4.classList.add('pop-up__big-img');
-    popUpBigImg4.src = 'images/products/product-02.png';
+    popUpBigImg4.src = '../images/products/product-02.png';
     popUpBigImg4.alt = 'Камера';
 
     //Обёртка для картинок большого слайдера
@@ -1726,18 +1726,324 @@ function createPopUp() {
     popUpSliderBig.appendChild(popUpSliderBigItem3);
     popUpSliderBig.appendChild(popUpSliderBigItem4);
 
+    //Картинки фона для маленького слайдера
+    const popUpSliderBg1 = document.createElement('img');
+    popUpSliderBg1.classList.add('pop-up__slider-bg');
+    popUpSliderBg1.src = '../images/bg/bg-02-item.png';
+    popUpSliderBg1.alt = 'Фон';
+
+    //Картинка товара для маленького слайдера
+    const popUpSliderImg1 = document.createElement('img');
+    popUpSliderImg1.classList.add('pop-up__slider-img');
+    popUpSliderImg1.src = 'images/products/product-02.png';
+    popUpSliderImg1.alt = 'Камера';
+
+
+
+    //Обёртка картинок для маленького слайдера
+    const popUpSliderThumbItem1 = document.createElement('div');
+    popUpSliderThumbItem1.classList.add('pop-up__slider-thumb-item');
+    popUpSliderThumbItem1.appendChild(popUpSliderBg1);
+    popUpSliderThumbItem1.appendChild(popUpSliderImg1);
+
+    //Картинки фона для маленького слайдера
+    const popUpSliderBg2 = document.createElement('img');
+    popUpSliderBg2.classList.add('pop-up__slider-bg');
+    popUpSliderBg2.src = '../images/bg/bg-03-item.png';
+    popUpSliderBg2.alt = 'Фон';
+
+    //Картинка товара для маленького слайдера
+    const popUpSliderImg2 = document.createElement('img');
+    popUpSliderImg2.classList.add('pop-up__slider-img');
+    popUpSliderImg2.src = 'images/products/product-03.png';
+    popUpSliderImg2.alt = 'Камера';
+
+
+
+    //Обёртка картинок для маленького слайдера
+    const popUpSliderThumbItem2 = document.createElement('div');
+    popUpSliderThumbItem2.classList.add('pop-up__slider-thumb-item');
+    popUpSliderThumbItem2.appendChild(popUpSliderBg2);
+    popUpSliderThumbItem2.appendChild(popUpSliderImg2);
+
+    //Картинки фона для маленького слайдера
+    const popUpSliderBg3 = document.createElement('img');
+    popUpSliderBg3.classList.add('pop-up__slider-bg');
+    popUpSliderBg3.src = '../images/bg/bg-04-item.png';
+    popUpSliderBg3.alt = 'Фон';
+
+    //Картинка товара для маленького слайдера
+    const popUpSliderImg3 = document.createElement('img');
+    popUpSliderImg3.classList.add('pop-up__slider-img');
+    popUpSliderImg3.src = 'images/products/product-04.png';
+    popUpSliderImg3.alt = 'Камера';
+
+
+
+    //Обёртка картинок для маленького слайдера
+    const popUpSliderThumbItem3 = document.createElement('div');
+    popUpSliderThumbItem3.classList.add('pop-up__slider-thumb-item');
+    popUpSliderThumbItem3.appendChild(popUpSliderBg3);
+    popUpSliderThumbItem3.appendChild(popUpSliderImg3);
+
+    //Картинки фона для маленького слайдера
+    const popUpSliderBg4 = document.createElement('img');
+    popUpSliderBg4.classList.add('pop-up__slider-bg');
+    popUpSliderBg4.src = '../images/bg/bg-05-item.png';
+    popUpSliderBg4.alt = 'Фон';
+
+    //Картинка товара для маленького слайдера
+    const popUpSliderImg4 = document.createElement('img');
+    popUpSliderImg4.classList.add('pop-up__slider-img');
+    popUpSliderImg4.src = 'images/products/product-05.png';
+    popUpSliderImg4.alt = 'Камера';
+
+
+
+    //Обёртка картинок для маленького слайдера
+    const popUpSliderThumbItem4 = document.createElement('div');
+    popUpSliderThumbItem4.classList.add('pop-up__slider-thumb-item');
+    popUpSliderThumbItem4.appendChild(popUpSliderBg4);
+    popUpSliderThumbItem4.appendChild(popUpSliderImg4);
+
+    //Обёртка маленького слайдера
+    const popUpSliderThumb = document.createElement('div');
+    popUpSliderThumb.classList.add('pop-up__slider-thumb');
+    popUpSliderThumb.appendChild(popUpSliderThumbItem1);
+    popUpSliderThumb.appendChild(popUpSliderThumbItem2);
+    popUpSliderThumb.appendChild(popUpSliderThumbItem3);
+    popUpSliderThumb.appendChild(popUpSliderThumbItem4);
+
     //Основная обёртка слайдера
     const popUpSliderBox = document.createElement('div');
     popUpSliderBox.classList.add('pop-up__slider-box');
     popUpSliderBox.appendChild(popUpSliderBig);
+    popUpSliderBox.appendChild(popUpSliderThumb);
+
+    //Товар в архиве
+    const productItemArchive = document.createElement('p');
+    productItemArchive.classList.add('product__item-archive');
+    productItemArchive.textContent = 'Товар в архиве';
+
+    //Товар под заказ
+    const productOnOrder = document.createElement('p');
+    productOnOrder.classList.add('product__on-order');
+    productOnOrder.textContent = 'Под заказ';
+
+    //Товар в наличии
+    const productInStok = document.createElement('p');
+    productInStok.classList.add('product__in-stock-info-text');
+    productInStok.textContent = 'В наличии';
+
+    //Обёртка доступности товара
+    const popUpInfoInner = document.createElement('div');
+    popUpInfoInner.classList.add('pop-up__info-inner');
+    popUpInfoInner.appendChild(productItemArchive);
+    popUpInfoInner.appendChild(productOnOrder);
+    popUpInfoInner.appendChild(productInStok);
+
+    //Старая цена товара
+    const popUpOldPrice = document.createElement('p');
+    popUpOldPrice.classList.add('pop-up__old-price');
+    popUpOldPrice.textContent = '2 190';
+
+    //Картинка валюты рубль
+    const popUpOldPriceRub = document.createElement('img');
+    popUpOldPriceRub.classList.add('pop-up__old-price-rub');
+    popUpOldPriceRub.src = '../images/icon/pop-up-old-price-rub.svg';
+    popUpOldPriceRub.alt = 'Рубль';
+
+    //Обёртка старой цены
+    const popUpOldPriceBox = document.createElement('div');
+    popUpOldPriceBox.classList.add('pop-up__price-box');
+    popUpOldPriceBox.appendChild(popUpOldPrice);
+    popUpOldPriceBox.appendChild(popUpOldPriceRub);
+
+    //Новая цена товара
+    const popUpNewPrice = document.createElement('p');
+    popUpNewPrice.classList.add('pop-up__new-price');
+    popUpNewPrice.textContent = '3 190';
+
+    //Картинка валюты рубль для новой цены
+    const popUpNewPriceRub = document.createElement('img');
+    popUpNewPriceRub.classList.add('pop-up__new-price-rub');
+    popUpNewPriceRub.src = '../images/icon/rub-img.svg';
+    popUpNewPriceRub.alt = 'Рубль';
+
+    //Обёртка новой цены
+    const popUpNewPriceBox = document.createElement('div');
+    popUpNewPriceBox.classList.add('pop-up__price-box');
+    popUpNewPriceBox.appendChild(popUpNewPrice);
+    popUpNewPriceBox.appendChild(popUpNewPriceRub);
+
+
+
+    //Обёртка цены
+    const popUpPriceWrapper = document.createElement('div');
+    popUpPriceWrapper.classList.add('pop-up__price-wrapper');
+    popUpPriceWrapper.appendChild(popUpOldPriceBox);
+    popUpPriceWrapper.appendChild(popUpNewPriceBox);
+
+    //Текст "количество"
+    const headerBasketSubboxBottomQuantityText = document.createElement('p');
+    headerBasketSubboxBottomQuantityText.classList.add('header__basket-subbox-bottom-quantity-text');
+    headerBasketSubboxBottomQuantityText.textContent = 'Кол-во:';
+
+    //Картинка кнопки минус
+    const headerBasketSubboxBottomMinusImg = document.createElement('img');
+    headerBasketSubboxBottomMinusImg.classList.add('header__basket-subbox-bottom-minus__img');
+    headerBasketSubboxBottomMinusImg.src = '../images/icon/quantity-minus.svg';
+    headerBasketSubboxBottomMinusImg.alt = 'Кнопка минус';
+
+    //Кнопка минус
+    const headerBasketSubboxMinusBtn = document.createElement('span');
+    headerBasketSubboxMinusBtn.classList.add('header__basket-subbox-bottom-minus-btn');
+    headerBasketSubboxMinusBtn.appendChild(headerBasketSubboxBottomMinusImg);
+
+    //Инпут для отображения количества товара
+    const headerBasketSubboxBottomQuantityInput = document.createElement('input');
+    headerBasketSubboxBottomQuantityInput.classList.add('header__basket-subbox-bottom-quantity-input');
+    headerBasketSubboxBottomQuantityInput.type = 'text';
+    headerBasketSubboxBottomQuantityInput.value = '1';
+
+    //Картинка кнопки плюс
+    const headerBasketSubboxBottomMinusPlus = document.createElement('img');
+    headerBasketSubboxBottomMinusPlus.classList.add('header__basket-subbox-bottom-minus-plus');
+    headerBasketSubboxBottomMinusPlus.src = '../images/icon/quantity-plus.svg';
+    headerBasketSubboxBottomMinusPlus.alt = 'Кнопка плюс';
+
+    //Кнопка плюс
+    const headerBasketSubboxBottomPlusBtn = document.createElement('span');
+    headerBasketSubboxBottomPlusBtn.classList.add('header__basket-subbox-bottom-plus-btn');
+    headerBasketSubboxBottomPlusBtn.appendChild(headerBasketSubboxBottomMinusPlus);
+
+
+    //Обёртка посчёта товара
+    const popUpBottomQuantity = document.createElement('div');
+    popUpBottomQuantity.classList.add('pop-up__bottom-quantity');
+    popUpBottomQuantity.appendChild(headerBasketSubboxBottomQuantityText);
+    popUpBottomQuantity.appendChild(headerBasketSubboxMinusBtn);
+    popUpBottomQuantity.appendChild(headerBasketSubboxBottomQuantityInput);
+    popUpBottomQuantity.appendChild(headerBasketSubboxBottomPlusBtn);
+
+    //Картинка для кнопки добавить в корзину
+    const popUpInBasketBtnImg = document.createElement('img');
+    popUpInBasketBtnImg.classList.add('pop-up__in-basket-btn-img');
+    popUpInBasketBtnImg.src = '../images/icon/product-basket.svg';
+    popUpInBasketBtnImg.alt = 'Корзина';
+
+    //Кнопка добавить в корзину
+    const popUpInBasketBtn = document.createElement('button');
+    popUpInBasketBtn.classList.add('pop-up__in-basket-btn');
+    popUpInBasketBtn.textContent = 'В Корзину';
+    popUpInBasketBtn.appendChild(popUpInBasketBtnImg);
+
+    //Основная обёртка подсчёта количестват товара
+    const popUpQuantityWrapper = document.createElement('div');
+    popUpQuantityWrapper.classList.add('pop-up__quantity-wrapper');
+    popUpQuantityWrapper.appendChild(popUpBottomQuantity);
+    popUpQuantityWrapper.appendChild(popUpInBasketBtn);
+
+
+    //Оновная обёртка прайса
+    const popUpPriceBoxInfo = document.createElement('div');
+    popUpPriceBoxInfo.classList.add('pop-up__price-box-info');
+    popUpPriceBoxInfo.appendChild(popUpPriceWrapper);
+    popUpPriceBoxInfo.appendChild(popUpQuantityWrapper);
+
+    //Обёртка подсчёта и добавления товара в корзину
+    const popUpQuantityBox = document.createElement('div');
+    popUpQuantityBox.classList.add('pop-up__quantity-box');
+    popUpQuantityBox.appendChild(popUpInfoInner);
+    popUpQuantityBox.appendChild(popUpPriceBoxInfo);
 
     //Левый блок с информацией
     const popUpInfoLeftBox = document.createElement('div');
     popUpInfoLeftBox.classList.add('pop-up__info-left-box');
+    popUpInfoLeftBox.appendChild(popUpSliderBox);
+    popUpInfoLeftBox.appendChild(popUpQuantityBox);
+
+    //Заголовок товара
+    const popUpInfoRightTitle = document.createElement('h3');
+    popUpInfoRightTitle.classList.add('pop-up__info-right-title');
+    popUpInfoRightTitle.textContent = 'Поворотная Wi-Fi камера';
+
+    //Аритикул товара
+    const popUpInfoRightArticle = document.createElement('p');
+    popUpInfoRightArticle.classList.add('pop-up__info-right-article');
+    popUpInfoRightArticle.textContent = 'Арт.: RV-3441';
+
+    //Заголовок описания
+    const popUpRightDescriptionTitle1 = document.createElement('h3');
+    popUpRightDescriptionTitle1.classList.add('pop-up__right-description-title');
+    popUpRightDescriptionTitle1.textContent = 'Описание';
+
+    //Описание товара
+    const popUpRightDescriptionText = document.createElement('p');
+    popUpRightDescriptionText.classList.add('pop-up__right-description-text');
+    popUpRightDescriptionText.textContent = 'W-Fi поворотная видеокамера 355°, Full HD 1080p, 2 МП, microSD до 128 GB Компактная поворотная видеокамера подходит для видеонаблюдения за домом, дачей и офисом. Видеонаблюдение со смартфона из любой точки мира Просматривать видео в реальном времени можно 24 часа в сутки с помощью мобильного приложения Rubetek.';
+
+    //Обёртка описания товара
+    const popUpRightDescriptionBox = document.createElement('div');
+    popUpRightDescriptionBox.classList.add('pop-up__right-description-box');
+    popUpRightDescriptionBox.appendChild(popUpRightDescriptionTitle1);
+    popUpRightDescriptionBox.appendChild(popUpRightDescriptionText);
+
+    //Заголовок характеристик
+    const popUpRightDescriptionTitle2 = document.createElement('h3');
+    popUpRightDescriptionTitle2.classList.add('pop-up__right-description-title');
+    popUpRightDescriptionTitle2.textContent = 'Характеристики';
+
+    //Заголовок модели
+    const popUpRightSpecificationsText1 = document.createElement('div');
+    popUpRightSpecificationsText1.classList.add('pop-up__right-specifications-text');
+    popUpRightSpecificationsText1.textContent = 'Модель';
+
+    //Называние модели
+    const popUpRightSpecificationsText2 = document.createElement('div');
+    popUpRightSpecificationsText2.classList.add('pop-up__right-specifications-text');
+    popUpRightSpecificationsText2.textContent = 'RV-3416';
+
+    //Блок модели товара
+    const popUpRightSpecificationsOddBox1 = document.createElement('div'); 
+    popUpRightSpecificationsOddBox1.classList.add('pop-up__right-specifications-odd-box');
+    popUpRightSpecificationsOddBox1.appendChild(popUpRightSpecificationsText1);
+    popUpRightSpecificationsOddBox1.appendChild(popUpRightSpecificationsText2);
+
+
+
+
+    //Обёртка характеристик
+    const popUpRightSpecificationsInfo = document.createElement('div');
+    popUpRightSpecificationsInfo.classList.add('pop-up__right-specifications-info');
+    popUpRightSpecificationsInfo.appendChild(popUpRightSpecificationsOddBox1);
+
+    //Основная обёртка характеристик товара
+    const popUpRightSpecificationsBox = document.createElement('div');
+    popUpRightSpecificationsBox.classList.add('pop-up__right-specifications-box');
+    popUpRightSpecificationsBox.appendChild(popUpRightDescriptionTitle2);
+    popUpRightSpecificationsBox.appendChild(popUpRightSpecificationsInfo);
+
+    //Основная обёртка информации о товаре
+    const popUpInfoRightBoxWrapper = document.createElement('div');
+    popUpInfoRightBoxWrapper.classList.add('pop-up__info-right-box-wrapper');
+    popUpInfoRightBoxWrapper.appendChild(popUpInfoRightTitle);
+    popUpInfoRightBoxWrapper.appendChild(popUpInfoRightArticle);
+    popUpInfoRightBoxWrapper.appendChild(popUpRightDescriptionBox);
+    popUpInfoRightBoxWrapper.appendChild(popUpRightSpecificationsBox);
+
+    //Правый блок с информацией
+    const popUpInfoRightBox = document.createElement('div');
+    popUpInfoRightBox.classList.add('pop-up__info-right-box');
+    popUpInfoRightBox.appendChild(popUpInfoRightBoxWrapper);
+
+
 
     //Основная обёртка информации
     const popUpInfoBox = document.createElement('div');
     popUpInfoBox.classList.add('pop-up__info-box');
+    popUpInfoBox.appendChild(popUpInfoLeftBox);
+    popUpInfoBox.appendChild(popUpInfoRightBox);
 
     //pop-up box
     const popUpBox = document.createElement('div');
@@ -1790,37 +2096,37 @@ function showPopup() {
     };
 }
 
-//Функция скрытия pop-up
-function closePopup() {
-    //Возвращаем странице возможность прокручиваться
-    document.body.style.overflow = '';
-    //Удаляем класс для отображения у элемента pop-up
-    popupElement.classList.remove('active--element');
-}
+// //Функция скрытия pop-up
+// function closePopup() {
+//     //Возвращаем странице возможность прокручиваться
+//     document.body.style.overflow = '';
+//     //Удаляем класс для отображения у элемента pop-up
+//     popupElement.classList.remove('active--element');
+// }
 
-//Вешаем событие на кнопку закрытия pop-up
-popupCloseBtn.addEventListener('click', (e) => {
-    //Вызываем функцию скрытия pop-up
-    closePopup();
-});
+// //Вешаем событие на кнопку закрытия pop-up
+// popupCloseBtn.addEventListener('click', (e) => {
+//     //Вызываем функцию скрытия pop-up
+//     closePopup();
+// });
 
 //Убираем pop-up
 //при нажатии на ESC
-document.addEventListener('keydown', (e) => {
-    if (e.code == 'Escape') {
-        closePopup();
-    }
-});
+// document.addEventListener('keydown', (e) => {
+//     if (e.code == 'Escape') {
+//         closePopup();
+//     }
+// });
 
 
 
 
 
-const popupInBasketBtn = document.querySelector('.pop-up__in-basket-btn');
+// const popupInBasketBtn = document.querySelector('.pop-up__in-basket-btn');
 
 
-popupInBasketBtn.addEventListener('click', () => {
+// popupInBasketBtn.addEventListener('click', () => {
     
-});
+// });
 
 

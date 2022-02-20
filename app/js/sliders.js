@@ -90,12 +90,5 @@ $(function(){
     });
 
 
-    //Pagination
-
-   
-
-
-
-
 });
 
