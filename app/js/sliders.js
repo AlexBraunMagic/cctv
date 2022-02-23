@@ -1,23 +1,6 @@
 $(function(){
 
-    //Слайдер в pop-up
-    $('.pop-up__slider-big').slick({
-        asNavFor: '.pop-up__slider-thumb',
-        draggable: false,
-        arrows: false,
-        fade: true
-    });
-
-
-
-    $('.pop-up__slider-thumb').slick({
-        asNavFor: '.pop-up__slider-big',
-        focusOnSelect: true,
-        slidesToShow: 3,
-        draggable: false,
-        prevArrow: '<button type="button" class="slick-prev"><svg width="17" height="29" viewBox="0 0 18 31" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.2437 0.365723L17.6758 2.79785L5.20131 15.2723L17.6758 27.7468L15.2437 30.1789L0.415501 15.2723L15.2437 0.365723Z" fill="#EAEAEA"/></svg></button>',
-        nextArrow: '<button type="button" class="slick-next"><svg width="17" height="29" viewBox="0 0 18 31" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.75537 0.365723L0.323242 2.79785L12.7977 15.2723L0.323242 27.7468L2.75537 30.1789L17.5835 15.2723L2.75537 0.365723Z" fill="#EAEAEA"/></svg></button>'
-    });
+  
 
 
 

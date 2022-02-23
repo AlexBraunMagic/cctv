@@ -661,7 +661,7 @@ function createProductCards() {
     productImgBox.appendChild(productImg);
 
     productImgBox.addEventListener('click', (e) => {
-        showPopup(productCardObj);
+        showPopup();
     });
 
     //Ссылка для перехода
@@ -1640,6 +1640,11 @@ function createPopUp() {
     const popUpCloseBtn = document.createElement('button');
     popUpCloseBtn.classList.add('pop-up__close-btn');
 
+    //Вызываем закрытие pop-up при клике
+    popUpCloseBtn.addEventListener('click', () => {
+        closePopup(popUp);
+    });
+
     //Шапка  pop-upэлемента
     const popUpTitleBox = document.createElement('div');
     popUpTitleBox.classList.add('pop-up__title-box');
@@ -1813,6 +1818,25 @@ function createPopUp() {
     popUpSliderThumb.appendChild(popUpSliderThumbItem2);
     popUpSliderThumb.appendChild(popUpSliderThumbItem3);
     popUpSliderThumb.appendChild(popUpSliderThumbItem4);
+
+      //Слайдер в pop-up
+      $(popUpSliderBig).slick({
+        asNavFor: '.pop-up__slider-thumb',
+        draggable: false,
+        arrows: false,
+        fade: true
+    });
+
+
+
+    $(popUpSliderThumb).slick({
+        asNavFor: '.pop-up__slider-big',
+        focusOnSelect: true,
+        slidesToShow: 3,
+        draggable: false,
+        prevArrow: '<button type="button" class="slick-prev"><svg width="17" height="29" viewBox="0 0 18 31" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.2437 0.365723L17.6758 2.79785L5.20131 15.2723L17.6758 27.7468L15.2437 30.1789L0.415501 15.2723L15.2437 0.365723Z" fill="#EAEAEA"/></svg></button>',
+        nextArrow: '<button type="button" class="slick-next"><svg width="17" height="29" viewBox="0 0 18 31" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.75537 0.365723L0.323242 2.79785L12.7977 15.2723L0.323242 27.7468L2.75537 30.1789L17.5835 15.2723L2.75537 0.365723Z" fill="#EAEAEA"/></svg></button>'
+    });
 
     //Основная обёртка слайдера
     const popUpSliderBox = document.createElement('div');
@@ -2010,6 +2034,159 @@ function createPopUp() {
     popUpRightSpecificationsOddBox1.appendChild(popUpRightSpecificationsText1);
     popUpRightSpecificationsOddBox1.appendChild(popUpRightSpecificationsText2);
 
+    //Заголовок типа камеры
+    const popUpRightTypeText1 = document.createElement('div');
+    popUpRightTypeText1.classList.add('pop-up__right-specifications-text');
+    popUpRightTypeText1.textContent = 'Тип камеры';
+
+    //Называние типа камеры
+    const popUpRightTypeText2 = document.createElement('div');
+    popUpRightTypeText2.classList.add('pop-up__right-specifications-text');
+    popUpRightTypeText2.textContent = 'IP/поворотная';
+
+    //Блок типа товара
+    const popUpRightSpecificationsEvenBox2 = document.createElement('div'); 
+    popUpRightSpecificationsEvenBox2.classList.add('pop-up__right-specifications-even-box');
+    popUpRightSpecificationsEvenBox2.appendChild(popUpRightTypeText1);
+    popUpRightSpecificationsEvenBox2.appendChild(popUpRightTypeText2);
+
+    //Заголовок качества съёмки
+    const popUpRightQualityText1 = document.createElement('div');
+    popUpRightQualityText1.classList.add('pop-up__right-specifications-text');
+    popUpRightQualityText1.textContent = 'Качество съемки';
+
+    //Качества съёмки
+    const popUpRightQualityText2 = document.createElement('div');
+    popUpRightQualityText2.classList.add('pop-up__right-specifications-text');
+    popUpRightQualityText2.textContent = 'Full HD 1080p';
+
+    //Блок качества товара
+    const popUpRightSpecificationsOddBox3 = document.createElement('div'); 
+    popUpRightSpecificationsOddBox3.classList.add('pop-up__right-specifications-odd-box');
+    popUpRightSpecificationsOddBox3.appendChild(popUpRightQualityText1);
+    popUpRightSpecificationsOddBox3.appendChild(popUpRightQualityText2);
+
+    //Заголовок разрешения съёмки
+    const popUpRightPermissionText1 = document.createElement('div');
+    popUpRightPermissionText1.classList.add('pop-up__right-specifications-text');
+    popUpRightPermissionText1.textContent = 'Разрешение';
+
+    //Разрешения съёмки
+    const popUpRightPermissionText2 = document.createElement('div');
+    popUpRightPermissionText2.classList.add('pop-up__right-specifications-text');
+    popUpRightPermissionText2.textContent = '1920х1080 пикселей';
+
+    //Блок разрешения съёмки
+    const popUpRightSpecificationsEvenBox4 = document.createElement('div'); 
+    popUpRightSpecificationsEvenBox4.classList.add('pop-up__right-specifications-even-box');
+    popUpRightSpecificationsEvenBox4.appendChild(popUpRightPermissionText1);
+    popUpRightSpecificationsEvenBox4.appendChild(popUpRightPermissionText2);
+
+    //Заголовок 1-й матрицы
+    const popUpRightMatrix1Text1 = document.createElement('div');
+    popUpRightMatrix1Text1.classList.add('pop-up__right-specifications-text');
+    popUpRightMatrix1Text1.textContent = 'Матрица';
+
+    //Марица 1
+    const popUpRightMatrix1Text2 = document.createElement('div');
+    popUpRightMatrix1Text2.classList.add('pop-up__right-specifications-text');
+    popUpRightMatrix1Text2.textContent = '2 Мпикс';
+
+    //Блок матрицы 1
+    const popUpRightSpecificationsOddBox5 = document.createElement('div'); 
+    popUpRightSpecificationsOddBox5.classList.add('pop-up__right-specifications-odd-box');
+    popUpRightSpecificationsOddBox5.appendChild(popUpRightMatrix1Text1);
+    popUpRightSpecificationsOddBox5.appendChild(popUpRightMatrix1Text2);
+
+    //Заголовок угла обзора 1
+    const popUpRightViewingAngel1Text1 = document.createElement('div');
+    popUpRightViewingAngel1Text1.classList.add('pop-up__right-specifications-text');
+    popUpRightViewingAngel1Text1.textContent = 'Горизонтальный угол обзора';
+
+    //Элемент градуса
+    const degressBox = document.createElement('sup');
+    degressBox.textContent = 'o';
+
+    //Угол обзора 1
+    const popUpRightViewingAngel1Text2 = document.createElement('div');
+    popUpRightViewingAngel1Text2.classList.add('pop-up__right-specifications-text');
+    popUpRightViewingAngel1Text2.textContent = '80';
+    popUpRightViewingAngel1Text2.appendChild(degressBox);
+
+    //Блок угла обзора 1
+    const popUpRightSpecificationsEvenBox6 = document.createElement('div'); 
+    popUpRightSpecificationsEvenBox6.classList.add('pop-up__right-specifications-even-box');
+    popUpRightSpecificationsEvenBox6.appendChild(popUpRightViewingAngel1Text1);
+    popUpRightSpecificationsEvenBox6.appendChild(popUpRightViewingAngel1Text2);
+
+    //Заголовок 2-й матрицы
+    const popUpRightMatrix2Text1 = document.createElement('div');
+    popUpRightMatrix2Text1.classList.add('pop-up__right-specifications-text');
+    popUpRightMatrix2Text1.textContent = 'Матрица';
+
+    //Марица 2
+    const popUpRightMatrix2Text2 = document.createElement('div');
+    popUpRightMatrix2Text2.classList.add('pop-up__right-specifications-text');
+    popUpRightMatrix2Text2.textContent = '2 Мпикс';
+
+    //Блок матрицы 2
+    const popUpRightSpecificationsOddBox7 = document.createElement('div'); 
+    popUpRightSpecificationsOddBox7.classList.add('pop-up__right-specifications-odd-box');
+    popUpRightSpecificationsOddBox7.appendChild(popUpRightMatrix2Text1);
+    popUpRightSpecificationsOddBox7.appendChild(popUpRightMatrix2Text2);
+
+    //Заголовок угла обзора 2
+    const popUpRightViewingAngel2Text1 = document.createElement('div');
+    popUpRightViewingAngel2Text1.classList.add('pop-up__right-specifications-text');
+    popUpRightViewingAngel2Text1.textContent = 'Горизонтальный угол обзора';
+
+    //Угол обзора 2
+    const popUpRightViewingAngel2Text2 = document.createElement('div');
+    popUpRightViewingAngel2Text2.classList.add('pop-up__right-specifications-text');
+    popUpRightViewingAngel2Text2.textContent = '80';
+    popUpRightViewingAngel2Text2.appendChild(degressBox);
+
+    //Блок угла обзора 2
+    const popUpRightSpecificationsEvenBox8 = document.createElement('div'); 
+    popUpRightSpecificationsEvenBox8.classList.add('pop-up__right-specifications-even-box');
+    popUpRightSpecificationsEvenBox8.appendChild(popUpRightViewingAngel2Text1);
+    popUpRightSpecificationsEvenBox8.appendChild(popUpRightViewingAngel2Text2);
+
+    //Заголовок 3-й матрицы
+    const popUpRightMatrix3Text1 = document.createElement('div');
+    popUpRightMatrix3Text1.classList.add('pop-up__right-specifications-text');
+    popUpRightMatrix3Text1.textContent = 'Матрица';
+
+    //Марица 3
+    const popUpRightMatrix3Text2 = document.createElement('div');
+    popUpRightMatrix3Text2.classList.add('pop-up__right-specifications-text');
+    popUpRightMatrix3Text2.textContent = '2 Мпикс';
+
+    //Блок матрицы 3
+    const popUpRightSpecificationsOddBox9 = document.createElement('div'); 
+    popUpRightSpecificationsOddBox9.classList.add('pop-up__right-specifications-odd-box');
+    popUpRightSpecificationsOddBox9.appendChild(popUpRightMatrix2Text1);
+    popUpRightSpecificationsOddBox9.appendChild(popUpRightMatrix2Text2);
+
+    //Заголовок угла обзора 3
+    const popUpRightViewingAngel3Text1 = document.createElement('div');
+    popUpRightViewingAngel3Text1.classList.add('pop-up__right-specifications-text');
+    popUpRightViewingAngel3Text1.textContent = 'Горизонтальный угол обзора';
+
+    //Угол обзора 3
+    const popUpRightViewingAngel3Text2 = document.createElement('div');
+    popUpRightViewingAngel3Text2.classList.add('pop-up__right-specifications-text');
+    popUpRightViewingAngel3Text2.textContent = '80';
+    popUpRightViewingAngel3Text2.appendChild(degressBox);
+
+    //Блок угла обзора 3
+    const popUpRightSpecificationsEvenBox10 = document.createElement('div'); 
+    popUpRightSpecificationsEvenBox10.classList.add('pop-up__right-specifications-even-box');
+    popUpRightSpecificationsEvenBox10.appendChild(popUpRightViewingAngel3Text1);
+    popUpRightSpecificationsEvenBox10.appendChild(popUpRightViewingAngel3Text2);
+
+
+
 
 
 
@@ -2017,6 +2194,15 @@ function createPopUp() {
     const popUpRightSpecificationsInfo = document.createElement('div');
     popUpRightSpecificationsInfo.classList.add('pop-up__right-specifications-info');
     popUpRightSpecificationsInfo.appendChild(popUpRightSpecificationsOddBox1);
+    popUpRightSpecificationsInfo.appendChild(popUpRightSpecificationsEvenBox2);
+    popUpRightSpecificationsInfo.appendChild(popUpRightSpecificationsOddBox3);
+    popUpRightSpecificationsInfo.appendChild(popUpRightSpecificationsEvenBox4);
+    popUpRightSpecificationsInfo.appendChild(popUpRightSpecificationsOddBox5);
+    popUpRightSpecificationsInfo.appendChild(popUpRightSpecificationsEvenBox6);
+    popUpRightSpecificationsInfo.appendChild(popUpRightSpecificationsOddBox7);
+    popUpRightSpecificationsInfo.appendChild(popUpRightSpecificationsEvenBox8);
+    popUpRightSpecificationsInfo.appendChild(popUpRightSpecificationsOddBox9);
+    popUpRightSpecificationsInfo.appendChild(popUpRightSpecificationsEvenBox10);
 
     //Основная обёртка характеристик товара
     const popUpRightSpecificationsBox = document.createElement('div');
@@ -2071,8 +2257,16 @@ function createPopUp() {
 //===================================================================================
 
 
-//Получаем кнопку закрытия pop-up
-const popupCloseBtn = document.querySelector('.pop-up__close-btn');
+let windowY = 0;
+//Получаем положение страницы при прокрутке,
+//для отображения pop-up
+window.onscroll = function () {
+    //Передаём в переменную значение положения окна
+    windowY = window.scrollY;
+    
+    console.log(windowY);
+};
+
 
 //Получаем сам pop-up 
 // const popupElement = document.querySelector('.pop-up');
@@ -2084,25 +2278,22 @@ function showPopup() {
     //Добавляем элементу pop-up класс активности
     const popupElemen = createPopUp();
     popupElemen.classList.add('active--element');
+
+    //Добавляем полученное значение в стили для pop-up
+    popupElemen.style.top = windowY + 'px';
+
+
     //Добавляем pop-up нас траницу
-    document.body.appendChild(popupElemen);
-    //Получаем положение страницы при прокрутке,
-    //для отображения pop-up
-    window.onscroll = function () {
-        //Передаём в переменную значение положения окна
-        const Y = window.scrollY;
-        //Добавляем полученное значение в стили для pop-up
-        popupElement.style.top = Y + 'px';
-    };
+    document.body.appendChild(popupElemen);     
 }
 
-// //Функция скрытия pop-up
-// function closePopup() {
-//     //Возвращаем странице возможность прокручиваться
-//     document.body.style.overflow = '';
-//     //Удаляем класс для отображения у элемента pop-up
-//     popupElement.classList.remove('active--element');
-// }
+//Функция скрытия pop-up
+function closePopup(popupElement) {
+    //Возвращаем странице возможность прокручиваться
+    document.body.style.overflow = '';
+    //Удаляем класс для отображения у элемента pop-up
+    popupElement.classList.remove('active--element');
+}
 
 // //Вешаем событие на кнопку закрытия pop-up
 // popupCloseBtn.addEventListener('click', (e) => {
