@@ -495,7 +495,6 @@ function delProductInBasket() {
                 }
                 removeBgBasket(basketProductWrapper[i]);
                 productInBasketWrapper.removeChild(item);
-                // console.log(productInBasket.length);
             }
         }
     }
@@ -593,8 +592,9 @@ function createProductCards() {
         inBasket: false,
         cartfavorite: false,
         basketfavorite: false,
-        newPriceProduct: 0,
-        oneProductSum: 0,
+        quantityProduct: 1,
+        sumOneProduct: 4990,
+        newPriceProduct: 4990,
         quantityShowProduct: 1,
     };
 
@@ -661,7 +661,7 @@ function createProductCards() {
     productImgBox.appendChild(productImg);
 
     productImgBox.addEventListener('click', (e) => {
-        showPopup();
+        showPopup(productCardObj);
     });
 
     //Ссылка для перехода
@@ -698,7 +698,7 @@ function createProductCards() {
     const productNewPrice = document.createElement('p');
     productNewPrice.classList.add('product__new-price');
     productNewPrice.classList.add('product__new-price-link--active');
-    productNewPrice.textContent = '4 990';
+    productNewPrice.textContent = numberToString(productCardObj.newPriceProduct);
 
     //Картика валюты рубль
     const productRubImg = document.createElement('img');
@@ -713,7 +713,9 @@ function createProductCards() {
     //Общая сумма одного товара
     const productNewPriceSum = document.createElement('p');
     productNewPriceSum.classList.add('product__new-price-sum');
-    productNewPriceSum.textContent = '4 990';
+    productNewPriceSum.textContent = numberToString(productCardObj.sumOneProduct);
+
+   
 
     //Картика валюты рубль
     const productRubSumImg = document.createElement('img');
@@ -778,7 +780,7 @@ function createProductCards() {
             productCardObj.inBasket = true;
             addBgBasket(productImgBasketWrapper);
             addBasketProduct(productCardObj);
-            addCardSum();
+            addCardSum(productCardObj);
             showPlusQuantityProduct();
         }
         else {
@@ -1278,8 +1280,7 @@ function headerBasketSubboxItem(obj) {
     // Цена товара
     const headerBasketSubboxPrice = document.createElement('p');
     headerBasketSubboxPrice.classList.add('header__basket-subbox-price');
-    headerBasketSubboxPrice.textContent = '4 990';
-    obj.newPriceProduct = stringToNumber(headerBasketSubboxPrice);
+    headerBasketSubboxPrice.textContent = numberToString(obj.newPriceProduct);
 
 
     //Картика валюты рубль
@@ -1297,7 +1298,7 @@ function headerBasketSubboxItem(obj) {
     const headerBasketSubboxPriceSum = document.createElement('p');
     // headerBasketSubboxPriceSum.classList.add('header__basket-subbox-price');
     headerBasketSubboxPriceSum.classList.add('header__basket-subbox-sum-price');
-    headerBasketSubboxPriceSum.textContent = '0';
+    headerBasketSubboxPriceSum.textContent = numberToString(obj.oneProductSum);
 
     //Картика валюты рубль
     const productRubSumImg = document.createElement('img');
@@ -1333,20 +1334,13 @@ function headerBasketSubboxItem(obj) {
 
     headerBasketSubboxBottomMinusBtn.addEventListener('click', () => {
 
-        const headerBasketSubboxAllSumNumber = document.querySelector('.header__basket-subbox-all-sum-number');
-        const rightSideBarBasketSum = document.querySelector('.right-side-bar__basket-sum');
 
 
         if (Number(headerBasketSubboxBottomQuantityInput.value) > 0) {
-            headerBasketSubboxBottomQuantityInput.value = (+headerBasketSubboxBottomQuantityInput.value) - 1;
-            obj.quantityShowProduct = headerBasketSubboxBottomQuantityInput.value;
-            headerBasketSubboxPriceSum.textContent = (+stringToNumber(headerBasketSubboxPriceSum)) - (+stringToNumber(headerBasketSubboxPrice));
-            obj.oneProductSum = headerBasketSubboxPriceSum.textContent;
-            headerBasketSubboxPriceSum.textContent = numberToString(headerBasketSubboxPriceSum);
-
-            headerBasketSubboxAllSumNumber.textContent = (+stringToNumber(headerBasketSubboxAllSumNumber)) - (+stringToNumber(headerBasketSubboxPrice));
-            headerBasketSubboxAllSumNumber.textContent = numberToString(headerBasketSubboxAllSumNumber);
-            rightSideBarBasketSum.textContent = headerBasketSubboxAllSumNumber.textContent + ' руб.';
+            obj.quantityProduct -= 1;
+            headerBasketSubboxBottomQuantityInput.value = obj.quantityProduct;
+            oneProductSumSub(headerBasketSubboxPriceSum, obj);
+            subCardSum(obj);
         }
         showMinusQuantityProduct();
         if (Number(headerBasketSubboxBottomQuantityInput.value) === 1) {
@@ -1360,7 +1354,7 @@ function headerBasketSubboxItem(obj) {
     const headerBasketSubboxBottomQuantityInput = document.createElement('input');
     headerBasketSubboxBottomQuantityInput.classList.add('header__basket-subbox-bottom-quantity-input');
     headerBasketSubboxBottomQuantityInput.type = 'text';
-    headerBasketSubboxBottomQuantityInput.value = '1';
+    headerBasketSubboxBottomQuantityInput.value = obj.quantityProduct;
 
     // Картинка плюс картинка
     const headerBasketSubboxPlusImg = document.createElement('img');
@@ -1379,23 +1373,19 @@ function headerBasketSubboxItem(obj) {
         const headerBasketSubboxAllSumNumber = document.querySelector('.header__basket-subbox-all-sum-number');
         const rightSideBarBasketSum = document.querySelector('.right-side-bar__basket-sum');
 
-        headerBasketSubboxBottomQuantityInput.value = (+headerBasketSubboxBottomQuantityInput.value) + 1;
-        obj.quantityShowProduct = headerBasketSubboxBottomQuantityInput.value;
+        obj.quantityProduct += 1;
+        headerBasketSubboxBottomQuantityInput.value = obj.quantityProduct;
         showPlusQuantityProduct();
 
-        headerBasketSubboxPriceSum.textContent = (+stringToNumber(headerBasketSubboxPrice)) * (+headerBasketSubboxBottomQuantityInput.value);
-        obj.oneProductSum = headerBasketSubboxPriceSum.textContent;
-        headerBasketSubboxPriceSum.textContent = numberToString(headerBasketSubboxPriceSum);
+        oneProductSumAdd(headerBasketSubboxPriceSum, obj);
+
+        addCardSum(obj);
 
         if (Number(headerBasketSubboxBottomQuantityInput.value) > 1) {
             headerBasketSubboxPriceSum.classList.add('header__basket-sum-one-product--active');
             headreBasketSubboxDividingLine.classList.add('header__basket-sum-one-product--active');
             productRubSumImg.classList.add('header__basket-sum-one-product--active');
         }
-
-        headerBasketSubboxAllSumNumber.textContent = (+stringToNumber(headerBasketSubboxAllSumNumber)) + (+stringToNumber(headerBasketSubboxPrice));
-        headerBasketSubboxAllSumNumber.textContent = numberToString(headerBasketSubboxAllSumNumber);
-        rightSideBarBasketSum.textContent = headerBasketSubboxAllSumNumber.textContent + ' руб.';
 
     });
 
@@ -1469,9 +1459,8 @@ function addBasketProduct(obj) {
 // при добавлении товара в корзину
 //=================================================================================
 
-function addCardSum() {
+function addCardSum(productCardObj) {
     const headerBasketSubboxAllSumNumber = document.querySelector('.header__basket-subbox-all-sum-number');
-    const priceProductElement = document.querySelector('.product__new-price');
     const headerBasketSubboxAllSumNumberArr = stringToNumber(headerBasketSubboxAllSumNumber);
     const rightSideBarBasketSum = document.querySelector('.right-side-bar__basket-sum');
 
@@ -1481,9 +1470,44 @@ function addCardSum() {
         headerBasketSubboxAllSumNumber.textContent = '0';
     }
 
-    headerBasketSubboxAllSumNumber.textContent = (+stringToNumber(headerBasketSubboxAllSumNumber)) + (+stringToNumber(priceProductElement));
-    headerBasketSubboxAllSumNumber.textContent = numberToString(headerBasketSubboxAllSumNumber);
+    headerBasketSubboxAllSumNumber.textContent = numberToString((+stringToNumber(headerBasketSubboxAllSumNumber)) + productCardObj.newPriceProduct);
     rightSideBarBasketSum.textContent = headerBasketSubboxAllSumNumber.textContent + ' руб.';
+}
+
+//=================================================================================
+//Функция вычетания из общей суммы
+// при удалении товара в корзину
+//=================================================================================
+
+function subCardSum(productCardObj) {
+    const headerBasketSubboxAllSumNumber = document.querySelector('.header__basket-subbox-all-sum-number');
+    const headerBasketSubboxAllSumNumberArr = stringToNumber(headerBasketSubboxAllSumNumber);
+    const rightSideBarBasketSum = document.querySelector('.right-side-bar__basket-sum');
+
+
+    if (headerBasketSubboxAllSumNumberArr.length === 1 || headerBasketSubboxAllSumNumberArr[0] === '0') {
+        // sumProductValue = '0';
+        headerBasketSubboxAllSumNumber.textContent = '0';
+    }
+
+    headerBasketSubboxAllSumNumber.textContent = numberToString((+stringToNumber(headerBasketSubboxAllSumNumber)) - productCardObj.newPriceProduct);
+    rightSideBarBasketSum.textContent = headerBasketSubboxAllSumNumber.textContent + ' руб.';
+}
+
+//=================================================================================
+//Функция увеличения суммы одного товара в корзине
+//=================================================================================
+function oneProductSumAdd(element, productCardObj) {
+    productCardObj.sumOneProduct += productCardObj.newPriceProduct;
+    element.textContent = numberToString(productCardObj.sumOneProduct);
+}
+
+//=================================================================================
+//Функция уменьшения суммы одного товара в корзине
+//=================================================================================
+function oneProductSumSub(element, productCardObj) {
+    productCardObj.sumOneProduct -= productCardObj.newPriceProduct;
+    element.textContent = numberToString(productCardObj.sumOneProduct);
 }
 
 
@@ -1495,16 +1519,18 @@ function numberToString(item) {
 
     let firstNumSum = '';
 
-    if (Number(item.textContent) < 10000) {
-        firstNumSum = item.textContent.substring(0, 1);
-        firstNumSum += " " + item.textContent.slice(1);
+    if (item < 10000) {
+        firstNumSum = String(item).substring(0, 1);
+        firstNumSum += " " + String(item).slice(1);
         return firstNumSum;
     }
-    if (Number(item.textContent) < 100000) {
-        firstNumSum = item.textContent.substring(0, 2);
-        firstNumSum += " " + item.textContent.slice(2);
+    if (item < 100000) {
+        firstNumSum = String(item).substring(0, 2);
+        firstNumSum += " " + String(item).slice(2);
         return firstNumSum;
     }
+
+    
 }
 
 //=================================================================================
@@ -1629,7 +1655,7 @@ bodyBox.addEventListener('click', (e) => {
 //Создание pop-up элемента
 //===================================================================================
 
-function createPopUp() {    
+function createPopUp(productCardObj) {    
 
     //title шапки pop-up
     const popUpTitle = document.createElement('h2');
@@ -1740,7 +1766,7 @@ function createPopUp() {
     //Картинка товара для маленького слайдера
     const popUpSliderImg1 = document.createElement('img');
     popUpSliderImg1.classList.add('pop-up__slider-img');
-    popUpSliderImg1.src = 'images/products/product-02.png';
+    popUpSliderImg1.src = '../images/products/product-02.png';
     popUpSliderImg1.alt = 'Камера';
 
 
@@ -1760,7 +1786,7 @@ function createPopUp() {
     //Картинка товара для маленького слайдера
     const popUpSliderImg2 = document.createElement('img');
     popUpSliderImg2.classList.add('pop-up__slider-img');
-    popUpSliderImg2.src = 'images/products/product-03.png';
+    popUpSliderImg2.src = '../images/products/product-03.png';
     popUpSliderImg2.alt = 'Камера';
 
 
@@ -1780,7 +1806,7 @@ function createPopUp() {
     //Картинка товара для маленького слайдера
     const popUpSliderImg3 = document.createElement('img');
     popUpSliderImg3.classList.add('pop-up__slider-img');
-    popUpSliderImg3.src = 'images/products/product-04.png';
+    popUpSliderImg3.src = '../images/products/product-04.png';
     popUpSliderImg3.alt = 'Камера';
 
 
@@ -1800,7 +1826,7 @@ function createPopUp() {
     //Картинка товара для маленького слайдера
     const popUpSliderImg4 = document.createElement('img');
     popUpSliderImg4.classList.add('pop-up__slider-img');
-    popUpSliderImg4.src = 'images/products/product-05.png';
+    popUpSliderImg4.src = '../images/products/product-05.png';
     popUpSliderImg4.alt = 'Камера';
 
 
@@ -1819,15 +1845,13 @@ function createPopUp() {
     popUpSliderThumb.appendChild(popUpSliderThumbItem3);
     popUpSliderThumb.appendChild(popUpSliderThumbItem4);
 
-      //Слайдер в pop-up
-      $(popUpSliderBig).slick({
+    //Слайдер в pop-up
+    $(popUpSliderBig).slick({
         asNavFor: '.pop-up__slider-thumb',
         draggable: false,
         arrows: false,
         fade: true
     });
-
-
 
     $(popUpSliderThumb).slick({
         asNavFor: '.pop-up__slider-big',
@@ -1924,11 +1948,32 @@ function createPopUp() {
     headerBasketSubboxMinusBtn.classList.add('header__basket-subbox-bottom-minus-btn');
     headerBasketSubboxMinusBtn.appendChild(headerBasketSubboxBottomMinusImg);
 
+    headerBasketSubboxMinusBtn.addEventListener('click', () => {
+
+    });
+
     //Инпут для отображения количества товара
     const headerBasketSubboxBottomQuantityInput = document.createElement('input');
     headerBasketSubboxBottomQuantityInput.classList.add('header__basket-subbox-bottom-quantity-input');
     headerBasketSubboxBottomQuantityInput.type = 'text';
-    headerBasketSubboxBottomQuantityInput.value = '1';
+    headerBasketSubboxBottomQuantityInput.value = productCardObj.quantityProduct;
+
+     // productCardObj
+    // id: cardId++,
+    //     productCard: '',
+    //     inBasket: false,
+    //     cartfavorite: false,
+    //     basketfavorite: false,
+    //     quantityProduct: 1,
+    //     priceProduct: 4990,
+    //     sumOneProduct: 4990,
+    //     newPriceProduct: 0,
+    //     oneProductSum: 0,
+    //     quantityShowProduct: 1,
+
+
+
+
 
     //Картинка кнопки плюс
     const headerBasketSubboxBottomMinusPlus = document.createElement('img');
@@ -1940,6 +1985,30 @@ function createPopUp() {
     const headerBasketSubboxBottomPlusBtn = document.createElement('span');
     headerBasketSubboxBottomPlusBtn.classList.add('header__basket-subbox-bottom-plus-btn');
     headerBasketSubboxBottomPlusBtn.appendChild(headerBasketSubboxBottomMinusPlus);
+
+    headerBasketSubboxBottomPlusBtn.addEventListener('click', () => {
+        const headerBasketSubboxAllSumNumber = document.querySelector('.header__basket-subbox-all-sum-number');
+        const rightSideBarBasketSum = document.querySelector('.right-side-bar__basket-sum');
+
+        headerBasketSubboxBottomQuantityInput.value = (+headerBasketSubboxBottomQuantityInput.value) + 1;
+        productCardObj.quantityShowProduct = headerBasketSubboxBottomQuantityInput.value;
+        showPlusQuantityProduct();
+        productCardObj.quantityProduct = headerBasketSubboxBottomQuantityInput.value;
+
+        // headerBasketSubboxPriceSum.textContent = (+stringToNumber(headerBasketSubboxPrice)) * (+headerBasketSubboxBottomQuantityInput.value);
+        // productCardObj.oneProductSum = headerBasketSubboxPriceSum.textContent;
+        // headerBasketSubboxPriceSum.textContent = numberToString(headerBasketSubboxPriceSum);
+
+        // if (Number(headerBasketSubboxBottomQuantityInput.value) > 1) {
+        //     headerBasketSubboxPriceSum.classList.add('header__basket-sum-one-product--active');
+        //     headreBasketSubboxDividingLine.classList.add('header__basket-sum-one-product--active');
+        //     productRubSumImg.classList.add('header__basket-sum-one-product--active');
+        // }
+
+        headerBasketSubboxAllSumNumber.textContent = (+stringToNumber(headerBasketSubboxAllSumNumber)) + (+stringToNumber(headerBasketSubboxPrice));
+        headerBasketSubboxAllSumNumber.textContent = numberToString(headerBasketSubboxAllSumNumber);
+        rightSideBarBasketSum.textContent = headerBasketSubboxAllSumNumber.textContent + ' руб.';
+    });
 
 
     //Обёртка посчёта товара
@@ -1961,6 +2030,14 @@ function createPopUp() {
     popUpInBasketBtn.classList.add('pop-up__in-basket-btn');
     popUpInBasketBtn.textContent = 'В Корзину';
     popUpInBasketBtn.appendChild(popUpInBasketBtnImg);
+
+    popUpInBasketBtn.addEventListener('click', () => {
+        productCardObj.inBasket = true;
+        console.log(productCardObj);
+        addBasketProduct(productCardObj);
+        showPlusQuantityProduct();
+        addCardSum();
+    });
 
     //Основная обёртка подсчёта количестват товара
     const popUpQuantityWrapper = document.createElement('div');
@@ -2253,7 +2330,7 @@ function createPopUp() {
 
 
 //===================================================================================
-//Активация pop-up элемента
+//Получаем координаты для отображения pop-up элемента
 //===================================================================================
 
 
@@ -2268,16 +2345,16 @@ window.onscroll = function () {
 };
 
 
-//Получаем сам pop-up 
-// const popupElement = document.querySelector('.pop-up');
+//===================================================================================
+//Функция отображения pop-up элемента
+//===================================================================================
 
-//Функция отображения pop-up
-function showPopup() {
+function showPopup(productCardObj) {
     //Отключаем прокрутку страницы когда отображается pop-up
     document.body.style.overflow = 'hidden';
     //Добавляем элементу pop-up класс активности
-    const popupElemen = createPopUp();
-    popupElemen.classList.add('active--element');
+    const popupElemen = createPopUp(productCardObj);
+    // popupElemen.classList.add('active--element');
 
     //Добавляем полученное значение в стили для pop-up
     popupElemen.style.top = windowY + 'px';
@@ -2287,27 +2364,28 @@ function showPopup() {
     document.body.appendChild(popupElemen);     
 }
 
-//Функция скрытия pop-up
+//===================================================================================
+//Функция закрытия pop-up элемента
+//===================================================================================
 function closePopup(popupElement) {
     //Возвращаем странице возможность прокручиваться
     document.body.style.overflow = '';
     //Удаляем класс для отображения у элемента pop-up
-    popupElement.classList.remove('active--element');
+    // popupElement.classList.remove('active--element');
+    // const popupEl = document.querySelector('.pop-up');
+    document.body.removeChild(popupElement);
 }
 
-// //Вешаем событие на кнопку закрытия pop-up
-// popupCloseBtn.addEventListener('click', (e) => {
-//     //Вызываем функцию скрытия pop-up
-//     closePopup();
-// });
 
-//Убираем pop-up
-//при нажатии на ESC
-// document.addEventListener('keydown', (e) => {
-//     if (e.code == 'Escape') {
-//         closePopup();
-//     }
-// });
+//===================================================================================
+//Функция закрытия pop-up элемента  при нажатии на ESC
+//===================================================================================
+document.addEventListener('keydown', (e) => {
+    const popupEl = document.querySelector('.pop-up');
+    if (e.code == 'Escape') {
+        closePopup(popupEl);
+    }
+});
 
 
 
