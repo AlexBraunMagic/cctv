@@ -725,9 +725,9 @@ function createProductCards() {
         }
         else {
             productCardObj.inBasket = false;
-            productCardObj.quantityProduct = 1;
             removeBgBasket(productImgBasketWrapper);            
-            delProductInBasket(productCardObj);
+            delProductInBasket(productCardObj);            
+            productCardObj.quantityProduct = 1;
         }
     });
 
@@ -1324,6 +1324,7 @@ function headerBasketSubboxItem(obj) {
         
         obj.quantityProduct += 1;
         headerBasketSubboxBottomQuantityInput.value = obj.quantityProduct;
+        console.log(obj.quantityProduct);
         showPlusQuantityProduct();
 
         
@@ -1603,34 +1604,35 @@ function stringToNumber(element) {
 
 
 
-//=================================================================================
-//Функция добавления количества одного товара
-//=================================================================================
+// //=================================================================================
+// //Функция добавления количества одного товара
+// //=================================================================================
 
-function sumQuantityOneProduct(inputProductValue, obj) {
-    obj.quantityProduct += 1;
-    inputProductValue.value = obj.quantityProduct;
-}
+// function sumQuantityOneProduct(inputProductValue, obj) {
+//     obj.quantityProduct += 1;
+//     inputProductValue.value = obj.quantityProduct;
+// }
 
 
-//=================================================================================
-//Функция уменьшения количества одного товара
-//=================================================================================
+// //=================================================================================
+// //Функция уменьшения количества одного товара
+// //=================================================================================
 
-function subQuantityOneProduct(inputProductValue, obj) {
+// function subQuantityOneProduct(inputProductValue, obj) {
 
-    if (inputProductValue.value > 0) {
-        obj.quantityProduct -= 1;
-        inputProductValue.value = obj.quantityProduct;
-    }
+//     if (inputProductValue.value > 0) {
+//         obj.quantityProduct -= 1;
+//         inputProductValue.value = obj.quantityProduct;
+//     }
 
-}
+// }
 
 //=================================================================================
 //Увеличение количества товаров в кружочке оранжевом
 //=================================================================================
 
 function showPlusQuantityProduct() {
+    console.log('work');
     const quantityProductBox = document.querySelector('.quantity-product__box');
     let quantityProductRightSideBar = document.querySelector('.quantity-product');
     const headerBasketSubboxItemArr = document.querySelectorAll('.header__basket-subbox-item');
@@ -1673,6 +1675,8 @@ function changeQuantityProduct(obj) {
     const quantityProductBox = document.querySelector('.quantity-product__box');
     let quantityProductRightSideBar = document.querySelector('.quantity-product');
     const headerBasketSubboxItemArr = document.querySelectorAll('.header__basket-subbox-item');
+
+    
 
     if (headerBasketSubboxItemArr.length > 0) {
         quantityProductBox.classList.add('active--element');
@@ -2000,6 +2004,17 @@ function createPopUp(productCardObj) {
 
     headerBasketSubboxMinusBtn.addEventListener('click', () => {
 
+        productCardObj.quantityProduct -= 1;
+        headerBasketSubboxBottomQuantityInput.value = productCardObj.quantityProduct;
+
+        if(headerBasketSubboxBottomQuantityInput.value > 0) {
+            if(productCardObj.inBasket) {
+                removeQuantityProductFromPopup(productCardObj);
+            }
+        }   
+
+        
+
     });
 
     //Инпут для отображения количества товара
@@ -2008,18 +2023,6 @@ function createPopUp(productCardObj) {
     headerBasketSubboxBottomQuantityInput.type = 'text';
     headerBasketSubboxBottomQuantityInput.value = productCardObj.quantityProduct;
 
-     // productCardObj
-    // id: cardId++,
-    //     productCard: '',
-    //     inBasket: false,
-    //     cartfavorite: false,
-    //     basketfavorite: false,
-    //     quantityProduct: 1,
-    //     priceProduct: 4990,
-    //     sumOneProduct: 4990,
-    //     newPriceProduct: 0,
-    //     oneProductSum: 0,
-    //     quantityShowProduct: 1,
 
 
 
@@ -2037,27 +2040,15 @@ function createPopUp(productCardObj) {
     headerBasketSubboxBottomPlusBtn.appendChild(headerBasketSubboxBottomMinusPlus);
 
     headerBasketSubboxBottomPlusBtn.addEventListener('click', () => {
-        const headerBasketSubboxAllSumNumber = document.querySelector('.header__basket-subbox-all-sum-number');
-        const rightSideBarBasketSum = document.querySelector('.right-side-bar__basket-sum');
-
-        headerBasketSubboxBottomQuantityInput.value = (+headerBasketSubboxBottomQuantityInput.value) + 1;
-        productCardObj.quantityShowProduct = headerBasketSubboxBottomQuantityInput.value;
-        showPlusQuantityProduct();
-        productCardObj.quantityProduct = headerBasketSubboxBottomQuantityInput.value;
-
-        // headerBasketSubboxPriceSum.textContent = (+stringToNumber(headerBasketSubboxPrice)) * (+headerBasketSubboxBottomQuantityInput.value);
-        // productCardObj.oneProductSum = headerBasketSubboxPriceSum.textContent;
-        // headerBasketSubboxPriceSum.textContent = numberToString(headerBasketSubboxPriceSum);
-
-        // if (Number(headerBasketSubboxBottomQuantityInput.value) > 1) {
-        //     headerBasketSubboxPriceSum.classList.add('header__basket-sum-one-product--active');
-        //     headreBasketSubboxDividingLine.classList.add('header__basket-sum-one-product--active');
-        //     productRubSumImg.classList.add('header__basket-sum-one-product--active');
-        // }
-
-        headerBasketSubboxAllSumNumber.textContent = (+stringToNumber(headerBasketSubboxAllSumNumber)) + (+stringToNumber(headerBasketSubboxPrice));
-        headerBasketSubboxAllSumNumber.textContent = numberToString(headerBasketSubboxAllSumNumber);
-        rightSideBarBasketSum.textContent = headerBasketSubboxAllSumNumber.textContent + ' руб.';
+        
+        
+        productCardObj.quantityProduct += 1;
+        headerBasketSubboxBottomQuantityInput.value = productCardObj.quantityProduct;
+        if(productCardObj.inBasket) {
+            addQuantityProductFromPopup(productCardObj);
+        }               
+        addSumAndQuantityFromPopupForOneProduct(productCardObj);
+        
     });
 
 
@@ -2083,11 +2074,14 @@ function createPopUp(productCardObj) {
 
     popUpInBasketBtn.addEventListener('click', () => {
         productCardObj.inBasket = true;
-        console.log(productCardObj);
         addBasketProduct(productCardObj);
         addBgBasketInPopup(productCardObj);
-        showPlusQuantityProduct();
-        addCardSum();
+        showPlusQuantityProductPopup(productCardObj);
+        addSumFromPopupForOneProduct(productCardObj);
+        // if(productCardObj.quantityProduct === 1) {
+            
+        // }        
+        // addCardSum();
     });
 
     //Основная обёртка подсчёта количестват товара
@@ -2231,15 +2225,15 @@ function createPopUp(productCardObj) {
     popUpRightViewingAngel1Text1.classList.add('pop-up__right-specifications-text');
     popUpRightViewingAngel1Text1.textContent = 'Горизонтальный угол обзора';
 
-    //Элемент градуса
-    const degressBox = document.createElement('sup');
-    degressBox.textContent = 'o';
+    //Элемент градуса 1
+    const degressBox1 = document.createElement('sup');
+    degressBox1.textContent = 'o';
 
     //Угол обзора 1
     const popUpRightViewingAngel1Text2 = document.createElement('div');
     popUpRightViewingAngel1Text2.classList.add('pop-up__right-specifications-text');
     popUpRightViewingAngel1Text2.textContent = '80';
-    popUpRightViewingAngel1Text2.appendChild(degressBox);
+    popUpRightViewingAngel1Text2.appendChild(degressBox1);
 
     //Блок угла обзора 1
     const popUpRightSpecificationsEvenBox6 = document.createElement('div'); 
@@ -2268,11 +2262,15 @@ function createPopUp(productCardObj) {
     popUpRightViewingAngel2Text1.classList.add('pop-up__right-specifications-text');
     popUpRightViewingAngel2Text1.textContent = 'Горизонтальный угол обзора';
 
+    //Элемент градуса 2
+    const degressBox2 = document.createElement('sup');
+    degressBox2.textContent = 'o';
+
     //Угол обзора 2
     const popUpRightViewingAngel2Text2 = document.createElement('div');
     popUpRightViewingAngel2Text2.classList.add('pop-up__right-specifications-text');
     popUpRightViewingAngel2Text2.textContent = '80';
-    popUpRightViewingAngel2Text2.appendChild(degressBox);
+    popUpRightViewingAngel2Text2.appendChild(degressBox2);
 
     //Блок угла обзора 2
     const popUpRightSpecificationsEvenBox8 = document.createElement('div'); 
@@ -2301,11 +2299,15 @@ function createPopUp(productCardObj) {
     popUpRightViewingAngel3Text1.classList.add('pop-up__right-specifications-text');
     popUpRightViewingAngel3Text1.textContent = 'Горизонтальный угол обзора';
 
+    //Элемент градуса 3
+    const degressBox3 = document.createElement('sup');
+    degressBox3.textContent = 'o';
+
     //Угол обзора 3
     const popUpRightViewingAngel3Text2 = document.createElement('div');
     popUpRightViewingAngel3Text2.classList.add('pop-up__right-specifications-text');
     popUpRightViewingAngel3Text2.textContent = '80';
-    popUpRightViewingAngel3Text2.appendChild(degressBox);
+    popUpRightViewingAngel3Text2.appendChild(degressBox3);
 
     //Блок угла обзора 3
     const popUpRightSpecificationsEvenBox10 = document.createElement('div'); 
@@ -2364,6 +2366,7 @@ function createPopUp(productCardObj) {
     popUpBox.classList.add('pop-up__box');
     popUpBox.appendChild(popUpTitleBox);
     popUpBox.appendChild(popUpInfoBox);
+    popUpBox.id = productCardObj.id;
 
 
     //Wrapper pop-up
@@ -2404,12 +2407,8 @@ function showPopup(productCardObj) {
     document.body.style.overflow = 'hidden';
     //Добавляем элементу pop-up класс активности
     const popupElemen = createPopUp(productCardObj);
-    // popupElemen.classList.add('active--element');
-
     //Добавляем полученное значение в стили для pop-up
     popupElemen.style.top = windowY + 'px';
-
-
     //Добавляем pop-up нас траницу
     document.body.appendChild(popupElemen);     
 }
@@ -2421,8 +2420,6 @@ function closePopup(popupElement) {
     //Возвращаем странице возможность прокручиваться
     document.body.style.overflow = '';
     //Удаляем класс для отображения у элемента pop-up
-    // popupElement.classList.remove('active--element');
-    // const popupEl = document.querySelector('.pop-up');
     document.body.removeChild(popupElement);
 }
 
@@ -2457,6 +2454,149 @@ function addBgBasketInPopup(productCardObj) {
 }
 
 
+//=================================================================================
+//Увеличение количества товаров в кружочке оранжевом при добавлении количества
+//товара в pop-up элементе
+//=================================================================================
+
+function showPlusQuantityProductPopup(productCardObj) {
+    const quantityProductBox = document.querySelector('.quantity-product__box');
+    const quantityProductRightSideBar = document.querySelector('.quantity-product');
+    const headerBasketSubboxItemArr = document.querySelectorAll('.header__basket-subbox-item');
+    const productInputInBasket = document.querySelectorAll('.header__basket-subbox-bottom-quantity-input');
+    const popupBox = document.querySelector('.pop-up__box');
+
+
+    for(let i = 0; i < headerBasketSubboxItemArr.length; i++) {
+        if(productCardObj.inBasket && (headerBasketSubboxItemArr[i].id === popupBox.id)) {
+            productInputInBasket[i].value =  productCardObj.quantityProduct;
+        }
+    }
+
+    quantityProductRightSideBar.textContent = Number(quantityProductRightSideBar.textContent) + productCardObj.quantityProduct;
+    quantityProductBox.classList.add('active--element');    
+}
+
+
+//=================================================================================
+//Увеличение количества товаров в popup элементе, в корзине
+//и в оранжевом кружочке
+//=================================================================================
+
+function addQuantityProductFromPopup(productCardObj) {
+    const quantityProductRightSideBar = document.querySelector('.quantity-product');
+    const headerBasketSubboxItemArr = document.querySelectorAll('.header__basket-subbox-item');
+    const productInputInBasket = document.querySelectorAll('.header__basket-subbox-bottom-quantity-input');
+    const popupBox = document.querySelector('.pop-up__box');
+
+    for(let i = 0; i < headerBasketSubboxItemArr.length; i++) {
+        if(productCardObj.inBasket && (headerBasketSubboxItemArr[i].id === popupBox.id)) {
+            productInputInBasket[i].value =  Number(productInputInBasket[i].value) + 1;
+        }
+    }
+
+    quantityProductRightSideBar.textContent = Number(quantityProductRightSideBar.textContent) + 1;
+}
+
+
+//=================================================================================
+//Уменьшение количества товаров в popup элементе, в корзине
+//и в оранжевом кружочке
+//=================================================================================
+
+function removeQuantityProductFromPopup(productCardObj) {
+    const quantityProductRightSideBar = document.querySelector('.quantity-product');
+    const headerBasketSubboxItemArr = document.querySelectorAll('.header__basket-subbox-item');
+    const productInputInBasket = document.querySelectorAll('.header__basket-subbox-bottom-quantity-input');
+    const popupBox = document.querySelector('.pop-up__box');
+
+    for(let i = 0; i < headerBasketSubboxItemArr.length; i++) {
+        if(productCardObj.inBasket && (headerBasketSubboxItemArr[i].id === popupBox.id)) {
+            productInputInBasket[i].value =  Number(productInputInBasket[i].value) - 1;
+        }
+    }
+
+    quantityProductRightSideBar.textContent = Number(quantityProductRightSideBar.textContent) - 1;
+}
+
+
+
+//=================================================================================
+//Добавление суммы товаров при увеличении количества товара из pop-up
+//=================================================================================
+
+function addSumAndQuantityFromPopupForOneProduct(productCardObj) {
+    const sumOneProduct = document.querySelectorAll('.header__basket-subbox-sum-price');
+    const productInBasketArray = document.querySelectorAll('.header__basket-subbox-item');
+    const oneProductPopup = document.querySelector('.pop-up__box');
+
+    
+
+    productCardObj.sumOneProduct += productCardObj.newPriceProduct;
+
+    for(let i = 0; i < productInBasketArray.length; i++) {
+        if(productCardObj.id == productInBasketArray[i].id && productInBasketArray[i].id == oneProductPopup.id) {
+            // if((productCardObj.sumOneProduct > productCardObj.newPriceProduct) && productCardObj.inBasket === true) {
+            //     sumOneProduct.textContent = productCardObj.sumOneProduct;
+            // }
+            sumOneProduct.textContent = productCardObj.sumOneProduct;
+        }
+    }
+}
+
+
+//=================================================================================
+//Добавление суммы товаров при добавлении товара из pop-up
+//=================================================================================
+
+function addSumFromPopupForOneProduct(productCardObj) {
+    const productInBasketArray = document.querySelectorAll('.header__basket-subbox-item');
+    const dividingLine = document.querySelectorAll('.header__basket-subbox-dividing-line');
+    const sumOneProduct = document.querySelectorAll('.header__basket-subbox-sum-price');
+    const rubImgOneProductSum = document.querySelectorAll('.product__rub-sum-img');
+    const oneProductPopup = document.querySelector('.pop-up__box');
+
+
+    // product__rub-sum-img header__basket-sum-one-product--active
+
+    
+    
+
+    for(let i = 0; i < productInBasketArray.length; i++) {
+       
+        if((productCardObj.id == productInBasketArray[i].id) && (productInBasketArray[i].id == oneProductPopup.id)) {
+            // if((productCardObj.sumOneProduct > productCardObj.newPriceProduct) && productCardObj.inBasket === true) {               
+            //     sumOneProduct[i].textContent = productCardObj.sumOneProduct;
+            //     sumOneProduct[i].classList.add('active--element');
+            //     dividingLine[i].classList.add('header__basket-sum-one-product--active');
+            //     rubImgOneProductSum[i].classList.add('header__basket-sum-one-product--active');
+            // }
+
+            console.log('work');
+
+            sumOneProduct[i].textContent = productCardObj.sumOneProduct;
+            sumOneProduct[i].classList.add('active--element');
+            dividingLine[i].classList.add('header__basket-sum-one-product--active');
+            rubImgOneProductSum[i].classList.add('header__basket-sum-one-product--active');
+
+           
+            
+        }
+    }
+}
+
+
+
+
+     // productCardObj
+    // id: cardId++,
+    //     productCard: '',
+    //     inBasket: false,
+    //     cartfavorite: false,
+    //     basketfavorite: false,
+    //     quantityProduct: 1,
+    //     newPriceProduct: 4990,
+    //     sumOneProduct: 4990,
 
 
 
