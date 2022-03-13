@@ -1604,28 +1604,6 @@ function stringToNumber(element) {
 
 
 
-// //=================================================================================
-// //Функция добавления количества одного товара
-// //=================================================================================
-
-// function sumQuantityOneProduct(inputProductValue, obj) {
-//     obj.quantityProduct += 1;
-//     inputProductValue.value = obj.quantityProduct;
-// }
-
-
-// //=================================================================================
-// //Функция уменьшения количества одного товара
-// //=================================================================================
-
-// function subQuantityOneProduct(inputProductValue, obj) {
-
-//     if (inputProductValue.value > 0) {
-//         obj.quantityProduct -= 1;
-//         inputProductValue.value = obj.quantityProduct;
-//     }
-
-// }
 
 //=================================================================================
 //Увеличение количества товаров в кружочке оранжевом
@@ -2006,12 +1984,24 @@ function createPopUp(productCardObj) {
 
         productCardObj.quantityProduct -= 1;
         headerBasketSubboxBottomQuantityInput.value = productCardObj.quantityProduct;
+        
+        removeQuantityProductFromPopup(productCardObj);
+        subSumAndSubQuantityFromPopupForOneProduct(productCardObj);
 
-        if(headerBasketSubboxBottomQuantityInput.value > 0) {
-            if(productCardObj.inBasket) {
-                removeQuantityProductFromPopup(productCardObj);
-            }
-        }   
+        // if(headerBasketSubboxBottomQuantityInput.value > 0) {
+        //     if(productCardObj.inBasket) {
+        //         removeQuantityProductFromPopup(productCardObj);
+        //     }
+        //     subSumAndSubQuantityFromPopupForOneProduct(productCardObj);
+        // }   
+        if(Number(headerBasketSubboxBottomQuantityInput.value) < 1) {
+            console.log('work delete product');            
+            productCardObj.inBasket = false;
+            productCardObj.sumOneProduct = productCardObj.newPriceProduct;        
+            delOneZeroProduct(productCardObj);
+            removeBgBasketWhenDelProduct(productCardObj);
+            productCardObj.quantityProduct = 1;    
+        }
 
         
 
@@ -2046,9 +2036,8 @@ function createPopUp(productCardObj) {
         headerBasketSubboxBottomQuantityInput.value = productCardObj.quantityProduct;
         if(productCardObj.inBasket) {
             addQuantityProductFromPopup(productCardObj);
-        }               
-        addSumAndQuantityFromPopupForOneProduct(productCardObj);
-        
+        }                      
+        addSumAndQuantityFromPopupForOneProduct(productCardObj);        
     });
 
 
@@ -2078,10 +2067,6 @@ function createPopUp(productCardObj) {
         addBgBasketInPopup(productCardObj);
         showPlusQuantityProductPopup(productCardObj);
         addSumFromPopupForOneProduct(productCardObj);
-        // if(productCardObj.quantityProduct === 1) {
-            
-        // }        
-        // addCardSum();
     });
 
     //Основная обёртка подсчёта количестват товара
@@ -2506,6 +2491,7 @@ function addQuantityProductFromPopup(productCardObj) {
 
 function removeQuantityProductFromPopup(productCardObj) {
     const quantityProductRightSideBar = document.querySelector('.quantity-product');
+    const quantityProductBox = document.querySelector('.quantity-product__box');
     const headerBasketSubboxItemArr = document.querySelectorAll('.header__basket-subbox-item');
     const productInputInBasket = document.querySelectorAll('.header__basket-subbox-bottom-quantity-input');
     const popupBox = document.querySelector('.pop-up__box');
@@ -2517,6 +2503,10 @@ function removeQuantityProductFromPopup(productCardObj) {
     }
 
     quantityProductRightSideBar.textContent = Number(quantityProductRightSideBar.textContent) - 1;
+
+    if (Number(quantityProductRightSideBar.textContent) <= 0) {
+        quantityProductBox.classList.remove('active--element');
+    }
 }
 
 
@@ -2529,24 +2519,33 @@ function addSumAndQuantityFromPopupForOneProduct(productCardObj) {
     const sumOneProduct = document.querySelectorAll('.header__basket-subbox-sum-price');
     const productInBasketArray = document.querySelectorAll('.header__basket-subbox-item');
     const oneProductPopup = document.querySelector('.pop-up__box');
+    const allSum = document.querySelector('.header__basket-subbox-all-sum-number');
+    const basketAllSum = document.querySelector('.right-side-bar__basket-sum');
+
+    const dividingLine = document.querySelectorAll('.header__basket-subbox-dividing-line');
+    const rubImgOneProductSum = document.querySelectorAll('.product__rub-sum-img');
 
     
 
     productCardObj.sumOneProduct += productCardObj.newPriceProduct;
+    
 
     for(let i = 0; i < productInBasketArray.length; i++) {
-        if(productCardObj.id == productInBasketArray[i].id && productInBasketArray[i].id == oneProductPopup.id) {
-            // if((productCardObj.sumOneProduct > productCardObj.newPriceProduct) && productCardObj.inBasket === true) {
-            //     sumOneProduct.textContent = productCardObj.sumOneProduct;
-            // }
-            sumOneProduct.textContent = productCardObj.sumOneProduct;
+        if(productCardObj.id == productInBasketArray[i].id && productInBasketArray[i].id == oneProductPopup.id && productCardObj.inBasket === true) {
+            sumOneProduct[i].textContent = numberToString(productCardObj.sumOneProduct);
+            allSum.textContent = numberToString(Number(stringToNumber(allSum)) + productCardObj.newPriceProduct);            
+            basketAllSum.textContent = allSum.textContent + ' руб';
+
+            sumOneProduct[i].classList.add('header__basket-sum-one-product--active');
+            dividingLine[i].classList.add('header__basket-sum-one-product--active');
+            rubImgOneProductSum[i].classList.add('header__basket-sum-one-product--active');
         }
     }
 }
 
 
 //=================================================================================
-//Добавление суммы товаров при добавлении товара из pop-up
+//Отображение суммы одного товаров при добавлении товара из pop-up
 //=================================================================================
 
 function addSumFromPopupForOneProduct(productCardObj) {
@@ -2555,32 +2554,62 @@ function addSumFromPopupForOneProduct(productCardObj) {
     const sumOneProduct = document.querySelectorAll('.header__basket-subbox-sum-price');
     const rubImgOneProductSum = document.querySelectorAll('.product__rub-sum-img');
     const oneProductPopup = document.querySelector('.pop-up__box');
+    const allSum = document.querySelector('.header__basket-subbox-all-sum-number');
+    const basketAllSum = document.querySelector('.right-side-bar__basket-sum');
 
 
-    // product__rub-sum-img header__basket-sum-one-product--active
-
-    
+   
     
 
     for(let i = 0; i < productInBasketArray.length; i++) {
        
         if((productCardObj.id == productInBasketArray[i].id) && (productInBasketArray[i].id == oneProductPopup.id)) {
-            // if((productCardObj.sumOneProduct > productCardObj.newPriceProduct) && productCardObj.inBasket === true) {               
-            //     sumOneProduct[i].textContent = productCardObj.sumOneProduct;
-            //     sumOneProduct[i].classList.add('active--element');
-            //     dividingLine[i].classList.add('header__basket-sum-one-product--active');
-            //     rubImgOneProductSum[i].classList.add('header__basket-sum-one-product--active');
-            // }
-
-            console.log('work');
-
-            sumOneProduct[i].textContent = productCardObj.sumOneProduct;
-            sumOneProduct[i].classList.add('active--element');
-            dividingLine[i].classList.add('header__basket-sum-one-product--active');
-            rubImgOneProductSum[i].classList.add('header__basket-sum-one-product--active');
-
            
+
+            allSum.textContent = numberToString(Number(stringToNumber(allSum)) + productCardObj.sumOneProduct);
+            sumOneProduct[i].textContent =  numberToString(productCardObj.sumOneProduct);
+            basketAllSum.textContent = allSum.textContent + ' руб';
+            allSum.classList.add('header__basket-subbox-all-sum-number');
+            // basketAllSum.classList.add('active--element');
+            sumOneProduct[i].classList.add('header__basket-sum-one-product--active');
+            dividingLine[i].classList.add('header__basket-sum-one-product--active');
+            rubImgOneProductSum[i].classList.add('header__basket-sum-one-product--active');     
             
+        }
+    }
+}
+
+
+
+//=================================================================================
+//Уменьшение суммы товаров при увеличении количества товара из pop-up
+//=================================================================================
+
+function subSumAndSubQuantityFromPopupForOneProduct(productCardObj) {
+    const sumOneProduct = document.querySelectorAll('.header__basket-subbox-sum-price');
+    const productInBasketArray = document.querySelectorAll('.header__basket-subbox-item');
+    const oneProductPopup = document.querySelector('.pop-up__box');
+    const allSum = document.querySelector('.header__basket-subbox-all-sum-number');
+    const basketAllSum = document.querySelector('.right-side-bar__basket-sum');
+
+    const dividingLine = document.querySelectorAll('.header__basket-subbox-dividing-line');
+    const rubImgOneProductSum = document.querySelectorAll('.product__rub-sum-img');
+
+    
+
+    productCardObj.sumOneProduct -= productCardObj.newPriceProduct;
+    
+
+    for(let i = 0; i < productInBasketArray.length; i++) {
+        if(productCardObj.id == productInBasketArray[i].id && productInBasketArray[i].id == oneProductPopup.id && productCardObj.inBasket === true) {
+            sumOneProduct[i].textContent = numberToString(productCardObj.sumOneProduct);
+            allSum.textContent = numberToString(Number(stringToNumber(allSum)) - productCardObj.newPriceProduct);            
+            basketAllSum.textContent = allSum.textContent + ' руб';            
+        }
+        if(productCardObj.quantityProduct === 1) {
+            sumOneProduct[i].classList.remove('header__basket-sum-one-product--active');
+            dividingLine[i].classList.remove('header__basket-sum-one-product--active');
+            rubImgOneProductSum[i].classList.remove('header__basket-sum-one-product--active');
         }
     }
 }
