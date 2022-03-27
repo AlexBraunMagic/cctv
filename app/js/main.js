@@ -470,12 +470,18 @@ function delAllProductInBasket() {
     }
 
 
+    const productOneInputQuantityValue = document.querySelector('.product-one__input-quantity-value');
+    if (productOneInputQuantityValue) {
+        productOneInputQuantityValue.value = 1;
+    }
+
+
     //Получаем все обёртки корзины у карточек
     const basketProductWrapper = document.querySelectorAll('.product__img-basket-wrapper');
     for (let i = 0; i < productCardObjArr.length; i++) {
         productCardObjArr[i].inBasket = false;
-        productCardObjArr[i].oneProductSum = productCardObjArr[i].newPriceProduct;
-        productCardObjArr[i].quantityShowProduct = 1;
+        productCardObjArr[i].sumOneProduct = productCardObjArr[i].newPriceProduct;
+        productCardObjArr[i].quantityProduct = 1;
         removeBgBasket(basketProductWrapper[i]);
     }
 
@@ -517,6 +523,17 @@ const productCardObjArr = [];
 
 let cardId = 1;
 
+const cloneProductCardObj = {
+    id: cardId,
+    productCard: '',
+    inBasket: false,
+    cartfavorite: false,
+    basketfavorite: false,
+    quantityProduct: 1,
+    sumOneProduct: 4990,
+    newPriceProduct: 4990,
+};
+
 
 //===================================================================================
 //Функции создания карточки
@@ -536,6 +553,8 @@ function createProductCards() {
         sumOneProduct: 4990,
         newPriceProduct: 4990,
     };
+
+    // productCardObj.id += 1;
 
     productCardObjArr.push(productCardObj);
 
@@ -600,6 +619,7 @@ function createProductCards() {
     productImgBox.appendChild(productImg);
 
     productImgBox.addEventListener('click', (e) => {
+        console.log('popup id ' + productCardObj.id);
         showPopup(productCardObj);
     });
 
@@ -654,7 +674,7 @@ function createProductCards() {
     productNewPriceSum.classList.add('product__new-price-sum');
     productNewPriceSum.textContent = numberToString(productCardObj.sumOneProduct);
 
-   
+
 
     //Картика валюты рубль
     const productRubSumImg = document.createElement('img');
@@ -719,14 +739,13 @@ function createProductCards() {
             productCardObj.inBasket = true;
             addBgBasket(productImgBasketWrapper);
             addBasketProduct(productCardObj);
-            console.log(productCardObj);
             addCardSum(productNewPriceSum, productCardObj);
             showPlusQuantityProduct();
         }
         else {
             productCardObj.inBasket = false;
-            removeBgBasket(productImgBasketWrapper);            
-            delProductInBasket(productCardObj);            
+            removeBgBasket(productImgBasketWrapper);
+            delProductInBasket(productCardObj);
             productCardObj.quantityProduct = 1;
         }
     });
@@ -788,7 +807,11 @@ function addProductCard() {
     }
 }
 
-addProductCard();
+if (productNetBoxWarpper) {
+
+    addProductCard();
+}
+
 
 
 
@@ -830,6 +853,19 @@ function addItemBoxNet() {
 
 }
 
+if (showMoreBtn) {
+    //Навешиваем событие клика на кнопку
+    //Добавить ещё
+    showMoreBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        //Вызываем функцию
+        addItemBoxNet();
+    });
+}
+
+
+
 
 
 
@@ -844,92 +880,92 @@ function addItemBoxNet() {
 //и добавления класса для изменения цвета у дочернего элемента
 const topFilterPositionNet = document.querySelector('.top__filter-position-img-net');
 
-//Получаем дочерний элемент родителя
-//для навешивания события
-const topfilterPositionNetChild = topFilterPositionNet.firstElementChild;
-
 //Получаем родителя элемента по которому будет производится клик
 //и добавления класса для изменения цвета у дочернего элемента
 const topFilterPositionList = document.querySelector('.top__filter-position-img-list');
 
-//Получаем дочерний элемент родителя
-//для навешивания события
-const topfilterPositionListChild = topFilterPositionList.firstElementChild;
 
-function showPositionNet() {
+if (topFilterPositionNet && topFilterPositionList) {
+    //Получаем дочерний элемент родителя
+    //для навешивания события
+    const topfilterPositionNetChild = topFilterPositionNet.firstElementChild;
 
-    let productItemsBox = document.getElementsByClassName('product__item-box');
 
-    //Проверяем элемент клика на наличие класса
-    if (topFilterPositionNet.classList.contains('top__filter-position-img-net--active') === false) {
 
-        //У элемента убираем класс для изменения цвета
-        topFilterPositionList.classList.remove('top__filter-position-img-list--active');
+    //Получаем дочерний элемент родителя
+    //для навешивания события
+    const topfilterPositionListChild = topFilterPositionList.firstElementChild;
 
-        //У элемента меняем цвет при клике
-        topFilterPositionNet.classList.add('top__filter-position-img-net--active');
+    function showPositionNet() {
 
-        //Перебираем элементы
-        for (let itemBox of productItemsBox) {
+        let productItemsBox = document.getElementsByClassName('product__item-box');
 
-            //Проверяем элементы на наличие класса
-            if (itemBox.classList.contains('product__item-box-list--active')) {
+        //Проверяем элемент клика на наличие класса
+        if (topFilterPositionNet.classList.contains('top__filter-position-img-net--active') === false) {
 
-                //Убираем у списка класс активности
-                //для отображения карточек сеткой
-                itemBox.classList.remove('product__item-box-list--active');
+            //У элемента убираем класс для изменения цвета
+            topFilterPositionList.classList.remove('top__filter-position-img-list--active');
+
+            //У элемента меняем цвет при клике
+            topFilterPositionNet.classList.add('top__filter-position-img-net--active');
+
+            //Перебираем элементы
+            for (let itemBox of productItemsBox) {
+
+                //Проверяем элементы на наличие класса
+                if (itemBox.classList.contains('product__item-box-list--active')) {
+
+                    //Убираем у списка класс активности
+                    //для отображения карточек сеткой
+                    itemBox.classList.remove('product__item-box-list--active');
+                }
+            }
+        }
+
+    }
+
+    function showPositionList() {
+
+        let productItemsBox = document.getElementsByClassName('product__item-box');
+
+        //Проверяем элемент клика на наличие класса
+        if (topFilterPositionList.classList.contains('top__filter-position-img-list--active') === false) {
+
+            //У элемента меняем цвет при клике
+            topFilterPositionList.classList.add('top__filter-position-img-list--active');
+
+            //У элемента убираем класс для изменения цвета
+            topFilterPositionNet.classList.remove('top__filter-position-img-net--active');
+
+            //Перебираем элементы
+            for (let itemBox of productItemsBox) {
+
+                //Проверяем элементы на наличие класса
+                if (itemBox.classList.contains('product__item-box-list--active') === false) {
+
+                    //Добавляем элементам сетки класс активности
+                    //для отображения карточек списком
+                    itemBox.classList.add('product__item-box-list--active');
+                }
             }
         }
     }
 
+    //Вешаем событие на дочерний элемент
+    topfilterPositionListChild.addEventListener('click', function (e) {
+        showPositionList();
+    });
+
+    //Вешаем событие на дочерний элемент    
+    topfilterPositionNetChild.addEventListener('click', function (e) {
+        // e.preventDefault();
+        showPositionNet();
+    });
 }
 
-function showPositionList() {
 
-    let productItemsBox = document.getElementsByClassName('product__item-box');
 
-    //Проверяем элемент клика на наличие класса
-    if (topFilterPositionList.classList.contains('top__filter-position-img-list--active') === false) {
 
-        //У элемента меняем цвет при клике
-        topFilterPositionList.classList.add('top__filter-position-img-list--active');
-
-        //У элемента убираем класс для изменения цвета
-        topFilterPositionNet.classList.remove('top__filter-position-img-net--active');
-
-        //Перебираем элементы
-        for (let itemBox of productItemsBox) {
-
-            //Проверяем элементы на наличие класса
-            if (itemBox.classList.contains('product__item-box-list--active') === false) {
-
-                //Добавляем элементам сетки класс активности
-                //для отображения карточек списком
-                itemBox.classList.add('product__item-box-list--active');
-            }
-        }
-    }
-}
-
-//Вешаем событие на дочерний элемент
-topfilterPositionListChild.addEventListener('click', function (e) {
-    showPositionList();
-});
-
-//Вешаем событие на дочерний элемент    
-topfilterPositionNetChild.addEventListener('click', function (e) {
-    // e.preventDefault();
-    showPositionNet();
-});
-
-//Навешиваем событие клика на кнопку
-//Добавить ещё
-showMoreBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-
-    //Вызываем функцию
-    addItemBoxNet();
-});
 
 //===================================================================================
 //Pagination
@@ -941,65 +977,69 @@ const element = document.querySelector(".pagination ul");
 let totalPages = 20;
 let page = 1;
 
-//calling function with passing parameters and adding inside element which is ul tag
-element.innerHTML = createPagination(totalPages, page);
-function createPagination(totalPages, page) {
-    let liTag = '';
-    let active;
-    let beforePage = page - 1;
-    let afterPage = page + 1;
-    if (page > 1) { //show the next button if the page value is greater than 1
-        liTag += `<li class="btn prev" onclick="createPagination(totalPages, ${page - 1})"><span><i class="fas fa-angle-left"></i>Предыдущая</span></li>`;
-    }
-
-    if (page > 2) { //if page value is less than 2 then add 1 after the previous button
-        liTag += `<li class="first numb" onclick="createPagination(totalPages, 1)"><span>1</span></li>`;
-        if (page > 3) { //if page value is greater than 3 then add this (...) after the first li or page
-            liTag += `<li class="dots"><span>...</span></li>`;
+if (element) {
+    //calling function with passing parameters and adding inside element which is ul tag
+    element.innerHTML = createPagination(totalPages, page);
+    function createPagination(totalPages, page) {
+        let liTag = '';
+        let active;
+        let beforePage = page - 1;
+        let afterPage = page + 1;
+        if (page > 1) { //show the next button if the page value is greater than 1
+            liTag += `<li class="btn prev" onclick="createPagination(totalPages, ${page - 1})"><span><i class="fas fa-angle-left"></i>Предыдущая</span></li>`;
         }
-    }
 
-    // how many pages or li show before the current li
-    if (page == totalPages) {
-        beforePage = beforePage - 2;
-    } else if (page == totalPages - 1) {
-        beforePage = beforePage - 1;
-    }
-    // how many pages or li show after the current li
-    if (page == 1) {
-        afterPage = afterPage + 2;
-    } else if (page == 2) {
-        afterPage = afterPage + 1;
-    }
+        if (page > 2) { //if page value is less than 2 then add 1 after the previous button
+            liTag += `<li class="first numb" onclick="createPagination(totalPages, 1)"><span>1</span></li>`;
+            if (page > 3) { //if page value is greater than 3 then add this (...) after the first li or page
+                liTag += `<li class="dots"><span>...</span></li>`;
+            }
+        }
 
-    for (var plength = beforePage; plength <= afterPage; plength++) {
-        if (plength > totalPages) { //if plength is greater than totalPage length then continue
-            continue;
+        // how many pages or li show before the current li
+        if (page == totalPages) {
+            beforePage = beforePage - 2;
+        } else if (page == totalPages - 1) {
+            beforePage = beforePage - 1;
         }
-        if (plength == 0) { //if plength is 0 than add +1 in plength value
-            plength = plength + 1;
+        // how many pages or li show after the current li
+        if (page == 1) {
+            afterPage = afterPage + 2;
+        } else if (page == 2) {
+            afterPage = afterPage + 1;
         }
-        if (page == plength) { //if page is equal to plength than assign active string in the active variable
-            active = "active";
-        } else { //else leave empty to the active variable
-            active = "";
-        }
-        liTag += `<li class="numb ${active}" onclick="createPagination(totalPages, ${plength})"><span>${plength}</span></li>`;
-    }
 
-    if (page < totalPages - 1) { //if page value is less than totalPage value by -1 then show the last li or page
-        if (page < totalPages - 2) { //if page value is less than totalPage value by -2 then add this (...) before the last li or page
-            liTag += `<li class="dots"><span>...</span></li>`;
+        for (var plength = beforePage; plength <= afterPage; plength++) {
+            if (plength > totalPages) { //if plength is greater than totalPage length then continue
+                continue;
+            }
+            if (plength == 0) { //if plength is 0 than add +1 in plength value
+                plength = plength + 1;
+            }
+            if (page == plength) { //if page is equal to plength than assign active string in the active variable
+                active = "active";
+            } else { //else leave empty to the active variable
+                active = "";
+            }
+            liTag += `<li class="numb ${active}" onclick="createPagination(totalPages, ${plength})"><span>${plength}</span></li>`;
         }
-        liTag += `<li class="last numb" onclick="createPagination(totalPages, ${totalPages})"><span>${totalPages}</span></li>`;
-    }
 
-    if (page < totalPages) { //show the next button if the page value is less than totalPage(20)
-        liTag += `<li class="btn next" onclick="createPagination(totalPages, ${page + 1})"><span>Следующая <i class="fas fa-angle-right"></i></span></li>`;
+        if (page < totalPages - 1) { //if page value is less than totalPage value by -1 then show the last li or page
+            if (page < totalPages - 2) { //if page value is less than totalPage value by -2 then add this (...) before the last li or page
+                liTag += `<li class="dots"><span>...</span></li>`;
+            }
+            liTag += `<li class="last numb" onclick="createPagination(totalPages, ${totalPages})"><span>${totalPages}</span></li>`;
+        }
+
+        if (page < totalPages) { //show the next button if the page value is less than totalPage(20)
+            liTag += `<li class="btn next" onclick="createPagination(totalPages, ${page + 1})"><span>Следующая <i class="fas fa-angle-right"></i></span></li>`;
+        }
+        element.innerHTML = liTag; //add li tag inside ul tag
+        return liTag; //reurn the li tag
     }
-    element.innerHTML = liTag; //add li tag inside ul tag
-    return liTag; //reurn the li tag
 }
+
+
 
 
 //===================================================================================
@@ -1046,10 +1086,10 @@ function removeBgCardFaivorite() {
 function addBgBasketFaivorite() {
     const heartBasketCard = document.querySelectorAll('.heart');
     const basketCard = document.querySelectorAll('.header__basket-subbox-item');
-   
 
 
-    for (let j = 0; j < basketCard.length; j++ ) {
+
+    for (let j = 0; j < basketCard.length; j++) {
         for (let i = 0; i < productCardObjArr.length; i++) {
             if (basketCard[j].id == productCardObjArr[i].id && productCardObjArr[i].cartfavorite === true) {
                 heartBasketCard[j].classList.add('heart--active-bg');
@@ -1070,10 +1110,10 @@ function addBgBasketFaivorite() {
 function removeBgBasketFaivorite() {
     const heartBasketCard = document.querySelectorAll('.heart');
     const basketCard = document.querySelectorAll('.header__basket-subbox-item');
-   
 
 
-    for (let j = 0; j < basketCard.length; j++ ) {
+
+    for (let j = 0; j < basketCard.length; j++) {
         for (let i = 0; i < productCardObjArr.length; i++) {
             if (basketCard[j].id == productCardObjArr[i].id && productCardObjArr[i].cartfavorite === false) {
                 heartBasketCard[j].classList.remove('heart--active-bg');
@@ -1182,6 +1222,10 @@ function headerBasketSubboxItem(obj) {
         removeBgBasketWhenDelProduct(obj);
         obj.quantityProduct = 1;
         obj.oneProductSum = obj.newPriceProduct;
+        const productOneInputQuantityValue = document.querySelector('.product-one__input-quantity-value');
+        if (productOneInputQuantityValue) {
+            productOneInputQuantityValue.value = 1;
+        }
     });
 
 
@@ -1276,28 +1320,37 @@ function headerBasketSubboxItem(obj) {
 
     headerBasketSubboxBottomMinusBtn.addEventListener('click', () => {
 
+        const productOneInputQuantityValue = document.querySelector('.product-one__input-quantity-value');
 
-        
-        obj.quantityProduct -= 1;    
-        headerBasketSubboxBottomQuantityInput.value = obj.quantityProduct;    
-        subCardSum(headerBasketSubboxPriceSum, obj);        
+
+
+        obj.quantityProduct -= 1;
+        headerBasketSubboxBottomQuantityInput.value = obj.quantityProduct;
+
+        subCardSum(headerBasketSubboxPriceSum, obj);
         showMinusQuantityProduct();
 
-               
-        if (Number(headerBasketSubboxBottomQuantityInput.value) === 1) {                       
+        if (productOneInputQuantityValue) {
+            productOneInputQuantityValue.value = headerBasketSubboxBottomQuantityInput.value;
+        }
+
+
+        if (Number(headerBasketSubboxBottomQuantityInput.value) === 1) {
             obj.quantityProduct = 1;
             obj.sumOneProduct = obj.newPriceProduct;
             headerBasketSubboxPriceSum.classList.remove('header__basket-sum-one-product--active');
             headreBasketSubboxDividingLine.classList.remove('header__basket-sum-one-product--active');
             productRubSumImg.classList.remove('header__basket-sum-one-product--active');
         }
-        if(Number(headerBasketSubboxBottomQuantityInput.value) < 1) {
-            console.log('work delete product');            
+        if (Number(headerBasketSubboxBottomQuantityInput.value) < 1) {
             obj.inBasket = false;
-            obj.sumOneProduct = obj.newPriceProduct;        
+            obj.sumOneProduct = obj.newPriceProduct;
             delOneZeroProduct(obj);
             removeBgBasketWhenDelProduct(obj);
-            obj.quantityProduct = 1;    
+            obj.quantityProduct = 1;
+        }
+        if (productOneInputQuantityValue) {
+            productOneInputQuantityValue.value = obj.quantityProduct;
         }
     });
 
@@ -1321,14 +1374,23 @@ function headerBasketSubboxItem(obj) {
 
     headerBasketSubboxBottomPlusBtn.addEventListener('click', () => {
 
-        
+        const productOneInputQuantityValue = document.querySelector('.product-one__input-quantity-value');
+
+
+
         obj.quantityProduct += 1;
         headerBasketSubboxBottomQuantityInput.value = obj.quantityProduct;
-        console.log(obj.quantityProduct);
+        if (productOneInputQuantityValue) {
+            productOneInputQuantityValue.value = obj.quantityProduct;
+        }
         showPlusQuantityProduct();
 
-        
-        
+
+        if (productOneInputQuantityValue) {
+            productOneInputQuantityValue.value = headerBasketSubboxBottomQuantityInput.value;
+        }
+
+
         addCardSum(headerBasketSubboxPriceSum, obj);
 
         if (Number(headerBasketSubboxBottomQuantityInput.value) > 1) {
@@ -1419,7 +1481,7 @@ function addCardSum(element, productCardObj) {
         headerBasketSubboxAllSumNumber.textContent = '0';
     }
 
-    
+
 
     productCardObj.sumOneProduct = productCardObj.quantityProduct * productCardObj.newPriceProduct;
     headerBasketSubboxAllSumNumber.textContent = numberToString((+stringToNumber(headerBasketSubboxAllSumNumber)) + productCardObj.newPriceProduct);
@@ -1469,7 +1531,7 @@ function delProductInBasket(productCardObj) {
         headerBasketSubboxAllSumNumber.textContent = '0';
     }
 
-    for (let item of productInBasket) {        
+    for (let item of productInBasket) {
         if ((productCardObj.id == item.id) && (productCardObj.inBasket === false)) {
             if (productCardObj.sumOneProduct > 0) {
                 headerBasketSubboxAllSumNumber.textContent = numberToString((+stringToNumber(headerBasketSubboxAllSumNumber)) - productCardObj.sumOneProduct);
@@ -1520,7 +1582,7 @@ function delOneZeroProduct(productCardObj) {
         headerBasketSubboxAllSumNumber.textContent = '0';
     }
 
-    for (let item of productInBasket) {        
+    for (let item of productInBasket) {
         if ((productCardObj.id == item.id) && (productCardObj.inBasket === false)) {
             productInBasketWrapper.removeChild(item);
         }
@@ -1549,14 +1611,14 @@ function removeBgBasketWhenDelProduct(productCardObj) {
     const allProductCard = document.querySelectorAll('.product__item-box');
     const productCardBtnBasketWrapper = document.querySelectorAll('.product__img-basket-wrapper');
 
-    for(let i = 0; i < allProductCard.length; i++) {
-        
-        
-        if((allProductCard[i].id == productCardObj.id) && (productCardObj.inBasket === false)) {
+    for (let i = 0; i < allProductCard.length; i++) {
+
+
+        if ((allProductCard[i].id == productCardObj.id) && (productCardObj.inBasket === false)) {
             removeBgBasket(productCardBtnBasketWrapper[i]);
         }
     }
-    
+
 }
 
 
@@ -1580,7 +1642,7 @@ function numberToString(item) {
         return firstNumSum;
     }
 
-    
+
 }
 
 //=================================================================================
@@ -1654,7 +1716,7 @@ function changeQuantityProduct(obj) {
     let quantityProductRightSideBar = document.querySelector('.quantity-product');
     const headerBasketSubboxItemArr = document.querySelectorAll('.header__basket-subbox-item');
 
-    
+
 
     if (headerBasketSubboxItemArr.length > 0) {
         quantityProductBox.classList.add('active--element');
@@ -1687,7 +1749,7 @@ bodyBox.addEventListener('click', (e) => {
 //Создание pop-up элемента
 //===================================================================================
 
-function createPopUp(productCardObj) {    
+function createPopUp(productCardObj) {
 
     //title шапки pop-up
     const popUpTitle = document.createElement('h2');
@@ -1982,28 +2044,40 @@ function createPopUp(productCardObj) {
 
     headerBasketSubboxMinusBtn.addEventListener('click', () => {
 
+
+
         productCardObj.quantityProduct -= 1;
         headerBasketSubboxBottomQuantityInput.value = productCardObj.quantityProduct;
-        
         removeQuantityProductFromPopup(productCardObj);
         subSumAndSubQuantityFromPopupForOneProduct(productCardObj);
 
-        // if(headerBasketSubboxBottomQuantityInput.value > 0) {
-        //     if(productCardObj.inBasket) {
-        //         removeQuantityProductFromPopup(productCardObj);
-        //     }
-        //     subSumAndSubQuantityFromPopupForOneProduct(productCardObj);
-        // }   
-        if(Number(headerBasketSubboxBottomQuantityInput.value) < 1) {
-            console.log('work delete product');            
+        if (headerBasketSubboxBottomQuantityInput.value < 1) {
             productCardObj.inBasket = false;
-            productCardObj.sumOneProduct = productCardObj.newPriceProduct;        
+            productCardObj.sumOneProduct = productCardObj.newPriceProduct;
             delOneZeroProduct(productCardObj);
             removeBgBasketWhenDelProduct(productCardObj);
-            productCardObj.quantityProduct = 1;    
+            productCardObj.quantityProduct = 1;
+            headerBasketSubboxBottomQuantityInput.value = 1;
         }
 
-        
+
+
+        // if(productCardObj.quantityProduct > 0) {
+
+        // }
+        // else {
+        //     headerBasketSubboxBottomQuantityInput.value = 1;
+        //     productCardObj.quantityProduct = 1;
+        // }
+
+
+        // removeQuantityProductFromPopup(productCardObj);
+
+
+
+
+
+
 
     });
 
@@ -2030,14 +2104,14 @@ function createPopUp(productCardObj) {
     headerBasketSubboxBottomPlusBtn.appendChild(headerBasketSubboxBottomMinusPlus);
 
     headerBasketSubboxBottomPlusBtn.addEventListener('click', () => {
-        
-        
+
+
         productCardObj.quantityProduct += 1;
         headerBasketSubboxBottomQuantityInput.value = productCardObj.quantityProduct;
-        if(productCardObj.inBasket) {
+        if (productCardObj.inBasket) {
             addQuantityProductFromPopup(productCardObj);
-        }                      
-        addSumAndQuantityFromPopupForOneProduct(productCardObj);        
+        }
+        addSumAndQuantityFromPopupForOneProduct(productCardObj);
     });
 
 
@@ -2136,7 +2210,7 @@ function createPopUp(productCardObj) {
     popUpRightSpecificationsText2.textContent = 'RV-3416';
 
     //Блок модели товара
-    const popUpRightSpecificationsOddBox1 = document.createElement('div'); 
+    const popUpRightSpecificationsOddBox1 = document.createElement('div');
     popUpRightSpecificationsOddBox1.classList.add('pop-up__right-specifications-odd-box');
     popUpRightSpecificationsOddBox1.appendChild(popUpRightSpecificationsText1);
     popUpRightSpecificationsOddBox1.appendChild(popUpRightSpecificationsText2);
@@ -2152,7 +2226,7 @@ function createPopUp(productCardObj) {
     popUpRightTypeText2.textContent = 'IP/поворотная';
 
     //Блок типа товара
-    const popUpRightSpecificationsEvenBox2 = document.createElement('div'); 
+    const popUpRightSpecificationsEvenBox2 = document.createElement('div');
     popUpRightSpecificationsEvenBox2.classList.add('pop-up__right-specifications-even-box');
     popUpRightSpecificationsEvenBox2.appendChild(popUpRightTypeText1);
     popUpRightSpecificationsEvenBox2.appendChild(popUpRightTypeText2);
@@ -2168,7 +2242,7 @@ function createPopUp(productCardObj) {
     popUpRightQualityText2.textContent = 'Full HD 1080p';
 
     //Блок качества товара
-    const popUpRightSpecificationsOddBox3 = document.createElement('div'); 
+    const popUpRightSpecificationsOddBox3 = document.createElement('div');
     popUpRightSpecificationsOddBox3.classList.add('pop-up__right-specifications-odd-box');
     popUpRightSpecificationsOddBox3.appendChild(popUpRightQualityText1);
     popUpRightSpecificationsOddBox3.appendChild(popUpRightQualityText2);
@@ -2184,7 +2258,7 @@ function createPopUp(productCardObj) {
     popUpRightPermissionText2.textContent = '1920х1080 пикселей';
 
     //Блок разрешения съёмки
-    const popUpRightSpecificationsEvenBox4 = document.createElement('div'); 
+    const popUpRightSpecificationsEvenBox4 = document.createElement('div');
     popUpRightSpecificationsEvenBox4.classList.add('pop-up__right-specifications-even-box');
     popUpRightSpecificationsEvenBox4.appendChild(popUpRightPermissionText1);
     popUpRightSpecificationsEvenBox4.appendChild(popUpRightPermissionText2);
@@ -2200,7 +2274,7 @@ function createPopUp(productCardObj) {
     popUpRightMatrix1Text2.textContent = '2 Мпикс';
 
     //Блок матрицы 1
-    const popUpRightSpecificationsOddBox5 = document.createElement('div'); 
+    const popUpRightSpecificationsOddBox5 = document.createElement('div');
     popUpRightSpecificationsOddBox5.classList.add('pop-up__right-specifications-odd-box');
     popUpRightSpecificationsOddBox5.appendChild(popUpRightMatrix1Text1);
     popUpRightSpecificationsOddBox5.appendChild(popUpRightMatrix1Text2);
@@ -2221,7 +2295,7 @@ function createPopUp(productCardObj) {
     popUpRightViewingAngel1Text2.appendChild(degressBox1);
 
     //Блок угла обзора 1
-    const popUpRightSpecificationsEvenBox6 = document.createElement('div'); 
+    const popUpRightSpecificationsEvenBox6 = document.createElement('div');
     popUpRightSpecificationsEvenBox6.classList.add('pop-up__right-specifications-even-box');
     popUpRightSpecificationsEvenBox6.appendChild(popUpRightViewingAngel1Text1);
     popUpRightSpecificationsEvenBox6.appendChild(popUpRightViewingAngel1Text2);
@@ -2237,7 +2311,7 @@ function createPopUp(productCardObj) {
     popUpRightMatrix2Text2.textContent = '2 Мпикс';
 
     //Блок матрицы 2
-    const popUpRightSpecificationsOddBox7 = document.createElement('div'); 
+    const popUpRightSpecificationsOddBox7 = document.createElement('div');
     popUpRightSpecificationsOddBox7.classList.add('pop-up__right-specifications-odd-box');
     popUpRightSpecificationsOddBox7.appendChild(popUpRightMatrix2Text1);
     popUpRightSpecificationsOddBox7.appendChild(popUpRightMatrix2Text2);
@@ -2258,7 +2332,7 @@ function createPopUp(productCardObj) {
     popUpRightViewingAngel2Text2.appendChild(degressBox2);
 
     //Блок угла обзора 2
-    const popUpRightSpecificationsEvenBox8 = document.createElement('div'); 
+    const popUpRightSpecificationsEvenBox8 = document.createElement('div');
     popUpRightSpecificationsEvenBox8.classList.add('pop-up__right-specifications-even-box');
     popUpRightSpecificationsEvenBox8.appendChild(popUpRightViewingAngel2Text1);
     popUpRightSpecificationsEvenBox8.appendChild(popUpRightViewingAngel2Text2);
@@ -2274,7 +2348,7 @@ function createPopUp(productCardObj) {
     popUpRightMatrix3Text2.textContent = '2 Мпикс';
 
     //Блок матрицы 3
-    const popUpRightSpecificationsOddBox9 = document.createElement('div'); 
+    const popUpRightSpecificationsOddBox9 = document.createElement('div');
     popUpRightSpecificationsOddBox9.classList.add('pop-up__right-specifications-odd-box');
     popUpRightSpecificationsOddBox9.appendChild(popUpRightMatrix2Text1);
     popUpRightSpecificationsOddBox9.appendChild(popUpRightMatrix2Text2);
@@ -2295,7 +2369,7 @@ function createPopUp(productCardObj) {
     popUpRightViewingAngel3Text2.appendChild(degressBox3);
 
     //Блок угла обзора 3
-    const popUpRightSpecificationsEvenBox10 = document.createElement('div'); 
+    const popUpRightSpecificationsEvenBox10 = document.createElement('div');
     popUpRightSpecificationsEvenBox10.classList.add('pop-up__right-specifications-even-box');
     popUpRightSpecificationsEvenBox10.appendChild(popUpRightViewingAngel3Text1);
     popUpRightSpecificationsEvenBox10.appendChild(popUpRightViewingAngel3Text2);
@@ -2379,7 +2453,7 @@ let windowY = 0;
 window.onscroll = function () {
     //Передаём в переменную значение положения окна
     windowY = window.scrollY;
-    
+
 };
 
 
@@ -2395,7 +2469,7 @@ function showPopup(productCardObj) {
     //Добавляем полученное значение в стили для pop-up
     popupElemen.style.top = windowY + 'px';
     //Добавляем pop-up нас траницу
-    document.body.appendChild(popupElemen);     
+    document.body.appendChild(popupElemen);
 }
 
 //===================================================================================
@@ -2428,14 +2502,16 @@ function addBgBasketInPopup(productCardObj) {
     const allProductCard = document.querySelectorAll('.product__item-box');
     const productCardBtnBasketWrapper = document.querySelectorAll('.product__img-basket-wrapper');
 
-    for(let i = 0; i < allProductCard.length; i++) {
-        
-        
-        if((allProductCard[i].id == productCardObj.id) && (productCardObj.inBasket === true)) {
+    for (let i = 0; i < allProductCard.length; i++) {
+
+        console.log("work cicl");
+
+        if ((allProductCard[i].id == productCardObj.id) && (productCardObj.inBasket === true)) {
+            console.log("work bg");
             addBgBasket(productCardBtnBasketWrapper[i]);
         }
     }
-    
+
 }
 
 
@@ -2452,14 +2528,14 @@ function showPlusQuantityProductPopup(productCardObj) {
     const popupBox = document.querySelector('.pop-up__box');
 
 
-    for(let i = 0; i < headerBasketSubboxItemArr.length; i++) {
-        if(productCardObj.inBasket && (headerBasketSubboxItemArr[i].id === popupBox.id)) {
-            productInputInBasket[i].value =  productCardObj.quantityProduct;
+    for (let i = 0; i < headerBasketSubboxItemArr.length; i++) {
+        if (productCardObj.inBasket && (headerBasketSubboxItemArr[i].id === popupBox.id)) {
+            productInputInBasket[i].value = productCardObj.quantityProduct;
         }
     }
 
     quantityProductRightSideBar.textContent = Number(quantityProductRightSideBar.textContent) + productCardObj.quantityProduct;
-    quantityProductBox.classList.add('active--element');    
+    quantityProductBox.classList.add('active--element');
 }
 
 
@@ -2474,9 +2550,9 @@ function addQuantityProductFromPopup(productCardObj) {
     const productInputInBasket = document.querySelectorAll('.header__basket-subbox-bottom-quantity-input');
     const popupBox = document.querySelector('.pop-up__box');
 
-    for(let i = 0; i < headerBasketSubboxItemArr.length; i++) {
-        if(productCardObj.inBasket && (headerBasketSubboxItemArr[i].id === popupBox.id)) {
-            productInputInBasket[i].value =  Number(productInputInBasket[i].value) + 1;
+    for (let i = 0; i < headerBasketSubboxItemArr.length; i++) {
+        if (productCardObj.inBasket && (headerBasketSubboxItemArr[i].id === popupBox.id)) {
+            productInputInBasket[i].value = Number(productInputInBasket[i].value) + 1;
         }
     }
 
@@ -2496,13 +2572,17 @@ function removeQuantityProductFromPopup(productCardObj) {
     const productInputInBasket = document.querySelectorAll('.header__basket-subbox-bottom-quantity-input');
     const popupBox = document.querySelector('.pop-up__box');
 
-    for(let i = 0; i < headerBasketSubboxItemArr.length; i++) {
-        if(productCardObj.inBasket && (headerBasketSubboxItemArr[i].id === popupBox.id)) {
-            productInputInBasket[i].value =  Number(productInputInBasket[i].value) - 1;
+    for (let i = 0; i < headerBasketSubboxItemArr.length; i++) {
+        if (productCardObj.inBasket && (headerBasketSubboxItemArr[i].id === popupBox.id)) {
+            productInputInBasket[i].value = Number(productInputInBasket[i].value) - 1;
         }
     }
 
-    quantityProductRightSideBar.textContent = Number(quantityProductRightSideBar.textContent) - 1;
+    if (Number(quantityProductRightSideBar.textContent) > 0) {
+        quantityProductRightSideBar.textContent = Number(quantityProductRightSideBar.textContent) - 1;
+    }
+
+
 
     if (Number(quantityProductRightSideBar.textContent) <= 0) {
         quantityProductBox.classList.remove('active--element');
@@ -2525,15 +2605,15 @@ function addSumAndQuantityFromPopupForOneProduct(productCardObj) {
     const dividingLine = document.querySelectorAll('.header__basket-subbox-dividing-line');
     const rubImgOneProductSum = document.querySelectorAll('.product__rub-sum-img');
 
-    
+
 
     productCardObj.sumOneProduct += productCardObj.newPriceProduct;
-    
 
-    for(let i = 0; i < productInBasketArray.length; i++) {
-        if(productCardObj.id == productInBasketArray[i].id && productInBasketArray[i].id == oneProductPopup.id && productCardObj.inBasket === true) {
+
+    for (let i = 0; i < productInBasketArray.length; i++) {
+        if (productCardObj.id == productInBasketArray[i].id && productInBasketArray[i].id == oneProductPopup.id && productCardObj.inBasket === true) {
             sumOneProduct[i].textContent = numberToString(productCardObj.sumOneProduct);
-            allSum.textContent = numberToString(Number(stringToNumber(allSum)) + productCardObj.newPriceProduct);            
+            allSum.textContent = numberToString(Number(stringToNumber(allSum)) + productCardObj.newPriceProduct);
             basketAllSum.textContent = allSum.textContent + ' руб';
 
             sumOneProduct[i].classList.add('header__basket-sum-one-product--active');
@@ -2558,23 +2638,23 @@ function addSumFromPopupForOneProduct(productCardObj) {
     const basketAllSum = document.querySelector('.right-side-bar__basket-sum');
 
 
-   
-    
 
-    for(let i = 0; i < productInBasketArray.length; i++) {
-       
-        if((productCardObj.id == productInBasketArray[i].id) && (productInBasketArray[i].id == oneProductPopup.id)) {
-           
+
+
+    for (let i = 0; i < productInBasketArray.length; i++) {
+
+        if ((productCardObj.id == productInBasketArray[i].id) && (productInBasketArray[i].id == oneProductPopup.id)) {
+
 
             allSum.textContent = numberToString(Number(stringToNumber(allSum)) + productCardObj.sumOneProduct);
-            sumOneProduct[i].textContent =  numberToString(productCardObj.sumOneProduct);
+            sumOneProduct[i].textContent = numberToString(productCardObj.sumOneProduct);
             basketAllSum.textContent = allSum.textContent + ' руб';
             allSum.classList.add('header__basket-subbox-all-sum-number');
             // basketAllSum.classList.add('active--element');
             sumOneProduct[i].classList.add('header__basket-sum-one-product--active');
             dividingLine[i].classList.add('header__basket-sum-one-product--active');
-            rubImgOneProductSum[i].classList.add('header__basket-sum-one-product--active');     
-            
+            rubImgOneProductSum[i].classList.add('header__basket-sum-one-product--active');
+
         }
     }
 }
@@ -2595,18 +2675,18 @@ function subSumAndSubQuantityFromPopupForOneProduct(productCardObj) {
     const dividingLine = document.querySelectorAll('.header__basket-subbox-dividing-line');
     const rubImgOneProductSum = document.querySelectorAll('.product__rub-sum-img');
 
-    
+
 
     productCardObj.sumOneProduct -= productCardObj.newPriceProduct;
-    
 
-    for(let i = 0; i < productInBasketArray.length; i++) {
-        if(productCardObj.id == productInBasketArray[i].id && productInBasketArray[i].id == oneProductPopup.id && productCardObj.inBasket === true) {
+
+    for (let i = 0; i < productInBasketArray.length; i++) {
+        if (productCardObj.id == productInBasketArray[i].id && productInBasketArray[i].id == oneProductPopup.id && productCardObj.inBasket === true) {
             sumOneProduct[i].textContent = numberToString(productCardObj.sumOneProduct);
-            allSum.textContent = numberToString(Number(stringToNumber(allSum)) - productCardObj.newPriceProduct);            
-            basketAllSum.textContent = allSum.textContent + ' руб';            
+            allSum.textContent = numberToString(Number(stringToNumber(allSum)) - productCardObj.newPriceProduct);
+            basketAllSum.textContent = allSum.textContent + ' руб';
         }
-        if(productCardObj.quantityProduct === 1) {
+        if (productCardObj.quantityProduct === 1) {
             sumOneProduct[i].classList.remove('header__basket-sum-one-product--active');
             dividingLine[i].classList.remove('header__basket-sum-one-product--active');
             rubImgOneProductSum[i].classList.remove('header__basket-sum-one-product--active');
@@ -2617,15 +2697,15 @@ function subSumAndSubQuantityFromPopupForOneProduct(productCardObj) {
 
 
 
-     // productCardObj
-    // id: cardId++,
-    //     productCard: '',
-    //     inBasket: false,
-    //     cartfavorite: false,
-    //     basketfavorite: false,
-    //     quantityProduct: 1,
-    //     newPriceProduct: 4990,
-    //     sumOneProduct: 4990,
+// productCardObj
+// id: cardId++,
+//     productCard: '',
+//     inBasket: false,
+//     cartfavorite: false,
+//     basketfavorite: false,
+//     quantityProduct: 1,
+//     newPriceProduct: 4990,
+//     sumOneProduct: 4990,
 
 
 
@@ -2633,7 +2713,347 @@ function subSumAndSubQuantityFromPopupForOneProduct(productCardObj) {
 
 
 // popupInBasketBtn.addEventListener('click', () => {
-    
+
 // });
 
 
+
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//Скрипты для страницы с одим товаром
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+//=================================================================================
+//Добавлене общей суммы придобавлении товара
+//со страницы одного товара
+//=================================================================================
+
+
+function addSumOneProductPage(productCardObj) {
+    const headerBasketSubboxAllSumNumber = document.querySelector('.header__basket-subbox-all-sum-number');
+    const headerBasketSubboxAllSumNumberArr = stringToNumber(headerBasketSubboxAllSumNumber);
+    const rightSideBarBasketSum = document.querySelector('.right-side-bar__basket-sum');
+
+
+    const productInBasketArray = document.querySelectorAll('.header__basket-subbox-item');
+    const dividingLine = document.querySelectorAll('.header__basket-subbox-dividing-line');
+    const sumOneProduct = document.querySelectorAll('.header__basket-subbox-sum-price');
+    const rubImgOneProductSum = document.querySelectorAll('.product__rub-sum-img');
+
+
+    if (headerBasketSubboxAllSumNumberArr.length === 1 || headerBasketSubboxAllSumNumberArr[0] === '0') {
+        headerBasketSubboxAllSumNumber.textContent = '0';
+    }
+
+
+
+    productCardObj.sumOneProduct = productCardObj.quantityProduct * productCardObj.newPriceProduct;
+
+    headerBasketSubboxAllSumNumber.textContent = numberToString((+stringToNumber(headerBasketSubboxAllSumNumber)) + productCardObj.sumOneProduct);
+    rightSideBarBasketSum.textContent = headerBasketSubboxAllSumNumber.textContent + ' руб.';
+
+    if (productCardObj.sumOneProduct > productCardObj.newPriceProduct) {
+        for (let i = 0; i < productInBasketArray.length; i++) {
+            sumOneProduct[i].textContent = numberToString(productCardObj.sumOneProduct);
+            // basketAllSum.classList.add('active--element');
+            sumOneProduct[i].classList.add('header__basket-sum-one-product--active');
+            dividingLine[i].classList.add('header__basket-sum-one-product--active');
+            rubImgOneProductSum[i].classList.add('header__basket-sum-one-product--active');
+        }
+    }
+}
+
+
+
+
+//=================================================================================
+//Добавлене товара принажатии на кнопку
+//=================================================================================
+
+const productOnePriceBtn = document.querySelector('.product-one__price-btn');
+
+if (productOnePriceBtn) {
+    productOnePriceBtn.addEventListener('click', () => {
+        cloneProductCardObj.inBasket = true;
+        addBasketProduct(cloneProductCardObj);
+        console.log(cloneProductCardObj.sumOneProduct);
+        addSumOneProductPage(cloneProductCardObj);
+        showPlusQuantityProduct();
+    });
+}
+
+
+
+
+
+//=================================================================================
+//Уменьшение количества товара в карточке в корзине
+// через страницу одного товара
+//=================================================================================
+
+function removeQuantityProductOneProductPage(productCardObj) {
+    const quantityProductRightSideBar = document.querySelector('.quantity-product');
+    const quantityProductBox = document.querySelector('.quantity-product__box');
+    const headerBasketSubboxItemArr = document.querySelectorAll('.header__basket-subbox-item');
+    const productInputInBasket = document.querySelectorAll('.header__basket-subbox-bottom-quantity-input');
+    // const popupBox = document.querySelector('.pop-up__box');
+
+    // for (let i = 0; i < headerBasketSubboxItemArr.length; i++) {
+    //     if (productCardObj.inBasket && (headerBasketSubboxItemArr[i].id === popupBox.id)) {
+    //         productInputInBasket[i].value = Number(productInputInBasket[i].value) - 1;
+    //     }
+    // }
+
+    for (let i = 0; i < headerBasketSubboxItemArr.length; i++) {
+        if (productCardObj.inBasket) {
+            productInputInBasket[i].value = Number(productInputInBasket[i].value) - 1;
+        }
+    }
+
+    if (Number(quantityProductRightSideBar.textContent) > 0) {
+        quantityProductRightSideBar.textContent = Number(quantityProductRightSideBar.textContent) - 1;
+    }
+
+    if (Number(quantityProductRightSideBar.textContent) <= 0) {
+        quantityProductBox.classList.remove('active--element');
+    }
+}
+
+
+
+
+//=================================================================================
+//Уменьшение суммы
+// через страницу одного товара
+//=================================================================================
+
+
+
+function subSumAndSubQuantityFromOneProductPage(productCardObj) {
+    const sumOneProduct = document.querySelectorAll('.header__basket-subbox-sum-price');
+    const productInBasketArray = document.querySelectorAll('.header__basket-subbox-item');
+    // const oneProductPopup = document.querySelector('.pop-up__box');
+    const allSum = document.querySelector('.header__basket-subbox-all-sum-number');
+    const basketAllSum = document.querySelector('.right-side-bar__basket-sum');
+
+    const dividingLine = document.querySelectorAll('.header__basket-subbox-dividing-line');
+    const rubImgOneProductSum = document.querySelectorAll('.product__rub-sum-img');
+
+
+
+    productCardObj.sumOneProduct -= productCardObj.newPriceProduct;
+
+
+    // for (let i = 0; i < productInBasketArray.length; i++) {
+    //     if (productCardObj.id == productInBasketArray[i].id && productInBasketArray[i].id == oneProductPopup.id && productCardObj.inBasket === true) {
+    //         sumOneProduct[i].textContent = numberToString(productCardObj.sumOneProduct);
+    //         allSum.textContent = numberToString(Number(stringToNumber(allSum)) - productCardObj.newPriceProduct);
+    //         basketAllSum.textContent = allSum.textContent + ' руб';
+    //     }
+    //     if (productCardObj.quantityProduct === 1) {
+    //         sumOneProduct[i].classList.remove('header__basket-sum-one-product--active');
+    //         dividingLine[i].classList.remove('header__basket-sum-one-product--active');
+    //         rubImgOneProductSum[i].classList.remove('header__basket-sum-one-product--active');
+    //     }
+    // }
+
+    for (let i = 0; i < productInBasketArray.length; i++) {
+        if (productCardObj.inBasket === true) {
+            sumOneProduct[i].textContent = numberToString(productCardObj.sumOneProduct);
+            allSum.textContent = numberToString(Number(stringToNumber(allSum)) - productCardObj.newPriceProduct);
+            basketAllSum.textContent = allSum.textContent + ' руб';
+        }
+        if (productCardObj.quantityProduct === 1) {
+            sumOneProduct[i].classList.remove('header__basket-sum-one-product--active');
+            dividingLine[i].classList.remove('header__basket-sum-one-product--active');
+            rubImgOneProductSum[i].classList.remove('header__basket-sum-one-product--active');
+        }
+    }
+}
+
+
+
+
+//=================================================================================
+//Увеличение количества товара в карточке в корзине
+// через страницу одного товара
+//=================================================================================
+
+
+
+function addQuantityProductFromOnePageProduct(productCardObj) {
+    const quantityProductRightSideBar = document.querySelector('.quantity-product');
+    const headerBasketSubboxItemArr = document.querySelectorAll('.header__basket-subbox-item');
+    const productInputInBasket = document.querySelectorAll('.header__basket-subbox-bottom-quantity-input');
+    // const popupBox = document.querySelector('.pop-up__box');
+
+    // for (let i = 0; i < headerBasketSubboxItemArr.length; i++) {
+    //     if (productCardObj.inBasket && (headerBasketSubboxItemArr[i].id === popupBox.id)) {
+    //         productInputInBasket[i].value = Number(productInputInBasket[i].value) + 1;
+    //     }
+    // }
+
+    for (let i = 0; i < headerBasketSubboxItemArr.length; i++) {
+        if (productCardObj.inBasket) {
+            productInputInBasket[i].value = Number(productInputInBasket[i].value) + 1;
+        }
+    }
+
+    quantityProductRightSideBar.textContent = Number(quantityProductRightSideBar.textContent) + 1;
+}
+
+
+//=================================================================================
+//Увеличение суммы
+// через страницу одного товара
+//=================================================================================
+
+
+function addSumAndQuantityFromPopupForOneProductPage(productCardObj) {
+    const sumOneProduct = document.querySelectorAll('.header__basket-subbox-sum-price');
+    const productInBasketArray = document.querySelectorAll('.header__basket-subbox-item');
+    // const oneProductPopup = document.querySelector('.pop-up__box');
+    const allSum = document.querySelector('.header__basket-subbox-all-sum-number');
+    const basketAllSum = document.querySelector('.right-side-bar__basket-sum');
+
+    const dividingLine = document.querySelectorAll('.header__basket-subbox-dividing-line');
+    const rubImgOneProductSum = document.querySelectorAll('.product__rub-sum-img');
+
+
+
+    productCardObj.sumOneProduct += productCardObj.newPriceProduct;
+
+    console.log(productCardObj.sumOneProduct);
+
+    // for (let i = 0; i < productInBasketArray.length; i++) {
+    //     if (productCardObj.id == productInBasketArray[i].id && productInBasketArray[i].id == oneProductPopup.id && productCardObj.inBasket === true) {
+    //         sumOneProduct[i].textContent = numberToString(productCardObj.sumOneProduct);
+    //         allSum.textContent = numberToString(Number(stringToNumber(allSum)) + productCardObj.newPriceProduct);
+    //         basketAllSum.textContent = allSum.textContent + ' руб';
+
+    //         sumOneProduct[i].classList.add('header__basket-sum-one-product--active');
+    //         dividingLine[i].classList.add('header__basket-sum-one-product--active');
+    //         rubImgOneProductSum[i].classList.add('header__basket-sum-one-product--active');
+    //     }
+    // }
+
+    for (let i = 0; i < productInBasketArray.length; i++) {
+        if (productCardObj.inBasket === true) {
+            sumOneProduct[i].textContent = numberToString(productCardObj.sumOneProduct);
+            allSum.textContent = numberToString(Number(stringToNumber(allSum)) + productCardObj.newPriceProduct);
+            basketAllSum.textContent = allSum.textContent + ' руб';
+
+            sumOneProduct[i].classList.add('header__basket-sum-one-product--active');
+            dividingLine[i].classList.add('header__basket-sum-one-product--active');
+            rubImgOneProductSum[i].classList.add('header__basket-sum-one-product--active');
+        }
+    }
+}
+
+
+
+//=================================================================================
+//Увеличение и уменьшение количества в элементе input
+// на странице одного товара
+//=================================================================================
+
+
+const productOneMinusBtn = document.querySelector('.product-one__minus-btn');
+const productOnePlusBtn = document.querySelector('.product-one__plus-btn');
+
+if (productOneMinusBtn) {
+    productOneMinusBtn.addEventListener('click', () => {
+        const productOneInputQuantityValue = document.querySelector('.product-one__input-quantity-value');
+
+        cloneProductCardObj.quantityProduct -= 1;
+        productOneInputQuantityValue.value = cloneProductCardObj.quantityProduct;
+        removeQuantityProductOneProductPage(cloneProductCardObj);
+        subSumAndSubQuantityFromOneProductPage(cloneProductCardObj);
+
+        if (Number(productOneInputQuantityValue.value) < 1) {
+            cloneProductCardObj.inBasket = false;
+            cloneProductCardObj.sumOneProduct = cloneProductCardObj.newPriceProduct;
+            delOneZeroProduct(cloneProductCardObj);
+            cloneProductCardObj.quantityProduct = 1;
+            productOneInputQuantityValue.value = 1;
+        }
+    });
+}
+
+
+
+
+if (productOnePlusBtn) {
+    productOnePlusBtn.addEventListener('click', () => {
+        cloneProductCardObj.quantityProduct += 1;
+        const productOneInputQuantityValue = document.querySelector('.product-one__input-quantity-value');
+        productOneInputQuantityValue.value = cloneProductCardObj.quantityProduct;
+        addQuantityProductFromOnePageProduct(cloneProductCardObj);
+        addSumAndQuantityFromPopupForOneProductPage(cloneProductCardObj);
+    });
+}
+
+
+
+
+
+//=================================================================================
+//Переключение между табами
+//=================================================================================
+
+const linksListItem = document.querySelectorAll('.links__list-item');
+
+const tabsBoxItem = document.querySelectorAll('.tabs-box__item');
+
+
+if(linksListItem && tabsBoxItem) {
+
+
+    linksListItem.forEach((tabBtn) => {
+        tabBtn.addEventListener('click', () => {
+            linksListItem.forEach((item) => {
+                item.classList.remove('links__list-item--active');
+            });
+            tabsBoxItem.forEach((item) => {
+                item.classList.remove('active--element');
+            });
+            const currentTab = document.querySelector(tabBtn.getAttribute('data-tab'));
+            currentTab.classList.add('active--element');
+            tabBtn.classList.add('links__list-item--active');
+        });
+    });
+}
+
+
+
+
+//=================================================================================
+//Показать больше характеристик
+//=================================================================================
+
+const showMoreSpecificationsBtn = document.querySelector('.tabs-box__specifications-list-all');
+
+
+
+if(showMoreSpecificationsBtn) {
+    showMoreSpecificationsBtn.addEventListener('click', () => {
+        console.log('work');
+        const specificationWrapper = document.querySelector('.tabs-box__specifications-wrapper');
+
+        if(specificationWrapper.classList.contains('tabs-box__specifications-wrapper--active') === false) {
+            specificationWrapper.classList.add('tabs-box__specifications-wrapper--active');
+            showMoreSpecificationsBtn.textContent = 'скрыть';
+        }
+        else {
+            specificationWrapper.classList.remove('tabs-box__specifications-wrapper--active');
+            showMoreSpecificationsBtn.textContent = 'показать больше';
+        }
+        
+    });
+}
+
+
+
+// tabs-box__specifications-wrapper--active
