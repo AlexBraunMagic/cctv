@@ -6,64 +6,64 @@
 //===================================================================================
 
 //Получаем элементы меню которые должны отобразиться
-const headerSubMenuBox = document.querySelectorAll('.header__submenu-box');
+// const headerSubMenuBox = document.querySelectorAll('.header__submenu-box');
 
-//Получаем элементы, что бы при клике на него убирался класс у элементов
-const headerMenuItem = document.querySelector('.header__menu-item');
-const headerMenu = document.querySelector('.header__menu');
-const headerWrapper = document.querySelector('.header__wrapper');
-const container = document.querySelector('.container');
-const header = document.querySelector('.header');
-const body = document.querySelector('body');
-
-
-//Получаем элементы меню по которым будет происходить клик
-const headerMenuItemLink = document.querySelectorAll('.header__menu-item-link');
+// //Получаем элементы, что бы при клике на него убирался класс у элементов
+// const headerMenuItem = document.querySelector('.header__menu-item');
+// const headerMenu = document.querySelector('.header__menu');
+// const headerWrapper = document.querySelector('.header__wrapper');
+// const container = document.querySelector('.container');
+// const header = document.querySelector('.header');
+// const body = document.querySelector('body');
 
 
-//Функция для отоброжения скрытых меню
-function showSubTopMenu() {
-    //Перебираем полученные ссылки и навешиваем на них обработчик
-    headerMenuItemLink.forEach(function (itemMenuLink) {
-
-        itemMenuLink.addEventListener('click', function (e) {
+// //Получаем элементы меню по которым будет происходить клик
+// const headerMenuItemLink = document.querySelectorAll('.header__menu-item-link');
 
 
-            // e.preventDefault();
+// //Функция для отоброжения скрытых меню
+// function showSubTopMenu() {
+//     //Перебираем полученные ссылки и навешиваем на них обработчик
+//     headerMenuItemLink.forEach(function (itemMenuLink) {
 
-            //Получаем елемент target
-            let itemTarget = e.target;
+//         itemMenuLink.addEventListener('click', function (e) {
 
-            //Получаем соседа элемента у которого было вызвано событие
-            let subMenuBox = itemTarget.nextElementSibling;
 
-            //Проверяем у какого элемента вызвано событие
-            if (itemTarget.className === 'header__menu-item-link') {
+//             // e.preventDefault();
 
-                //Проверяем элемент на наличие класса
-                if (subMenuBox.classList.contains('active--element') === false) {
+//             //Получаем елемент target
+//             let itemTarget = e.target;
 
-                    //Перебираем все элементы и удаляем у них класс
-                    headerSubMenuBox.forEach(function (subMenuItem) {
-                        subMenuItem.classList.remove('active--element');
-                    });
+//             //Получаем соседа элемента у которого было вызвано событие
+//             let subMenuBox = itemTarget.nextElementSibling;
 
-                    //Добавляем класс элементу соседнему с элементом
-                    //у которого было вызвано событие
-                    subMenuBox.classList.add('active--element');
-                }
-                //Проверяем есть ли у элемента у которого вызвано событие 
-                //нужный класс
-                else if (subMenuBox.classList.contains('active--element')) {
+//             //Проверяем у какого элемента вызвано событие
+//             if (itemTarget.className === 'header__menu-item-link') {
 
-                    //Удаляем класс при клике на элемент
-                    subMenuBox.classList.remove('active--element');
-                }
-            }
-        });
+//                 //Проверяем элемент на наличие класса
+//                 if (subMenuBox.classList.contains('active--element') === false) {
 
-    });
-}
+//                     //Перебираем все элементы и удаляем у них класс
+//                     headerSubMenuBox.forEach(function (subMenuItem) {
+//                         subMenuItem.classList.remove('active--element');
+//                     });
+
+//                     //Добавляем класс элементу соседнему с элементом
+//                     //у которого было вызвано событие
+//                     subMenuBox.classList.add('active--element');
+//                 }
+//                 //Проверяем есть ли у элемента у которого вызвано событие 
+//                 //нужный класс
+//                 else if (subMenuBox.classList.contains('active--element')) {
+
+//                     //Удаляем класс при клике на элемент
+//                     subMenuBox.classList.remove('active--element');
+//                 }
+//             }
+//         });
+
+//     });
+// }
 
 //Функция для удаления класса
 //Принимает в себя параметром коллекцию элементов
@@ -104,7 +104,7 @@ function showSubTopMenu() {
 // }
 
 //вызываем функцию для отоброжения скрытых меню
-showSubTopMenu();
+// showSubTopMenu();
 
 // headerMenuItem.addEventListener('click', removeClassActive);
 // headerMenu.addEventListener('click', removeClassActive);
@@ -115,6 +115,22 @@ showSubTopMenu();
 
 //Вызываем функцию для удаления класса у элементов
 // getWrapperElement(headerWrapper, headerSubMenuBox);
+
+//===================================================================================
+//Очистка строки поиска
+//===================================================================================
+
+function clearSearch() {
+    const headerSearch = document.querySelector('.header__search');
+    headerSearch.value = '';
+}
+
+const clearSearchBtn = document.querySelector('.search-box__link-clear');
+
+
+clearSearchBtn.addEventListener('click', () => {
+    clearSearch();
+})
 
 
 

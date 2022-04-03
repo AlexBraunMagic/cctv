@@ -16,8 +16,9 @@ body{
     @extend %montserrat-400;
     font-size: 17px;
     line-height: 22px;
+    padding-top: 28px;
     color: $descriptionTextColor;
-    height: 23px;
+    height: 100%;
     width: 124px;
     position: relative;
     cursor: pointer;
@@ -33,7 +34,7 @@ body{
             height: 2px;
             background-color: $defaultColor;
             position: absolute;
-            bottom: -33px;
+            bottom: -10px;
             left: 0;
         }
     }

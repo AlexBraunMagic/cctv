@@ -17,6 +17,15 @@
     display: flex;
     justify-content:space-between;
     text-align: center;
+    height: 73px;
+}
+
+.header__menu-item {
+    &:hover {
+        .header__submenu-box {
+            display: block;
+        }
+    }        
 }
 
 
@@ -31,7 +40,7 @@
 .header__submenu-box{
     padding: 20px 18px;
     position: absolute;
-    top: 59px;
+    top: 86px;
     left: -6px;
     width: 245px;
     background: #FFFFFF;
@@ -40,6 +49,11 @@
     z-index: 1;    
     display: none;
     text-align: left;
+    &:hover {
+        .header__submenu-box {
+            display: block;
+        }
+    }
 }
 
 .header__submenu-list-item{
@@ -465,10 +479,18 @@
 .top__menu{
     display: flex;
     justify-content: space-between;
+    gap: 60px;
+}
+
+.top__menu-item {
+    text-align: center;    
 }
 
 .top__menu-link{
-    text-align: center;
+    @extend %montserrat-400;
+    font-size: 13px;
+    line-height: 17px;
+    color: $checkedLinkColor;
 }
 
 .top__img-wrapper{
