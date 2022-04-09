@@ -1,120 +1,5 @@
 'use strict';
 
-//===================================================================================
-//Отображение скрытого меню при нажатии
-//на элементы меню header
-//===================================================================================
-
-//Получаем элементы меню которые должны отобразиться
-// const headerSubMenuBox = document.querySelectorAll('.header__submenu-box');
-
-// //Получаем элементы, что бы при клике на него убирался класс у элементов
-// const headerMenuItem = document.querySelector('.header__menu-item');
-// const headerMenu = document.querySelector('.header__menu');
-// const headerWrapper = document.querySelector('.header__wrapper');
-// const container = document.querySelector('.container');
-// const header = document.querySelector('.header');
-// const body = document.querySelector('body');
-
-
-// //Получаем элементы меню по которым будет происходить клик
-// const headerMenuItemLink = document.querySelectorAll('.header__menu-item-link');
-
-
-// //Функция для отоброжения скрытых меню
-// function showSubTopMenu() {
-//     //Перебираем полученные ссылки и навешиваем на них обработчик
-//     headerMenuItemLink.forEach(function (itemMenuLink) {
-
-//         itemMenuLink.addEventListener('click', function (e) {
-
-
-//             // e.preventDefault();
-
-//             //Получаем елемент target
-//             let itemTarget = e.target;
-
-//             //Получаем соседа элемента у которого было вызвано событие
-//             let subMenuBox = itemTarget.nextElementSibling;
-
-//             //Проверяем у какого элемента вызвано событие
-//             if (itemTarget.className === 'header__menu-item-link') {
-
-//                 //Проверяем элемент на наличие класса
-//                 if (subMenuBox.classList.contains('active--element') === false) {
-
-//                     //Перебираем все элементы и удаляем у них класс
-//                     headerSubMenuBox.forEach(function (subMenuItem) {
-//                         subMenuItem.classList.remove('active--element');
-//                     });
-
-//                     //Добавляем класс элементу соседнему с элементом
-//                     //у которого было вызвано событие
-//                     subMenuBox.classList.add('active--element');
-//                 }
-//                 //Проверяем есть ли у элемента у которого вызвано событие 
-//                 //нужный класс
-//                 else if (subMenuBox.classList.contains('active--element')) {
-
-//                     //Удаляем класс при клике на элемент
-//                     subMenuBox.classList.remove('active--element');
-//                 }
-//             }
-//         });
-
-//     });
-// }
-
-//Функция для удаления класса
-//Принимает в себя параметром коллекцию элементов
-
-// function removeClassActive() {
-//     //принятая параметром коллекция перебирается
-//     headerSubMenuBox.forEach(function(headerSubMenuBox) {
-//         //Каждый элемент коллекции проверяется на наличие класса
-//         //И если класс присутствует
-//         if(headerSubMenuBox.classList.contains('active--element') === true) {
-//             //Класс удаляется у элемента
-//             headerSubMenuBox.classList.remove('active--element');
-//         }
-//     });
-// }
-
-
-//Функция принимающая в себя элемент обёртку и коллекцию элементов
-//у которых нужно удалить класс
-// function getWrapperElement(body, collectionElement) {
-
-//     //Вызываем событие click у элемента
-//     body.addEventListener('click',function(e) {
-//         e.preventDefault();
-
-//         //Получаем таргет
-//         const headerWrapperTarget = e.target;
-
-//         //Проверяем элемент у которого вызвано событие
-//         //И если у него присутствуем нужный класс, то мы берём наши элементы меню и удаляем
-//         // у них класс активности
-//         if(headerWrapperTarget.className !== 'header__menu-item-link') {
-//             removeClassActive(collectionElement);
-//         }
-
-//     });
-
-// }
-
-//вызываем функцию для отоброжения скрытых меню
-// showSubTopMenu();
-
-// headerMenuItem.addEventListener('click', removeClassActive);
-// headerMenu.addEventListener('click', removeClassActive);
-// headerWrapper.addEventListener('click', removeClassActive);
-// container.addEventListener('click', removeClassActive);
-// header.addEventListener('click', removeClassActive);
-// body.addEventListener('click', removeClassActive);
-
-//Вызываем функцию для удаления класса у элементов
-// getWrapperElement(headerWrapper, headerSubMenuBox);
 
 //===================================================================================
 //Очистка строки поиска
@@ -229,7 +114,6 @@ const rightSideBarInner = document.querySelector('.right-side-bar__item-box-inne
 
 const rightSideBarEmpty = document.querySelector('.right-side-bar__basket-box-empty-inner');
 
-// const headerBasketSubboxEmptyWrapper = document.querySelector('.header__basket-subbox-empty-wrapper');
 
 const rightSideBarBasketSum = document.querySelector('.right-side-bar__basket-sum');
 
@@ -280,50 +164,43 @@ for (let item of rightSideBarItem) {
 //===================================================================================
 
 //Получаем элемент для клика
-const topMenuItem = document.querySelectorAll('.top__menu-link');
-
+const topMenuLink = document.querySelectorAll('.top__menu-link');
 
 //Получаем элементы для добавления класса
 const topMenuImgWrapper = document.querySelectorAll('.top__img-wrapper');
 
+//Получаем картинки для клика
+const topMenuImg = document.querySelectorAll('.top-menu__img');
+
+//Получчаем текст для bread-crumbs
+const topMenuLinkText = document.querySelectorAll('.top__menu-text');
+
 
 //Функция для изменения фона и цвета картинки
-function changeBgTopItem() {
+function changeBgTopItem(index) {
 
-    //Перебираем элементы для клика
-    topMenuItem.forEach(function (topMenuLink) {
+    const breadcrumbsText = document.querySelectorAll('.bread-crumbs__link');
 
-        //Вешаем на элемент событие
-        topMenuLink.addEventListener('click', function (e) {
+    for(let i = 0; i < topMenuImgWrapper.length; i++) {
+        topMenuImgWrapper[i].classList.remove('top__img-wrapper--active');
+    }
 
-            e.preventDefault();
+    topMenuImgWrapper[index].classList.add('top__img-wrapper--active');
 
-            //Получаем таргет
-            const topMenuTarget = e.target;
+    breadcrumbsText[1].textContent = topMenuLinkText[index].textContent;  
+}
 
-            //Получаем первого потомка элемента
-            //У которого нужно добавить класс
-            const topMenuLinkChild = topMenuTarget.firstElementChild;
-
-            //Проверяем таргет
-            if (topMenuTarget.className === 'top__menu-link') {
-
-                //Проверяем дочерние элемент, элемента по которому произведён клик
-                //на наличие класса
-                if (topMenuLinkChild.classList.contains('top__img-wrapper--active') === false) {
-                    topMenuImgWrapper.forEach(function (topImgWrapper) {
-                        topImgWrapper.classList.remove('top__img-wrapper--active');
-                    });
-
-                    topMenuLinkChild.classList.add('top__img-wrapper--active');
-                }
-            }
-
-        });
+for(let i = 0; i < topMenuLink.length; i++) {
+    topMenuLink[i].addEventListener('click', (e) => {
+        if((e.target.classList.contains('top__menu-link') || e.target.classList.contains('top__img-wrapper') || e.target.classList.contains('top-menu__img') || e.target.classList.contains('top__menu-text')) === true) {
+            changeBgTopItem(i);
+        }
     });
 }
 
-changeBgTopItem();
+
+
+
 
 
 //===================================================================================
@@ -343,8 +220,7 @@ function topFilterActive() {
         //Вешаем событие клика
         topFilterLinksItem.addEventListener('click', function (e) {
 
-            // e.preventDefault();
-
+            
             //Получаем таргет
             const topFilterLinksItemTarget = e.target;
 
@@ -390,7 +266,6 @@ function leftFilterMenuActive() {
         //Вешаем на элемент массива событие
         filterCaseTitlesItem.addEventListener('click', function (e) {
 
-            // e.preventDefault();
 
             //Получаем таргет
             const filterCaseTitlesItemTarget = e.target;
@@ -570,7 +445,6 @@ function createProductCards() {
         newPriceProduct: 4990,
     };
 
-    // productCardObj.id += 1;
 
     productCardObjArr.push(productCardObj);
 
@@ -635,7 +509,6 @@ function createProductCards() {
     productImgBox.appendChild(productImg);
 
     productImgBox.addEventListener('click', (e) => {
-        console.log('popup id ' + productCardObj.id);
         showPopup(productCardObj);
     });
 
@@ -797,8 +670,6 @@ function createProductCards() {
     productItemBox.appendChild(productImgBox);
     productItemBox.appendChild(box);
 
-    // productCardObjArr.push(createproductCardObj(productItemBox));
-    console.log(productCardObjArr);
 
     return productItemBox;
 
@@ -974,7 +845,6 @@ if (topFilterPositionNet && topFilterPositionList) {
 
     //Вешаем событие на дочерний элемент    
     topfilterPositionNetChild.addEventListener('click', function (e) {
-        // e.preventDefault();
         showPositionNet();
     });
 }
@@ -1109,8 +979,6 @@ function addBgBasketFaivorite() {
         for (let i = 0; i < productCardObjArr.length; i++) {
             if (basketCard[j].id == productCardObjArr[i].id && productCardObjArr[i].cartfavorite === true) {
                 heartBasketCard[j].classList.add('heart--active-bg');
-                console.log(i);
-                console.log('work');
             }
         }
     }
@@ -1688,7 +1556,6 @@ function stringToNumber(element) {
 //=================================================================================
 
 function showPlusQuantityProduct() {
-    console.log('work');
     const quantityProductBox = document.querySelector('.quantity-product__box');
     let quantityProductRightSideBar = document.querySelector('.quantity-product');
     const headerBasketSubboxItemArr = document.querySelectorAll('.header__basket-subbox-item');
@@ -2075,24 +1942,6 @@ function createPopUp(productCardObj) {
             productCardObj.quantityProduct = 1;
             headerBasketSubboxBottomQuantityInput.value = 1;
         }
-
-
-
-        // if(productCardObj.quantityProduct > 0) {
-
-        // }
-        // else {
-        //     headerBasketSubboxBottomQuantityInput.value = 1;
-        //     productCardObj.quantityProduct = 1;
-        // }
-
-
-        // removeQuantityProductFromPopup(productCardObj);
-
-
-
-
-
 
 
     });
@@ -2520,10 +2369,8 @@ function addBgBasketInPopup(productCardObj) {
 
     for (let i = 0; i < allProductCard.length; i++) {
 
-        console.log("work cicl");
 
         if ((allProductCard[i].id == productCardObj.id) && (productCardObj.inBasket === true)) {
-            console.log("work bg");
             addBgBasket(productCardBtnBasketWrapper[i]);
         }
     }
@@ -2666,7 +2513,6 @@ function addSumFromPopupForOneProduct(productCardObj) {
             sumOneProduct[i].textContent = numberToString(productCardObj.sumOneProduct);
             basketAllSum.textContent = allSum.textContent + ' руб';
             allSum.classList.add('header__basket-subbox-all-sum-number');
-            // basketAllSum.classList.add('active--element');
             sumOneProduct[i].classList.add('header__basket-sum-one-product--active');
             dividingLine[i].classList.add('header__basket-sum-one-product--active');
             rubImgOneProductSum[i].classList.add('header__basket-sum-one-product--active');
@@ -2713,27 +2559,6 @@ function subSumAndSubQuantityFromPopupForOneProduct(productCardObj) {
 
 
 
-// productCardObj
-// id: cardId++,
-//     productCard: '',
-//     inBasket: false,
-//     cartfavorite: false,
-//     basketfavorite: false,
-//     quantityProduct: 1,
-//     newPriceProduct: 4990,
-//     sumOneProduct: 4990,
-
-
-
-// const popupInBasketBtn = document.querySelector('.pop-up__in-basket-btn');
-
-
-// popupInBasketBtn.addEventListener('click', () => {
-
-// });
-
-
-
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //Скрипты для страницы с одим товаром
@@ -2773,7 +2598,6 @@ function addSumOneProductPage(productCardObj) {
     if (productCardObj.sumOneProduct > productCardObj.newPriceProduct) {
         for (let i = 0; i < productInBasketArray.length; i++) {
             sumOneProduct[i].textContent = numberToString(productCardObj.sumOneProduct);
-            // basketAllSum.classList.add('active--element');
             sumOneProduct[i].classList.add('header__basket-sum-one-product--active');
             dividingLine[i].classList.add('header__basket-sum-one-product--active');
             rubImgOneProductSum[i].classList.add('header__basket-sum-one-product--active');
@@ -2794,7 +2618,6 @@ if (productOnePriceBtn) {
     productOnePriceBtn.addEventListener('click', () => {
         cloneProductCardObj.inBasket = true;
         addBasketProduct(cloneProductCardObj);
-        console.log(cloneProductCardObj.sumOneProduct);
         addSumOneProductPage(cloneProductCardObj);
         showPlusQuantityProduct();
     });
@@ -2814,13 +2637,7 @@ function removeQuantityProductOneProductPage(productCardObj) {
     const quantityProductBox = document.querySelector('.quantity-product__box');
     const headerBasketSubboxItemArr = document.querySelectorAll('.header__basket-subbox-item');
     const productInputInBasket = document.querySelectorAll('.header__basket-subbox-bottom-quantity-input');
-    // const popupBox = document.querySelector('.pop-up__box');
-
-    // for (let i = 0; i < headerBasketSubboxItemArr.length; i++) {
-    //     if (productCardObj.inBasket && (headerBasketSubboxItemArr[i].id === popupBox.id)) {
-    //         productInputInBasket[i].value = Number(productInputInBasket[i].value) - 1;
-    //     }
-    // }
+  
 
     for (let i = 0; i < headerBasketSubboxItemArr.length; i++) {
         if (productCardObj.inBasket) {
@@ -2850,7 +2667,6 @@ function removeQuantityProductOneProductPage(productCardObj) {
 function subSumAndSubQuantityFromOneProductPage(productCardObj) {
     const sumOneProduct = document.querySelectorAll('.header__basket-subbox-sum-price');
     const productInBasketArray = document.querySelectorAll('.header__basket-subbox-item');
-    // const oneProductPopup = document.querySelector('.pop-up__box');
     const allSum = document.querySelector('.header__basket-subbox-all-sum-number');
     const basketAllSum = document.querySelector('.right-side-bar__basket-sum');
 
@@ -2862,18 +2678,6 @@ function subSumAndSubQuantityFromOneProductPage(productCardObj) {
     productCardObj.sumOneProduct -= productCardObj.newPriceProduct;
 
 
-    // for (let i = 0; i < productInBasketArray.length; i++) {
-    //     if (productCardObj.id == productInBasketArray[i].id && productInBasketArray[i].id == oneProductPopup.id && productCardObj.inBasket === true) {
-    //         sumOneProduct[i].textContent = numberToString(productCardObj.sumOneProduct);
-    //         allSum.textContent = numberToString(Number(stringToNumber(allSum)) - productCardObj.newPriceProduct);
-    //         basketAllSum.textContent = allSum.textContent + ' руб';
-    //     }
-    //     if (productCardObj.quantityProduct === 1) {
-    //         sumOneProduct[i].classList.remove('header__basket-sum-one-product--active');
-    //         dividingLine[i].classList.remove('header__basket-sum-one-product--active');
-    //         rubImgOneProductSum[i].classList.remove('header__basket-sum-one-product--active');
-    //     }
-    // }
 
     for (let i = 0; i < productInBasketArray.length; i++) {
         if (productCardObj.inBasket === true) {
@@ -2930,7 +2734,6 @@ function addQuantityProductFromOnePageProduct(productCardObj) {
 function addSumAndQuantityFromPopupForOneProductPage(productCardObj) {
     const sumOneProduct = document.querySelectorAll('.header__basket-subbox-sum-price');
     const productInBasketArray = document.querySelectorAll('.header__basket-subbox-item');
-    // const oneProductPopup = document.querySelector('.pop-up__box');
     const allSum = document.querySelector('.header__basket-subbox-all-sum-number');
     const basketAllSum = document.querySelector('.right-side-bar__basket-sum');
 
@@ -2941,7 +2744,6 @@ function addSumAndQuantityFromPopupForOneProductPage(productCardObj) {
 
     productCardObj.sumOneProduct += productCardObj.newPriceProduct;
 
-    console.log(productCardObj.sumOneProduct);
 
     // for (let i = 0; i < productInBasketArray.length; i++) {
     //     if (productCardObj.id == productInBasketArray[i].id && productInBasketArray[i].id == oneProductPopup.id && productCardObj.inBasket === true) {
@@ -3055,7 +2857,6 @@ const showMoreSpecificationsBtn = document.querySelector('.tabs-box__specificati
 
 if(showMoreSpecificationsBtn) {
     showMoreSpecificationsBtn.addEventListener('click', () => {
-        console.log('work');
         const specificationWrapper = document.querySelector('.tabs-box__specifications-wrapper');
 
         if(specificationWrapper.classList.contains('tabs-box__specifications-wrapper--active') === false) {
@@ -3070,6 +2871,3 @@ if(showMoreSpecificationsBtn) {
     });
 }
 
-
-
-// tabs-box__specifications-wrapper--active

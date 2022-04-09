@@ -209,7 +209,7 @@
     box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.25);
     text-align: right;
     width: 670px;
-    padding: 27px 0 27px 20px;  
+    padding: 27px 20px;  
     position: absolute;
     right: 50px;
     top: 70px;
@@ -227,21 +227,6 @@
         border-left: 13px solid transparent;
     }
 }
-
-// .right-side-bar__basket-box{
-//     text-align: right;
-//     padding: 72px 0 23px 40px;
-//     background-color: #fff;
-//     width: 695px;
-//     position: fixed;
-//     top: 15%;
-//     // top: -333px;
-//     right: 65px;
-//     box-shadow: 0px 4px 19px 1px rgba(0, 0, 0, 0.25);
-//     border-radius: 30px 0px 0px 10px;
-//     display: none;
-// }
-
 
 
 .header__basket-products-info{
@@ -316,7 +301,6 @@
 .header__product-basket-box{
     text-align: left;
     width: 100%;
-    padding-right: 30px;
 }
 
 .header__basket-subbox-top{
@@ -400,7 +384,6 @@
 .header__basket-subbox-bottom-quantity{
     display: flex;
     justify-content: space-between;
-    width: 27%;
     align-items: center;
 }
 
@@ -443,9 +426,7 @@
     }
 }
 
-.header__basket-subbox-btn-wrapper{
-    padding-right: 30px;
-}
+
 
 .header__basket-subbox-btn{
     @extend %montserrat-600;
@@ -1067,28 +1048,8 @@
     display: none;
 }
 
-// .right-side-bar__basket-product,
-// .right-side-bar__product-in-basket{
-//     @extend %montserrat-600;
-//     font-size: 22px;
-//     line-height: 29px;
-//     color: #fff;
-//     display: none;
-// }
 
-// .right-side-bar__basket-box{
-//     text-align: right;
-//     padding: 72px 0 23px 40px;
-//     background-color: #fff;
-//     width: 695px;
-//     position: fixed;
-//     top: 15%;
-//     // top: -333px;
-//     right: 65px;
-//     box-shadow: 0px 4px 19px 1px rgba(0, 0, 0, 0.25);
-//     border-radius: 30px 0px 0px 10px;
-//     display: none;
-// }
+
 
 .right-side-bar__basket-box-empty-inner{
     display: none;
@@ -1164,10 +1125,8 @@
         color: #4b4b4b;
         width: 65%;
     }
-    // .product__rub-sum-img
-    // .dividing-line,
-    // .product__rub-sum-img,
-    // .product__new-price-sum,
+    
+    
     .product__img-wrapper-text-list,
     .product__img-wrapper-text-list{
         display: block;
@@ -1280,13 +1239,8 @@ align-items: center;
     transform: translate(-50%, -50%);
     display: inline-block;
 }
-// .pagination ul li.numb.first {
-//     margin: 0px 3px 0 -5px;
-// }
-// .pagination ul li.numb.last{
-//     margin: 0px -5px 0 3px;
-//     // margin-right: 24px;
-// }
+
+
 .pagination ul li.dots {
     font-size: 16px;
     cursor: default;
@@ -1338,12 +1292,6 @@ align-items: center;
     color: $defaultColor;
 }
 
-// .next{ 
-     
-// }
-
-
-//Footer
 
 .footer{
     background-color: $defaultColor;
@@ -1576,13 +1524,7 @@ align-items: center;
     margin-right: 9px;
 }
 
-// .slick-slide{
-//     width: 61px !important;
-// }
 
-// .slick-track {
-//     width: 100% !important;
-// }
 
 .pop-up__slider-img{
     position: absolute;
@@ -1722,7 +1664,6 @@ align-items: center;
     color: $descriptionTextColor;
 }
 
-//Стили для страницы продукта
 
 
 //Секция product__one
@@ -1962,15 +1903,7 @@ align-items: center;
     cursor: pointer;
 }
 
-// .links__list-link{
-//     @extend %montserrat-400;
-//     font-size: 18px;
-//     line-height: 24px;
-//     color: $oldPriceColor;
-//     border: none;
-//     outline: none;
-//     background-color: transparent;
-// }
+
 
 .tabs-box{
     border-top: 1px solid $tabBorderColor;
@@ -2245,24 +2178,6 @@ align-items: center;
 
 
 
-
-//Класс для добавления полосы в топ меню
-
-// .header__menu-item--active{
-//     &::after{
-//         content: '';
-//         width: 100%;
-//         height: 2px;
-//         background-color: $defaultColor;
-//         position: absolute;
-//         bottom: -33px;
-//         left: 0;
-//     }
-// }
-
-
-
-
 //Класс для добавления фона табам
 //и изменение цвета текста
 
@@ -2418,7 +2333,7 @@ align-items: center;
 //Стили корзины для отображения справа
 .header__basket-right-subbox--active {
     text-align: right;
-    padding: 72px 0 23px 40px;
+    padding: 72px 20px 23px 40px;
     background-color: #fff;
     width: 695px;
     position: fixed;
@@ -2431,29 +2346,6 @@ align-items: center;
         display: none;
     }
 }
-
-
-
-
-//Выезжающий элемент правого меню
-
-// .test--active{
-//         width: 760px;
-//         background-color: $defaultColor;
-//         z-index: 1;  
-//         .right-side-bar__baskem-price-box{
-//             display: block;
-//             left: 10%;
-//         }
-    
-//         .right-side-bar__link{
-//             left: 26px;
-//         }
-//         &:hover{
-
-//         }
-    
-// }
 
 
 
