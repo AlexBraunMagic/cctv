@@ -9,8 +9,6 @@ npm-debug.*
 dist/
 node_modules/
 package-lock.json
-app/css/*
 app/js/kjfghg.js
 app/js/shablon.js
-app/js/main.min.js
 app/shablon.html
